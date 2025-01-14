@@ -17,11 +17,11 @@
    {
        protected static ?string $model = Transportasi::class;
 
-       protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+       protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+       protected static ?string $navigationGroup = 'Transportasi';  
        protected static ?string $label = 'Transportasi';
        protected static ?string $pluralLabel = 'Transportasi';
-
+         
        public static function form(Form $form): Form
        {
            return $form
@@ -38,7 +38,7 @@
                    Textarea::make('keterangan')
                    ->label('Keterangan')
                    ->required()
-                   ->maxLength(255),
+                    ->maxLength(255),
                    Forms\Components\Select::make('id_type_transportasi')
                        ->label('Tipe Transportasi')
                        ->required()
@@ -51,13 +51,20 @@
            return $table
                ->columns([
                    TextColumn::make('id_transportasi')
-                   ->label('ID Transportasi')
-                   ->searchable(),
-                   TextColumn::make('kode')
-                   ->label('Kode')
-                   ->searchable(),
-                   TextColumn::make('jumlah_kursi')->label('Jumlah Kursi'),
-                   TextColumn::make('keterangan')->label('Keterangan')->wrap(),
+                    ->label('ID Transportasi')
+                    ->searchable(),
+                    TextColumn::make('typeTransportasi.nama_type') 
+                    ->label('Type Transportasi')
+                    ->searchable(),
+                TextColumn::make('kode')
+                    ->label('Kode')
+                    ->searchable(),
+                TextColumn::make('jumlah_kursi')
+                    ->label('Jumlah Kursi'),
+                TextColumn::make('keterangan')
+                    ->label('Keterangan')
+                    ->wrap(),
+                
                ])
                ->actions([
                    Tables\Actions\EditAction::make(),
@@ -78,4 +85,4 @@
                'edit' => Pages\EditTransportasi::route('/{record}/edit'),
            ];
        }
-}
+ }

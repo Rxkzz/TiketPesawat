@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Hapus semua data di tabel users
+        User::truncate();
 
         User::factory()->create([
             'name' => 'Test User',
@@ -24,9 +25,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
         ]);
-        //call seeder
-        // $this->call([
-        //     \Database\Seeders\TypeTransportasiSeeder::class,
-        // ]);
+
+        \App\Models\Pemesanan::factory(10)->create();
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TypeTransportasiResource\Pages;
-use App\Filament\Resources\TypeTransportasiResource\RelationManagers;
+   use App\Filament\Resources\TypeTransportasiResource\RelationManagers;
 use App\Models\TypeTransportasi;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -15,12 +15,14 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\RichEditor;
 
 class TypeTransportasiResource extends Resource
 {
     protected static ?string $model = TypeTransportasi::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrows-right-left';
+    protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
+    protected static ?string $navigationGroup = 'Transportasi';  
 
     protected static ?string $label = 'Type Transportasi';
     protected static ?string $pluralLabel = 'Type Transportasi';
@@ -29,16 +31,11 @@ class TypeTransportasiResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('id_type_transportasi')
-                ->label('ID Type Transportasi')
-                ->required()
-                ->numeric()
-                ->maxLength(10),
                 TextInput::make('nama_type')
                 ->label('Type')
                 ->required()
                 ->maxLength(50),
-                Textarea::make('keterangan')
+                RichEditor::make('keterangan')
                 ->label('Keterangan')
                 ->required()
                 ->maxLength(255),

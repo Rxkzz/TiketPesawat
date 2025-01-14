@@ -20,7 +20,7 @@ class RuteResource extends Resource
     protected static ?string $model = Rute::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrows-right-left';
-
+    protected static ?string $navigationGroup = 'Transportasi';     
        protected static ?string $label = 'Rute';
        protected static ?string $pluralLabel = 'Rute';
 
@@ -70,6 +70,7 @@ class RuteResource extends Resource
                 ->label('rute_akhir')
                 ->searchable(),             
                 TextColumn::make('harga')->label('harga'),   
+                TextColumn::make('Transportasi.kode')->label('kode'),   
             ])
             ->filters([
                 //
