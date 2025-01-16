@@ -38,6 +38,6 @@ class User extends Authenticatable
 
     public function petugas()
     {
-        return $this->belongsTo(Petugas::class, 'id_petugas');
+          return $this->belongsTo(Petugas::class, 'id_petugas');
     }
   }

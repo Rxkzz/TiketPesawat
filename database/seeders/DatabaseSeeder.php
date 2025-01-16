@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@admin.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@admin.com',
+        // ]);
 
         \App\Models\Pemesanan::factory(10)->create();
     }
