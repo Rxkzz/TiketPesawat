@@ -17,7 +17,7 @@ use Spatie\Permission\Models\Role;
 
 class PetugasResource extends Resource
 {
-    protected static ?string $model = User::class;
+     protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationGroup = 'Manajemen Pengguna';
     protected static ?string $label = 'Petugas';
