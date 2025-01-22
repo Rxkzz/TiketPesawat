@@ -49,7 +49,7 @@
                             <div class="bg-blue-100 p-6 rounded-lg">
                                 <h3 class="text-lg font-semibold mb-2">Pesan Tiket</h3>
                                 <p>Mulai pemesanan tiket pesawat Anda.</p>
-                                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                <a href="{{ route('customer.home') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                                     Pesan Sekarang
                                 </a>
                             </div>

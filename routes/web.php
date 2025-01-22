@@ -17,9 +17,14 @@ Route::middleware('guest')->group(function () {
 
 // Customer routes
 Route::middleware('auth:penumpang')->group(function () {
-    Route::get('/dashboard', function() {
+    Route::get('/dashboard', function () {
         return view('customer.dashboard');
     })->name('customer.dashboard');
+
+    // Rute untuk halaman home
+    Route::get('/home', function () {
+        return view('customer.home');
+    })->name('customer.home');
 });
 
 // Admin routes akan ditangani oleh Filament secara otomatis
