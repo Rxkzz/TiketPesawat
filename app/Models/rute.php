@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class rute extends Model
+class Rute extends Model
 {
     use HasFactory;
 
@@ -18,13 +19,49 @@ class rute extends Model
         'rute_awal',
         'rute_akhir',
         'harga',
+        'total_harga',
         'id_transportasi',
         'tanggal_berangkat',
         'waktu_keberangkatan',
+        'id_class'
     ];
 
-    public function transportasi()
+    protected static function boot()
     {
-        return $this->belongsTo(transportasi::class, 'id_transportasi', 'id_transportasi');
+        parent::boot();
+        
+        static::saving(function ($rute) {
+            if ($rute->id_class) {
+                $class = ClassModel::find($rute->id_class);
+                if ($class) {
+                    $rute->total_harga = $rute->harga + $class->harga_tambahan;
+                }
+            } else {
+                $rute->total_harga = $rute->harga;
+            }
+        });
+    }
+
+    public function transportasi(): BelongsTo
+    {
+        return $this->belongsTo(Transportasi::class, 'id_transportasi', 'id_transportasi');
+    }
+
+    public function class(): BelongsTo
+    {
+        return $this->belongsTo(ClassModel::class, 'id_class', 'id_class');
+    }
+
+    public function fasilitas(): BelongsTo
+    {
+        return $this->belongsTo(Fasilitas::class, 'id_fasilitas', 'id_fasilitas');
+    }
+
+    public function getTotalHargaAttribute($value)
+    {
+        if (!$value || $value == 0) {
+            return $this->harga + ($this->class ? $this->class->harga_tambahan : 0);
+        }
+        return $value;
     }
 }

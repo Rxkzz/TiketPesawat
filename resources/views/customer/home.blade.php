@@ -207,7 +207,7 @@
                                                                 <option value="">kelas</option>
                                                                 @foreach($routes as $route)
                                                                     <option value="{{ $route->id_transportasi }}">
-                                                                        {{ $route->rute_akhir }} ({{ $route->transportasi->kode }})
+                                                                        {{ $route->class->nama_class }}
                                                                     </option>
                                                                 @endforeach
                                                              </select>

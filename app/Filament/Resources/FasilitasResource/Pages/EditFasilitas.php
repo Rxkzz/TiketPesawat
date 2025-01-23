@@ -4,16 +4,21 @@ namespace App\Filament\Resources\FasilitasResource\Pages;
 
 use App\Filament\Resources\FasilitasResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\EditRecord;
 
-class ListFasilitas extends ListRecords
+class EditFasilitas extends EditRecord
 {
     protected static string $resource = FasilitasResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 } 

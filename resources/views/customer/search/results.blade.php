@@ -140,7 +140,7 @@
                     <div class="col-md-8">
                         @if($results->isNotEmpty())
                             <strong>{{ $results->first()->rute_awal }} ({{ $results->first()->transportasi->kode }})</strong> → 
-                            <strong>{{ $results->first()->tujuan }}</strong>
+                            <strong>{{ $results->first()->tujuan }} ({{ $results->first()->transportasi->kode }})</strong>
                             <p>{{ \Carbon\Carbon::parse($results->first()->tanggal_berangkat)->format('l, d F Y') }} | 1 Penumpang | Kelas Bisnis</p>
                         @endif
                     </div>
@@ -158,15 +158,18 @@
                 @foreach($results as $result)
                     <a href="{{ route('flight.show', $result->id_rute) }}" class="flight-card">
                         <div class="flight-details">
-                            <h5>{{ $result->rute_awal }} ({{ $result->transportasi->kode }}) → {{ $result->tujuan }}</h5>
+                            <h5>{{ $result->rute_awal }} ({{ $result->transportasi->kode }}) → {{ $result->tujuan }} ({{ $results->first()->transportasi->kode }})</h5>
                             <p>
                                 <i class="fas fa-plane"></i> 
                                 {{ \Carbon\Carbon::parse($result->tanggal_berangkat)->format('d-m-Y') }} | 
                                 {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->format('H:i') }} - {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->addHours(2)->format('H:i') }}
                             </p>
+                            <div class="flight-class">
+                                <strong>Kelas:</strong> {{ $result->class->nama_class }}
+                            </div>
                         </div>
                         <div class="flight-price">
-                            Rp {{ number_format($result->harga, 0, ',', '.') }}
+                            Rp {{ number_format($result->total_harga, 0, ',', '.') }}
                         </div>
                     </a>
                 @endforeach

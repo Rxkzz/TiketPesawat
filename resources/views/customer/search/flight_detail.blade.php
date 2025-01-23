@@ -134,9 +134,96 @@
         .book-button:hover {
             background: #f4511e;
         }
+        .facilities-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .facilities-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .facilities-list li i {
+            margin-right: 8px;
+            color: #28a745;
+            width: 20px;
+            text-align: center;
+        }
+        .see-more-facilities {
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .modal-header {
+            border-bottom: none;
+            padding: 20px 20px 0;
+        }
+        .modal-header .close {
+            padding: 20px;
+            margin: -20px -20px -20px auto;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .facility-section {
+            margin-bottom: 24px;
+        }
+        .facility-section:last-child {
+            margin-bottom: 0;
+        }
+        .facility-section h6 {
+            color: #687176;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .facility-section p {
+            color: #687176;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .facility-info {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .facility-info:last-child {
+            margin-bottom: 0;
+        }
+        .facility-info i {
+            margin-right: 12px;
+            color: #28a745;
+            margin-top: 3px;
+            width: 20px;
+            text-align: center;
+        }
+        .facility-info .content {
+            flex: 1;
+        }
+        .facility-info .title {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .facility-note {
+            font-size: 12px;
+            color: #687176;
+            margin: 0;
+        }
+        .modal-content {
+            border-radius: 12px;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
     </style>
 </head>
-<body style="background-image: url('{{ asset('images/image_1.jpg') }}'); background-size: cover; background-position: center; padding: 20px;">
+<body style="background-color: #f5f5f5; padding: 20px;">
     <div class="container mt-5">
         <div class="flight-detail-container">
             <!-- Header -->
@@ -177,16 +264,43 @@
             <!-- Flight Details -->
             <div class="flight-details">
                 <div class="detail-item">
+                    <div class="detail-label">Kelas</div>
+                    <div class="detail-value">{{ $flight->class->nama_class }}</div>
+                </div>
+                 
+                <div class="detail-item">
                     <div class="detail-label">Tipe Pesawat</div>
-                    <div class="detail-value">Boeing 737</div>
+                    <div class="detail-value">{{ $flight->transportasi->typeTransportasi->nama_type }}</div>
                 </div>
+
+                <!-- Fasilitas -->
                 <div class="detail-item">
-                    <div class="detail-label">Bagasi</div>
-                    <div class="detail-value">20 kg</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Hiburan</div>
-                    <div class="detail-value">Tidak tersedia</div>
+                    <div class="detail-label">Tiket Sudah Termasuk</div>
+                    <div class="detail-value">
+                        <ul class="facilities-list">
+                            <li>
+                                <i class="fas fa-suitcase"></i>
+                                <span>Bagasi: {{ $flight->class->bagasi }} kg</span>
+                            </li>
+                            @if($flight->class->hiburan)
+                            <li>
+                                <i class="fas fa-tv"></i>
+                                <span>Hiburan In-Flight</span>
+                            </li>
+                            @endif
+                            @foreach($flight->class->fasilitas->take(2) as $fasilitas)
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>{{ $fasilitas->nama_fasilitas }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @if($flight->class->fasilitas->count() > 2)
+                        <button type="button" class="see-more-facilities" data-toggle="modal" data-target="#fasilitasModal">
+                            Lihat fasilitas lainnya
+                        </button>
+                        @endif
+                    </div>
                 </div>
             </div>
 
@@ -195,7 +309,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="total-price">
-                            Rp {{ number_format($flight->harga, 0, ',', '.') }}
+                            Rp {{ number_format($flight->total_harga, 0, ',', '.') }}
                         </div>
                         <div class="text-muted">per orang</div>
                     </div>
@@ -203,6 +317,59 @@
                         <button class="book-button">
                             Pilih Penerbangan Ini
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Fasilitas -->
+    <div class="modal fade" id="fasilitasModal" tabindex="-1" role="dialog" aria-labelledby="fasilitasModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fasilitasModalLabel">Fasilitas Penerbangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="facility-section">
+                        <h6>{{ $flight->transportasi->typeTransportasi->nama_type }} • {{ $flight->transportasi->kode }}</h6>
+                        <p>{{ $flight->class->nama_class }} • {{ \Carbon\Carbon::parse($flight->waktu_keberangkatan)->format('H:i') }}</p>
+                    </div>
+
+                    <div class="facility-section">
+                        <h6>Tiket Sudah Termasuk</h6>
+                        <div class="facility-info">
+                            <i class="fas fa-suitcase"></i>
+                            <div class="content">
+                                <div class="title">Bagasi: {{ $flight->class->bagasi }} kg</div>
+                                <p class="facility-note">Pembelian bagasi tambahan tersedia di halaman pemesanan. *Ketersediaan tergantung pihak maskapai.</p>
+                            </div>
+                        </div>
+                        @if($flight->class->hiburan)
+                        <div class="facility-info">
+                            <i class="fas fa-tv"></i>
+                            <div class="content">
+                                <div class="title">Hiburan In-Flight</div>
+                                <p class="facility-note">Nikmati berbagai hiburan selama penerbangan.</p>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="facility-section">
+                        <h6>Fasilitas Tambahan</h6>
+                        @foreach($flight->class->fasilitas as $fasilitas)
+                        <div class="facility-info">
+                            <i class="fas fa-check"></i>
+                            <div class="content">
+                                <div class="title">{{ $fasilitas->nama_fasilitas }}</div>
+                                <p class="facility-note">{{ $fasilitas->deskripsi }}</p>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

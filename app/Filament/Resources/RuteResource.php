@@ -18,6 +18,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TimePicker;
 use Carbon\Carbon;
+use Filament\Forms\Components\Select;
 
 class RuteResource extends Resource
 {
@@ -45,10 +46,38 @@ class RuteResource extends Resource
                     ->required() 
                     ->maxLength(255),           
                 TextInput::make('harga')
-                    ->label('Harga')
+                    ->label('Harga Dasar')
                     ->required() 
                     ->numeric()
-                    ->maxLength(255), 
+                    ->prefix('Rp')
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
+                        $classId = $get('id_class');
+                        if ($classId) {
+                            $class = \App\Models\ClassModel::find($classId);
+                            if ($class) {
+                                $set('total_harga', intval($state) + intval($class->harga_tambahan));
+                            }
+                        }
+                    }),
+                Select::make('id_class')
+                    ->relationship('class', 'nama_class')
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
+                        if ($state) {
+                            $class = \App\Models\ClassModel::find($state);
+                            if ($class) {
+                                $hargaDasar = intval($get('harga') ?? 0);
+                                $set('total_harga', $hargaDasar + intval($class->harga_tambahan));
+                            }
+                        }
+                    }),
+                TextInput::make('total_harga')
+                    ->label('Total Harga')
+                    ->disabled()
+                    ->dehydrated(true)
+                    ->prefix('Rp'),
                 Forms\Components\Select::make('id_transportasi')
                     ->label('Kode')
                     ->required() 
@@ -71,7 +100,7 @@ class RuteResource extends Resource
                     ->label('ID')
                     ->searchable(),
                 TextColumn::make('tujuan')
-                    ->label('Nama Tipe')
+                    ->label('Tujuan')
                     ->searchable(),
                 TextColumn::make('rute_awal')
                     ->label('Rute Awal')
@@ -79,14 +108,27 @@ class RuteResource extends Resource
                 TextColumn::make('rute_akhir')
                     ->label('Rute Akhir')
                     ->searchable(),             
-                TextColumn::make('harga')->label('Harga'),   
-                TextColumn::make('transportasi.kode')->label('Kode'),   
+                TextColumn::make('harga')
+                    ->label('Harga Dasar')
+                    ->money('idr'),   
+                TextColumn::make('class.harga_tambahan')
+                    ->label('Harga Tambahan Kelas')
+                    ->money('idr'),
+                TextColumn::make('total_harga')
+                    ->label('Total Harga')
+                    ->money('idr')
+                    ->sortable(),
+                TextColumn::make('transportasi.kode')
+                    ->label('Kode'),   
                 TextColumn::make('tanggal_berangkat')
                     ->label('Tanggal Berangkat')
                     ->date(),
                 TextColumn::make('waktu_keberangkatan')
                     ->label('Waktu Keberangkatan')
                     ->time(),
+                TextColumn::make('class.nama_class')
+                    ->label('Kelas')
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -118,5 +160,25 @@ class RuteResource extends Resource
         ];
     }
 
+    public static function mutateFormDataBeforeCreate(array $data): array
+    {
+        $class = \App\Models\ClassModel::find($data['id_class']);
+        if ($class) {
+            $data['total_harga'] = intval($data['harga']) + intval($class->harga_tambahan);
+        } else {
+            $data['total_harga'] = $data['harga'];
+        }
+        return $data;
+    }
 
+    public static function mutateFormDataBeforeUpdate(array $data): array
+    {
+        $class = \App\Models\ClassModel::find($data['id_class']);
+        if ($class) {
+            $data['total_harga'] = intval($data['harga']) + intval($class->harga_tambahan);
+        } else {
+            $data['total_harga'] = $data['harga'];
+        }
+        return $data;
+    }
 }

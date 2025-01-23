@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class transportasi extends Model
 {
@@ -24,7 +25,7 @@ class transportasi extends Model
     ];
 
     // Menentukan relasi dengan model TypeTransportasi
-    public function typeTransportasi()
+    public function typeTransportasi(): BelongsTo
     {
         return $this->belongsTo(TypeTransportasi::class, 'id_type_transportasi', 'id_type_transportasi');
     }

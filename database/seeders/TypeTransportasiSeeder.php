@@ -12,6 +12,23 @@ class TypeTransportasiSeeder extends Seeder
      */
     public function run(): void
     {
-        TypeTransportasi::factory(10)->create();
+        $types = [
+            [
+                'nama_type' => 'Boeing 737',
+                'keterangan' => 'Pesawat penumpang narrow-body'
+            ],
+            [
+                'nama_type' => 'Airbus A320',
+                'keterangan' => 'Pesawat penumpang single-aisle'
+            ],
+            [
+                'nama_type' => 'Boeing 777',
+                'keterangan' => 'Pesawat penumpang wide-body'
+            ]
+        ];
+
+        foreach ($types as $type) {
+            TypeTransportasi::create($type);
+        }
     }
 }

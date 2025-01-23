@@ -13,7 +13,6 @@ class TypeTransportasi extends Model
     protected $primaryKey = 'id_type_transportasi';
 
     protected $fillable = [
-        'id_type_transportasi',
         'nama_type',
         'keterangan'
     ];

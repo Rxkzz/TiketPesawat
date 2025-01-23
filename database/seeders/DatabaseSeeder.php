@@ -27,5 +27,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Pemesanan::factory(10)->create();
+
+        $this->call([
+            TypeTransportasiSeeder::class,
+            TransportasiSeeder::class,
+            ClassSeeder::class,
+            FasilitasSeeder::class,
+            ClassFasilitasSeeder::class,
+            RuteSeeder::class,
+        ]);
     }
 }
