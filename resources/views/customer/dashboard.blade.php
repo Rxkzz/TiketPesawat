@@ -7,67 +7,92 @@
 
     <title>Dashboard Customer - {{ config('app.name', 'Tiket Pesawat') }}</title>
 
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <div class="min-h-screen">
+<body class="bg-light">
+    <div class="min-vh-100">
         <!-- Navigation -->
-        <nav class="bg-white shadow-lg">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center">
-                        <span class="text-xl font-semibold">
-                            Tiket Pesawat
-                        </span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-gray-700 mr-4">
-                            Selamat datang, {{ auth('penumpang')->user()->nama_penumpang }}
-                        </span>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="text-red-600 hover:text-red-800">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
+    <div class="container">
+        <span class="navbar-brand fw-semibold">Tiket Pesawat</span>
+        <div class="d-flex align-items-center">
+            <li class="nav-item dropdown list-unstyled">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Welcome, {{ auth('penumpang')->user()->nama_penumpang }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <!-- Edit Profile -->
+                    <a class="dropdown-item" href="">
+                        <i class="fas fa-user-edit me-2"></i> Edit Profile
+                    </a>
+                    
+                    <!-- Dashboard -->
+                    <a class="dropdown-item" href="{{ route('customer.dashboard') }}">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    
+                    <!-- Divider -->
+                    <div class="dropdown-divider"></div>
+                    
+                    <!-- Logout -->
+                    <a class="dropdown-item text-danger" href="{{ route('logout') }}" 
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
-            </div>
-        </nav>
+            </li>
+        </div>
+    </div>
+</nav>
 
         <!-- Main Content -->
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <h2 class="text-2xl font-semibold mb-4">Dashboard Customer</h2>
+        <div class="py-5">
+            <div class="container">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="fs-2 fw-semibold mb-4">Dashboard Customer</h2>
                         <p>Selamat datang di panel customer Tiket Pesawat.</p>
                         
-                        <!-- Tambahkan konten dashboard sesuai kebutuhan -->
-                        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="bg-blue-100 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold mb-2">Pesan Tiket</h3>
-                                <p>Mulai pemesanan tiket pesawat Anda.</p>
-                                <a href="{{ route('customer.home') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                    Pesan Sekarang
-                                </a>
+                        <!-- Dashboard Content -->
+                        <div class="row mt-4 g-4">
+                            <div class="col-md-4">
+                                <div class="card bg-warning bg-opacity-10">
+                                    <div class="card-body">
+                                        <h3 class="fs-5 fw-semibold mb-2">Pesan Tiket</h3>
+                                        <p>Mulai pemesanan tiket pesawat Anda.</p>
+                                        <a href="{{ route('customer.home') }}" class="btn btn-warning mt-3">
+                                            Pesan Sekarang
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             
-                            <div class="bg-green-100 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold mb-2">Riwayat Pemesanan</h3>
-                                <p>Lihat history pemesanan tiket Anda.</p>
-                                <a href="#" class="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                    Lihat Riwayat
-                                </a>
+                            <div class="col-md-4">
+                                <div class="card bg-warning bg-opacity-10">
+                                    <div class="card-body">
+                                        <h3 class="fs-5 fw-semibold mb-2">Riwayat Pemesanan</h3>
+                                        <p>Lihat history pemesanan tiket Anda.</p>
+                                        <a href="#" class="btn btn-warning mt-3">
+                                            Lihat Riwayat
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             
-                            <div class="bg-purple-100 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold mb-2">Profil Saya</h3>
-                                <p>Update informasi profil Anda.</p>
-                                <a href="#" class="mt-4 inline-block bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
-                                    Edit Profil
-                                </a>
+                            <div class="col-md-4">
+                                <div class="card bg-warning bg-opacity-10">
+                                    <div class="card-body">
+                                        <h3 class="fs-5 fw-semibold mb-2">Profil Saya</h3>
+                                        <p>Update informasi profil Anda.</p>
+                                        <a href="#" class="btn btn-warning mt-3">
+                                            Edit Profil
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,5 +100,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>

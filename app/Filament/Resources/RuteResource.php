@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\TimePicker;
+use Carbon\Carbon;
 
 class RuteResource extends Resource
 {
@@ -28,49 +32,61 @@ class RuteResource extends Resource
     {
         return $form
             ->schema([
-                //
-                    TextInput::make('tujuan')
+                TextInput::make('tujuan')
                     ->label('Tujuan')
                     ->required() 
                     ->maxLength(255),
-                    TextInput::make('rute_awal')
-                    ->label('rute_awal')
+                TextInput::make('rute_awal')
+                    ->label('Rute Awal')
                     ->required() 
                     ->maxLength(255),            
-                    TextInput::make('rute_akhir')
-                    ->label('rute_akhir')
+                TextInput::make('rute_akhir')
+                    ->label('Rute Akhir')
                     ->required() 
                     ->maxLength(255),           
-                    TextInput::make('harga')->label('harga')
+                TextInput::make('harga')
+                    ->label('Harga')
                     ->required() 
                     ->numeric()
                     ->maxLength(255), 
-                    Forms\Components\Select::make('id_transportasi')
-                       ->label('kode')
-                       ->required() 
+                Forms\Components\Select::make('id_transportasi')
+                    ->label('Kode')
+                    ->required() 
                     ->relationship('Transportasi', 'kode'),            
+                DatePicker::make('tanggal_berangkat')
+                    ->label('Tanggal Berangkat')
+                    ->required()
+                    ->format('Y-m-d'),
+                TimePicker::make('waktu_keberangkatan')
+                    ->label('Waktu Keberangkatan')
+                    ->required(),
             ]);
-      }
+    }
   
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
                 TextColumn::make('id_rute')
-                ->label('ID')
-                ->searchable(),
+                    ->label('ID')
+                    ->searchable(),
                 TextColumn::make('tujuan')
-                ->label('Nama Tipe')
-                ->searchable(),
+                    ->label('Nama Tipe')
+                    ->searchable(),
                 TextColumn::make('rute_awal')
-                ->label('rute_awal')
-                ->searchable(),             
+                    ->label('Rute Awal')
+                    ->searchable(),             
                 TextColumn::make('rute_akhir')
-                ->label('rute_akhir')
-                ->searchable(),             
-                TextColumn::make('harga')->label('harga'),   
-                TextColumn::make('Transportasi.kode')->label('kode'),   
+                    ->label('Rute Akhir')
+                    ->searchable(),             
+                TextColumn::make('harga')->label('Harga'),   
+                TextColumn::make('transportasi.kode')->label('Kode'),   
+                TextColumn::make('tanggal_berangkat')
+                    ->label('Tanggal Berangkat')
+                    ->date(),
+                TextColumn::make('waktu_keberangkatan')
+                    ->label('Waktu Keberangkatan')
+                    ->time(),
             ])
             ->filters([
                 //
@@ -101,4 +117,6 @@ class RuteResource extends Resource
             'edit' => Pages\EditRute::route('/{record}/edit'),
         ];
     }
+
+
 }

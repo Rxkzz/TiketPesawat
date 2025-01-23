@@ -29,7 +29,6 @@
                    TextInput::make('kode')
                    ->label('Kode')
                    ->required()
-                   ->numeric()
                    ->maxLength(10),
                    TextInput::make('jumlah_kursi')
                    ->label('Jumlah Kursi')

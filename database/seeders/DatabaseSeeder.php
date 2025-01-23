@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
         // Hapus semua data di tabel users
         User::truncate();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-
         // User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@admin.com',
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
         // ]);
+
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+        ]);
 
         \App\Models\Pemesanan::factory(10)->create();
     }

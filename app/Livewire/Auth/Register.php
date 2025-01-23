@@ -42,7 +42,7 @@ class Register extends Component
 
         auth('penumpang')->login($penumpang);
 
-        return redirect()->route('customer.dashboard');
+        return redirect()->route('customer.home');
     }
 
     public function render()

@@ -19,6 +19,8 @@ class rute extends Model
         'rute_akhir',
         'harga',
         'id_transportasi',
+        'tanggal_berangkat',
+        'waktu_keberangkatan',
     ];
 
     public function transportasi()

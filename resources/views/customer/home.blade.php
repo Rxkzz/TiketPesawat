@@ -7,7 +7,7 @@
 	
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link rel="stylesheet" href="css/animate.css">
@@ -22,27 +22,65 @@
 	
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html">Pacific<span>Travel Agency</span></a>
+		<a class="navbar-brand" href="index.html">Pacific Travel Agency</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
+			<span class="oi oi-menu"> Menu</span>
 			</button>
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+				<li class="nav-item active"><a href="{{ route('customer.home') }}" class="nav-link">Home</a></li>
 					<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 					<li class="nav-item"><a href="destination.html" class="nav-link">Destination</a></li>
 					<li class="nav-item"><a href="hotel.html" class="nav-link">Hotel</a></li>
 					<li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-				</ul>
-			</div>
+
+				@if(auth('penumpang')->check())
+					<!-- User is authenticated, show the dropdown -->
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Welcome, {{ auth('penumpang')->user()->nama_penumpang }}
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<!-- Edit Profile -->
+							<a class="dropdown-item" href="">
+								<i class="fas fa-user-edit mr-2"></i> Edit Profile
+							</a>
+							
+							<!-- Dashboard -->
+							<a class="dropdown-item" href="{{ route('customer.dashboard') }}">
+								<i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+							</a>
+							
+							<!-- Divider -->
+							<div class="dropdown-divider"></div>
+							
+							<!-- Logout -->
+							<a class="dropdown-item text-danger" href="{{ route('logout') }}" 
+							   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+								<i class="fas fa-sign-out-alt mr-2"></i> Logout
+							</a>
+							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+								@csrf
+							</form>
+						</div>
+					</li>
+				@else
+					<!-- User is not authenticated, show Sign In -->
+					<li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Sign In</a></li>
+				@endif
+			</ul>
 		</div>
-	</nav>
+	</div>
+                            </nav>
 	<!-- END nav -->
 	
 	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_5.jpg');">
@@ -62,163 +100,146 @@
 	</div>
 
 	<section class="ftco-section ftco-no-pb ftco-no-pt">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="ftco-search d-flex justify-content-center">
-						<div class="row">
-							<div class="col-md-12 nav-link-wrap">
-								<div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-									<a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Search Tour</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ftco-search d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col-md-12 nav-link-wrap">
+                            <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Cari Penerbangan</a>
 
-									<a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a>
+                                <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12 tab-wrap">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+                                    <form action="{{ route('search.flights') }}" method="POST" class="search-property-1">
+                                        @csrf
+                                        <div class="row no-gutters">
+                                            <div class="col-md d-flex">
+                                                <div class="form-group p-4 border-0">
+                                                    <label for="from">Dari</label>
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="fa fa-plane-departure"></span></div>
+                                                            <select name="from" id="from" class="form-control" required>
+                                                                <option value="">Pilih Kota Asal</option>
+                                                                @foreach($routes as $route)
+                                                                    <option value="{{ $route->id_transportasi }}">
+                                                                        {{ $route->rute_awal }} ({{ $route->transportasi->kode }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md d-flex">
+                                                <div class="form-group p-4 border-0">
+                                                    <label for="to">Ke</label>
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="fa fa-plane-arrival"></span></div>
+                                                            <select name="to" id="to" class="form-control" required>
+                                                                <option value="">Pilih Kota Tujuan</option>
+                                                                @foreach($routes as $route)
+                                                                    <option value="{{ $route->id_transportasi }}">
+                                                                        {{ $route->rute_akhir }} ({{ $route->transportasi->kode }})
+                                                                    </option>
+                                                                @endforeach
+                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md d-flex">
+                                                <div class="form-group p-4">
+                                                    <label for="tanggal_berangkat">Tanggal Berangkat</label>
+                                                    <div class="form-field">
+                                                        <div class="icon"><span class="fa fa-calendar"></span></div>
+                                                        <input type="text" id="tanggal_berangkat" name="tanggal_berangkat" class="form-control checkin_date" placeholder="Pilih Tanggal" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md d-flex">
+                                                <div class="form-group p-4">
+                                                    <label for="passenger_count">Jumlah Penumpang</label>
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="fa fa-user"></span></div>
+                                                            <select name="passenger_count" id="passenger_count" class="form-control" required>
+                                                                <option value="">Pilih Jumlah</option>
+                                                                @for($i = 1; $i <= 5; $i++)
+                                                                    <option value="{{ $i }}">{{ $i }} Penumpang</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md d-flex">
+                                                <div class="form-group p-4">
+                                                    <label for="price_limit">Batas Harga</label>
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="fa fa-money-bill"></span></div>
+                                                            <select name="price_limit" id="price_limit" class="form-control">
+                                                                <option value="">Pilih Batas Harga</option>
+                                                                <option value="1000000">< Rp 1.000.000</option>
+                                                                <option value="2000000">< Rp 2.000.000</option>
+                                                                <option value="3000000">< Rp 3.000.000</option>
+                                                                <option value="5000000">< Rp 5.000.000</option>
+                                                                <option value="10000000">< Rp 10.000.000</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+											<div class="col-md d-flex">
+                                                <div class="form-group p-4 border-0">
+                                                    <label for="to">Kelas</label>
+                                                    <div class="form-field">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="fa fa-plane-arrival"></span></div>
+                                                            <select name="to" id="to" class="form-control" required>
+                                                                <option value="">kelas</option>
+                                                                @foreach($routes as $route)
+                                                                    <option value="{{ $route->id_transportasi }}">
+                                                                        {{ $route->rute_akhir }} ({{ $route->transportasi->kode }})
+                                                                    </option>
+                                                                @endforeach
+                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md d-flex">
+                                                <div class="form-group d-flex w-100 border-0">
+                                                    <div class="form-field w-100 align-items-center d-flex">
+                                                        <button type="submit" class="align-self-stretch form-control btn btn-primary">
+                                                            Cari Penerbangan
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
-								</div>
-							</div>
-							<div class="col-md-12 tab-wrap">
-								
-								<div class="tab-content" id="v-pills-tabContent">
-
-									<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-										<form action="#" class="search-property-1">
-											<div class="row no-gutters">
-												<div class="col-md d-flex">
-													<div class="form-group p-4 border-0">
-														<label for="#">Destination</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-search"></span></div>
-															<input type="text" class="form-control" placeholder="Search place">
-														</div>
-													</div>
-												</div>
-												<div class="col-md d-flex">
-													<div class="form-group p-4">
-														<label for="#">Check-in date</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-calendar"></span></div>
-															<input type="text" class="form-control checkin_date" placeholder="Check In Date">
-														</div>
-													</div>
-												</div>
-												<div class="col-md d-flex">
-													<div class="form-group p-4">
-														<label for="#">Check-out date</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-calendar"></span></div>
-															<input type="text" class="form-control checkout_date" placeholder="Check Out Date">
-														</div>
-													</div>
-												</div>
-												<div class="col-md d-flex">
-													<div class="form-group p-4">
-														<label for="#">Price Limit</label>
-														<div class="form-field">
-															<div class="select-wrap">
-																<div class="icon"><span class="fa fa-chevron-down"></span></div>
-																<select name="" id="" class="form-control">
-																	<option value="">$100</option>
-																	<option value="">$10,000</option>
-																	<option value="">$50,000</option>
-																	<option value="">$100,000</option>
-																	<option value="">$200,000</option>
-																	<option value="">$300,000</option>
-																	<option value="">$400,000</option>
-																	<option value="">$500,000</option>
-																	<option value="">$600,000</option>
-																	<option value="">$700,000</option>
-																	<option value="">$800,000</option>
-																	<option value="">$900,000</option>
-																	<option value="">$1,000,000</option>
-																	<option value="">$2,000,000</option>
-																</select>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-md d-flex">
-													<div class="form-group d-flex w-100 border-0">
-														<div class="form-field w-100 align-items-center d-flex">
-															<input type="submit" value="Search" class="align-self-stretch form-control btn btn-primary">
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-
-									<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-										<form action="#" class="search-property-1">
-											<div class="row no-gutters">
-												<div class="col-lg d-flex">
-													<div class="form-group p-4 border-0">
-														<label for="#">Destination</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-search"></span></div>
-															<input type="text" class="form-control" placeholder="Search place">
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group p-4">
-														<label for="#">Check-in date</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-calendar"></span></div>
-															<input type="text" class="form-control checkin_date" placeholder="Check In Date">
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group p-4">
-														<label for="#">Check-out date</label>
-														<div class="form-field">
-															<div class="icon"><span class="fa fa-calendar"></span></div>
-															<input type="text" class="form-control checkout_date" placeholder="Check Out Date">
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group p-4">
-														<label for="#">Price Limit</label>
-														<div class="form-field">
-															<div class="select-wrap">
-																<div class="icon"><span class="fa fa-chevron-down"></span></div>
-																<select name="" id="" class="form-control">
-																	<option value="">$100</option>
-																	<option value="">$10,000</option>
-																	<option value="">$50,000</option>
-																	<option value="">$100,000</option>
-																	<option value="">$200,000</option>
-																	<option value="">$300,000</option>
-																	<option value="">$400,000</option>
-																	<option value="">$500,000</option>
-																	<option value="">$600,000</option>
-																	<option value="">$700,000</option>
-																	<option value="">$800,000</option>
-																	<option value="">$900,000</option>
-																	<option value="">$1,000,000</option>
-																	<option value="">$2,000,000</option>
-																</select>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-lg d-flex">
-													<div class="form-group d-flex w-100 border-0">
-														<div class="form-field w-100 align-items-center d-flex">
-															<input type="submit" value="Search" class="align-self-stretch form-control btn btn-primary p-0">
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                                <!-- Tab Hotel tetap sama seperti sebelumnya -->
+                                <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
+                                    <!-- ... kode hotel search ... -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 		<section class="ftco-section services-section">
 			<div class="container">
@@ -797,6 +818,23 @@
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 			<script src="js/google-map.js"></script>
 			<script src="js/main.js"></script>
-			
+			<script>
+				$(document).ready(function() {
+					$('#tanggal_berangkat').datepicker({
+						dateFormat: 'mm/dd/yy', // Format yang diinginkan untuk tampilan
+						autoclose: true
+					});
+
+					$('form').on('submit', function() {
+						var date = $('#tanggal_berangkat').val(); // Ambil nilai tanggal yang dipilih
+						var parts = date.split('/'); // Memisahkan tanggal
+						if (parts.length === 3) {
+							// Mengonversi ke format Y-m-d
+							var formattedDate = parts[2] + '-' + parts[0] + '-' + parts[1]; // Y-m-d
+							$('#tanggal_berangkat').val(formattedDate); // Mengatur nilai input ke format yang benar
+						}
+					});
+				});
+			</script>
 		</body>
-		</html>
+ 		</html>

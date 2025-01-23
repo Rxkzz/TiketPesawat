@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rute', function (Blueprint $table) {
-             $table->id('id_rute');
+            $table->id('id_rute');
             $table->string('tujuan');
             $table->string('rute_awal');
             $table->string('rute_akhir');
             $table->integer('harga');
             $table->foreignId('id_transportasi')->constrained('transportasi', 'id_transportasi');
+            $table->date('tanggal_berangkat');
+            $table->time('waktu_keberangkatan');
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@ class Login extends Component
 
         // Coba login sebagai penumpang
         if (Auth::guard('penumpang')->attempt(['username' => $this->username, 'password' => $this->password])) {
-            return redirect()->intended(route('customer.dashboard'));
+            return redirect()->intended(route('customer.home'));
         }
 
         $this->addError('username', 'Kredensial yang diberikan tidak cocok dengan data kami.');
