@@ -16,8 +16,10 @@ class ClassModel extends Model
     
     protected $fillable = [
         'nama_class',
+        'harga_tambahan',
         'bagasi',
-        'hiburan'
+        'hiburan',
+        'keterangan'
     ];
 
     public function fasilitas(): BelongsToMany

@@ -146,7 +146,7 @@
                                                                 <option value="">Pilih Kota Tujuan</option>
                                                                 @foreach($routes as $route)
                                                                     <option value="{{ $route->id_transportasi }}">
-                                                                        {{ $route->rute_akhir }} ({{ $route->transportasi->kode }})
+                                                                        {{ $route->tujuan }} ({{ $route->transportasi->kode }})
                                                                     </option>
                                                                 @endforeach
                                                              </select>
@@ -179,38 +179,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md d-flex">
-                                                <div class="form-group p-4">
-                                                    <label for="price_limit">Batas Harga</label>
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="fa fa-money-bill"></span></div>
-                                                            <select name="price_limit" id="price_limit" class="form-control">
-                                                                <option value="">Pilih Batas Harga</option>
-                                                                <option value="1000000">< Rp 1.000.000</option>
-                                                                <option value="2000000">< Rp 2.000.000</option>
-                                                                <option value="3000000">< Rp 3.000.000</option>
-                                                                <option value="5000000">< Rp 5.000.000</option>
-                                                                <option value="10000000">< Rp 10.000.000</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 											<div class="col-md d-flex">
                                                 <div class="form-group p-4 border-0">
-                                                    <label for="to">Kelas</label>
+                                                    <label for="id_class">Kelas</label>
                                                     <div class="form-field">
                                                         <div class="select-wrap">
-                                                            <div class="icon"><span class="fa fa-plane-arrival"></span></div>
-                                                            <select name="to" id="to" class="form-control" required>
-                                                                <option value="">kelas</option>
-                                                                @foreach($routes as $route)
-                                                                    <option value="{{ $route->id_transportasi }}">
-                                                                        {{ $route->class->nama_class }}
+                                                            <div class="icon"><span class="fa fa-ticket-alt"></span></div>
+                                                            <select name="id_class" id="id_class" class="form-control" required>
+                                                                <option value="">Pilih Kelas</option>
+                                                                @foreach($classes as $class)
+                                                                    <option value="{{ $class->nama_class }}">
+                                                                        {{ $class->nama_class }} 
+                                                                        @if($class->harga_tambahan)
+                                                                            (+ Rp {{ number_format($class->harga_tambahan, 0, ',', '.') }})
+                                                                        @endif
                                                                     </option>
                                                                 @endforeach
-                                                             </select>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -795,7 +780,8 @@
 						</div>
 					</div>
 				</div>
-			</footer>
+			</div>
+		</footer>
 			
 			
 

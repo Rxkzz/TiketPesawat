@@ -141,35 +141,54 @@
                         @if($results->isNotEmpty())
                             <strong>{{ $results->first()->rute_awal }} ({{ $results->first()->transportasi->kode }})</strong> → 
                             <strong>{{ $results->first()->tujuan }} ({{ $results->first()->transportasi->kode }})</strong>
-                            <p>{{ \Carbon\Carbon::parse($results->first()->tanggal_berangkat)->format('l, d F Y') }} | 1 Penumpang | Kelas Bisnis</p>
+                            <p>
+                                {{ \Carbon\Carbon::parse($results->first()->tanggal_berangkat)->format('l, d F Y') }} | 
+                                {{ $request->passenger_count ?? 1 }} Penumpang | 
+                                @if(isset($search_params['id_class']))
+                                    Kelas {{ $results->first()->class->nama_class }}
+                                @endif
+                            </p>
                         @endif
                     </div>
                     <div class="col-md-4 text-right">
-                        <button class="btn btn-primary">Ubah Pencarian</button>
+                        <a href="{{ route('customer.home') }}" class="btn btn-primary">Ubah Pencarian</a>
                     </div>
                 </div>
             </div>
 
             @if($results->isEmpty())
                 <div class="alert alert-info text-center">
-                    Tidak ada penerbangan yang tersedia.
+                    Tidak ada penerbangan yang tersedia untuk kriteria pencarian Anda.
                 </div>
             @else
                 @foreach($results as $result)
                     <a href="{{ route('flight.show', $result->id_rute) }}" class="flight-card">
-                        <div class="flight-details">
-                            <h5>{{ $result->rute_awal }} ({{ $result->transportasi->kode }}) → {{ $result->tujuan }} ({{ $results->first()->transportasi->kode }})</h5>
-                            <p>
-                                <i class="fas fa-plane"></i> 
-                                {{ \Carbon\Carbon::parse($result->tanggal_berangkat)->format('d-m-Y') }} | 
-                                {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->format('H:i') }} - {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->addHours(2)->format('H:i') }}
-                            </p>
-                            <div class="flight-class">
-                                <strong>Kelas:</strong> {{ $result->class->nama_class }}
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="flight-details">
+                                    <h5>{{ $result->rute_awal }} ({{ $result->transportasi->kode }}) → {{ $result->tujuan }} ({{ $result->transportasi->kode }})</h5>
+                                    <p>
+                                        <i class="fas fa-plane"></i> 
+                                        {{ \Carbon\Carbon::parse($result->tanggal_berangkat)->format('d-m-Y') }} | 
+                                        {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->format('H:i') }} - 
+                                        {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->addHours(2)->format('H:i') }}
+                                    </p>
+                                    <div class="flight-class">
+                                        <strong>Kelas:</strong> {{ $result->class->nama_class }}
+                                        <br>
+                                        <small class="text-muted">
+                                            Harga Dasar: Rp {{ number_format($result->harga, 0, ',', '.') }} + 
+                                            Tambahan Kelas: Rp {{ number_format($result->class->harga_tambahan, 0, ',', '.') }}
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flight-price">
-                            Rp {{ number_format($result->total_harga, 0, ',', '.') }}
+                            <div class="col-md-4 text-right">
+                                <div class="flight-price">
+                                    Rp {{ number_format($result->total_harga, 0, ',', '.') }}
+                                </div>
+                                <small class="text-muted">per orang</small>
+                            </div>
                         </div>
                     </a>
                 @endforeach
