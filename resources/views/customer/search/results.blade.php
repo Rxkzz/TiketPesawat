@@ -3,562 +3,737 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Search Results</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
+    <title>Tiket Pesawat - Search Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        :root {
+            --primary-purple: #6E2EBF;
+            --light-purple: #F5F2FF;
+            --text-dark: #35405A;
+            --text-gray: #687182;
+            --border-color: #E7E8EA;
+            --success-green: #00AA5B;
+            --navbar-height: 84px;
         }
 
-        .main-container {
+        body {
+            font-family: 'Open Sans', sans-serif;
+            /* background: linear-gradient(135deg, #00C4CC 0%, #7D2AE7 100%); */
+            background-image: url('{{ asset('images/bg_2.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            padding-top: var(--navbar-height);
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            background: #F8F9FE;
+            padding: 16px 0;
+            margin-top: var(--navbar-height);
+        }
+
+        .search-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            margin-top: 100px;
         }
 
-        .search-header {
-            background: linear-gradient(135deg, #5CA0F2, #4A90E2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(74,144,226,0.15);
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        .search-box {
+        .search-input-group {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 8px;
+        }
+
+        .location-input {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             background: white;
-            border-radius: 8px;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            flex: 1;
+            cursor: pointer;
+            min-height: 48px;
         }
 
-        .route-info {
+        .location-input i {
+            color: var(--text-gray);
             font-size: 16px;
-            color: #424242;
         }
 
-        .route-info strong {
-            font-size: 18px;
+        .location-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dark);
         }
 
-        .search-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+        .location-code {
+            color: var(--text-gray);
+            font-size: 15px;
         }
 
-        .notification-btn {
+        .location-swap {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            background: white;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
-        .date-selector {
+        .location-swap i {
+            color: var(--text-gray);
+            font-size: 16px;
+        }
+
+        .search-btn {
+            background: var(--primary-purple);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 32px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            height: 48px;
+            min-width: 100px;
+        }
+
+        .search-btn:hover {
+            background: #5B26A6;
+        }
+
+        /* Container styles */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Date Navigation Styles */
+        .date-scroll-wrapper {
+            background: white;
+            border-radius: 12px;
+            padding: 2px;
+            margin: 24px 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .date-scroll {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
             overflow-x: auto;
-            padding-bottom: 5px;
+            gap: 0;
+            scrollbar-width: none;
+        }
+
+        .date-scroll::-webkit-scrollbar {
+            display: none;
         }
 
         .date-item {
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            min-width: 120px;
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
             text-align: center;
+            cursor: pointer;
+            position: relative;
         }
 
         .date-item.active {
-            background: white;
-            color: #4A90E2;
+            background: var(--light-purple);
         }
 
-        .coupon-section {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        .coupon-tag {
-            display: inline-block;
-            padding: 5px 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 20px;
+        .date-item .date {
             font-size: 14px;
+            color: var(--text-gray);
         }
 
-        .sort-options {
+        .date-item .price {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-top: 4px;
+        }
+
+        .date-item.active .price {
+            color: var(--primary-purple);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
             display: flex;
-            gap: 20px;
+            gap: 8px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .sort-option {
-            flex: 1;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .sort-option:hover {
-            background: #f8f9fa;
-        }
-
-        .sort-option.active {
-            background: #F5F9FF;
-        }
-
-        .sort-option i {
-            color: #4A90E2;
-            margin-right: 8px;
-        }
-
-        .sort-option .price {
-            font-weight: bold;
-            color: #4A90E2;
-            margin-top: 5px;
-        }
-
-        .sort-option .duration {
-            color: #757575;
             font-size: 14px;
+            color: var(--text-dark);
+            cursor: pointer;
         }
 
+        .filter-button i {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .filter-button.active {
+            background: var(--light-purple);
+            border-color: var(--primary-purple);
+            color: var(--primary-purple);
+        }
+
+        /* Promo Banner */
+        .promo-banner {
+            background: linear-gradient(90deg, #00C4CC 0%, #7D2AE7 100%);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin: 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: white;
+        }
+
+        .promo-banner i {
+            font-size: 24px;
+        }
+
+        .promo-text {
+            flex: 1;
+        }
+
+        .promo-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .promo-subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* Flight Cards */
         .flight-card {
             background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            color: inherit;
         }
 
         .flight-card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(110, 46, 191, 0.15);
+        }
+
+        .airline-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .airline-logo {
-            width: 32px;
-            height: 32px;
-            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .airline-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .airline-facilities {
+            display: flex;
+            gap: 8px;
+        }
+
+        .facility-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
         }
 
         .flight-info {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            justify-content: space-between;
+            margin-bottom: 16px;
         }
 
-        .flight-time {
-            font-size: 20px;
-            font-weight: bold;
-            color: #212121;
+        .time-section {
+            text-align: left;
+        }
+
+        .time {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .city {
+            font-size: 14px;
+            color: var(--text-gray);
         }
 
         .flight-duration {
-            color: #757575;
-            font-size: 14px;
             text-align: center;
+            position: relative;
             padding: 0 20px;
         }
 
-        .flight-price {
-            text-align: right;
-            color: #4A90E2;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .flight-features {
-            display: flex;
-            gap: 15px;
-            color: #757575;
+        .duration-text {
             font-size: 14px;
-            margin-top: 10px;
+            color: var(--text-gray);
+            margin-bottom: 4px;
         }
 
-        .feature-item {
+        .transit-info {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .duration-line {
+            position: relative;
+            height: 2px;
+            background: #E7E8EA;
+            margin: 8px 0;
+        }
+
+        .duration-line::before,
+        .duration-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #E7E8EA;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .duration-line::before {
+            left: -4px;
+        }
+
+        .duration-line::after {
+            right: -4px;
+        }
+
+        .price-section {
+            text-align: right;
+        }
+
+        .price-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FF5E1F;
+            line-height: 1.2;
+        }
+
+        .price-label {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .points {
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: flex-end;
+            gap: 4px;
+            margin-top: 4px;
+            font-size: 13px;
+            color: var(--primary-purple);
         }
 
-        .loading-bar {
-            height: 4px;
-            background: #e0e0e0;
-            margin: 20px 0;
-            border-radius: 2px;
-            overflow: hidden;
-            position: relative;
+        .points i {
+            font-size: 6px;
         }
 
-        .loading-progress {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 63%;
-            background: linear-gradient(90deg, #5CA0F2, #4A90E2);
-            animation: loading 2s infinite;
+        .flight-footer {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
         }
 
-        @keyframes loading {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
+        .reschedule-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: #E6F8EF;
+            color: #00AA5B;
+            border-radius: 4px;
+            font-size: 13px;
         }
 
-        .search-status {
-            text-align: center;
-            color: #f44336;
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
-        .tabs {
+        .flight-actions {
             display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
         }
 
-        .tab {
-            padding: 10px 20px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            cursor: pointer;
+        .transit-link {
+            color: var(--primary-purple);
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .tab.active {
-            background: white;
-            color: #4A90E2;
-        }
-
-        .choose-btn {
-            background: #4A90E2;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .choose-btn:hover {
-            background: #357ABD;
-            transform: translateY(-1px);
-        }
-
-        .text-success {
-            color: #4A90E2 !important;
+        .transit-link i {
+            font-size: 12px;
         }
 
         /* Navbar Styles */
-        .ftco-navbar-light {
-            background: transparent !important;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 30px 0;
+        .navbar {
+            background: white;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .ftco-navbar-light .navbar-brand {
-            color: #fff;
-            font-weight: bold;
-            font-size: 24px;
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 32px;
         }
 
-        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
-            color: rgba(255, 255, 255, 0.9);
-            padding: 0.5rem 1rem;
-            font-size: 15px;
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            justify-self: start;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 32px;
+        }
+
+        .search-global {
+            background: var(--light-purple);
+            border-radius: 8px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 300px;
+        }
+
+        .search-global input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            width: 100%;
+            color: var(--text-dark);
+        }
+
+        .search-global input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            justify-self: center;
+        }
+
+        .nav-item {
+            font-size: 14px;
+            color: var(--text-dark);
+            text-decoration: none;
             font-weight: 500;
         }
 
-        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
-            color: #007bff;;
+        .nav-item:hover {
+            color: var(--primary-purple);
         }
 
-        .ftco-navbar-light .navbar-nav > .nav-item.active > .nav-link {
-            color: #007bff;
+        .nav-item.dropdown {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* Scrolled state */
-        .ftco-navbar-light.scrolled {
-            background: #fff !important;
-            padding: 15px 0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        .navbar-right {
+            justify-self: end;
         }
 
-        .ftco-navbar-light.scrolled .navbar-brand {
-            color: #007bff;
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .ftco-navbar-light.scrolled .navbar-nav > .nav-item > .nav-link {
-            color: #007bff;
+        .btn-login {
+            color: var(--primary-purple);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--light-purple);
         }
 
-        .ftco-navbar-light.scrolled .navbar-nav > .nav-item > .nav-link:hover {
-            color: #007bff;
-        }
-
-        .ftco-navbar-light.scrolled .navbar-nav > .nav-item.active > .nav-link {
-            color: #007bff;
-        }
-
-        /* Adjust main container for transparent navbar */
-        .main-container {
-            padding-top: 120px;
+        .btn-register {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--primary-purple);
         }
     </style>
 </head>
-  <body style="background-image: url('{{ asset('images/bg_1.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Pacific Travel Agency</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"> Menu</span>
-            </button>
+<body>
+    @include('customer.partials.navbar')
+   
+    <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-form">
+                <div class="search-input-group">
+                    <div class="location-input">
+                        <i class="fas fa-plane-departure"></i>
+                        <div>
+                            <span class="location-text">Jakarta</span>,
+                            <span class="location-code">SUBC</span>
+                        </div>
+                    </div>
 
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="{{ route('customer.home') }}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="destination.html" class="nav-link">Destination</a></li>
-                    <li class="nav-item"><a href="hotel.html" class="nav-link">Hotel</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <button class="location-swap">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
 
-                    @if(auth('penumpang')->check())
-                        <!-- User is authenticated, show the dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Welcome, {{ auth('penumpang')->user()->nama_penumpang }}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <!-- Edit Profile -->
-                                <a class="dropdown-item" href="">
-                                    <i class="fas fa-user-edit mr-2"></i> Edit Profile
-                                </a>
-                                
-                                <!-- Dashboard -->
-                                <a class="dropdown-item" href="{{ route('customer.dashboard') }}">
-                                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
-                                </a>
-                                
-                                <!-- Divider -->
-                                <div class="dropdown-divider"></div>
-                                
-                                <!-- Logout -->
-                                <a class="dropdown-item text-danger" href="{{ route('logout') }}" 
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+                    <div class="location-input">
+                        <i class="fas fa-plane-arrival"></i>
+                        <div>
+                            <span class="location-text">Bali</span>,
+                            <span class="location-code">JKTC</span>
+                        </div>
                             </div>
-                        </li>
-                    @else
-                        <!-- User is not authenticated, show Sign In -->
-                        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Sign In</a></li>
-                    @endif
-                </ul>
+
+                    <div class="location-input">
+                        <i class="far fa-calendar"></i>
+                        <div class="location-text">
+                            Sat, 25 Jan 25 (Sekali Jalan)
             </div>
         </div>
-    </nav>
-    <!-- END nav -->
 
-    <div class="main-container">
-        <!-- Search Header -->
-        <div class="search-header">
-            <div class="search-box">
-                <div class="route-info">
-                    <strong>{{ $results->first()->rute_awal }} ({{ $results->first()->transportasi->kode }})</strong>
-                    <i class="fas fa-arrow-right mx-2"></i>
-                    <strong>{{ $results->first()->tujuan }} ({{ $results->first()->transportasi->kode }})</strong>
-                    <div class="text-black mt-1">
-                        {{ \Carbon\Carbon::parse($results->first()->tanggal_berangkat)->format('D, d M Y') }} | 
-                        {{ $request->passenger_count ?? 1 }} passenger(s) | {{ $results->first()->class->nama_class }}
+                    <div class="location-input">
+                        <i class="fas fa-user"></i>
+                        <div class="location-text">
+                            1 penumpang, Ekonomi
+                        </div>
                     </div>
                 </div>
-                <div class="search-actions">
-                    <button class="notification-btn">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                    <button class="btn btn-light" id="changeSearchBtn">
-                        <i class="fas fa-search"></i> Change Search
-                    </button>
-                </div>
-            </div>
 
-            <!-- Date Selector -->
-            <div class="date-selector">
-                @for($i = -2; $i <= 2; $i++)
+                <button class="search-btn">
+                    Cari
+                    </button>
+            </div>
+                </div>
+
+    <div class="main-container">
+        <!-- Date Navigation -->
+        <div class="date-scroll-wrapper">
+            <div class="date-scroll">
+                @for($i = -4; $i <= 4; $i++)
                     @php
                         $date = \Carbon\Carbon::parse($results->first()->tanggal_berangkat)->addDays($i);
                         $isActive = $i == 0;
                     @endphp
                     <div class="date-item {{ $isActive ? 'active' : '' }}">
-                        <div>{{ $date->format('D, d M') }}</div>
-                        <div>Rp {{ number_format($results->min('total_harga') + ($i * 100000), 0, ',', '.') }}</div>
+                        <div class="date">{{ $date->format('D, d M Y') }}</div>
+                        <div class="price">IDR {{ number_format($results->min('total_harga') + ($i * 50000), 0, ',', '.') }}</div>
                     </div>
                 @endfor
             </div>
         </div>
 
-        <!-- Coupon Section -->
-        <div class="coupon-section">
-            <span class="coupon-tag">
-                <i class="fas fa-ticket-alt me-2"></i>
-                Coupon: FLDOMCNY
-            </span>
-        </div>
-
-        <!-- Sort Options -->
-        <div class="sort-options">
-            <div class="sort-option active">
-                <i class="fas fa-dollar-sign"></i>
-                <span>Lowest price</span>
-                <div class="price">Rp {{ number_format($results->min('total_harga'), 0, ',', '.') }}</div>
-                <div class="duration">16h 20m</div>
-            </div>
-            <div class="sort-option">
-                <i class="fas fa-clock"></i>
-                <span>Shortest duration</span>
-                <div class="price">Rp {{ number_format($results->min('total_harga'), 0, ',', '.') }}</div>
-                <div class="duration">16h 20m</div>
-            </div>
-            <div class="sort-option">
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-button">
+                <i class="fas fa-filter"></i>
+                Filter
+            </button>
+            <button class="filter-button">
+                <i class="fas fa-sort"></i>
+                Urutkan
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="filter-button">
                 <i class="fas fa-plane"></i>
-                <span>Direct flights first</span>
-                <div class="price">Rp {{ number_format($results->min('total_harga'), 0, ',', '.') }}</div>
-                <div class="duration">16h 20m</div>
+                Transit
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="filter-button">
+                <i class="fas fa-clock"></i>
+                Waktu
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="filter-button">
+                <i class="fas fa-plane-departure"></i>
+                Maskapai
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="filter-button active">
+                Semua
+            </button>
             </div>
-        </div>
 
-        <!-- Loading Bar -->
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
+        <!-- Promo Banner -->
+        <div class="promo-banner">
+            <i class="fas fa-gift"></i>
+            <div class="promo-text">
+                <div class="promo-title">Wah, ada Jaminan Harga Termurah untuk tujuan penerbangan yang kamu cari! (*)</div>
+                <div class="promo-subtitle">*Syarat & Ketentuan berlaku</div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
         </div>
-        <div class="search-status">Searching for flights... 63%</div>
 
         <!-- Flight Results -->
-        @if($results->isEmpty())
-            <div class="alert alert-info text-center">
-                Tidak ada penerbangan yang tersedia untuk kriteria pencarian Anda.
+        @foreach($results as $result)
+        <a href="{{ route('flight.show', $result->id_rute) }}" class="flight-card">
+            <div class="airline-header">
+                <img src="{{ asset('images/airlines/' . $result->transportasi->kode . '.png') }}" alt="Airline Logo" class="airline-logo">
+                <span class="airline-name">{{ $result->transportasi->nama }}</span>
             </div>
-        @else
-            @foreach($results as $result)
-            <div class="flight-card">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
+
                         <div class="flight-info">
-                            <img src="https://www.malaysiaairlines.com/content/dam/mas/global/favicon/favicon-96x96.png" alt="Airline Logo" class="airline-logo">
-                            <div>
-                                <div class="flight-time">
-                                    {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->format('H:i') }}
-                                    <i class="fas fa-arrow-right mx-3"></i>
-                                    {{ \Carbon\Carbon::parse($result->waktu_keberangkatan)->addHours(2)->format('H:i') }}
+                <div class="time-section">
+                    <div class="time">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->format('H:i') }}</div>
+                    <div class="city">{{ $result->rute_awal }}</div>
                                 </div>
+
                                 <div class="flight-duration">
-                                    {{ $result->transportasi->nama_transportasi }} • 1 stop
+                    <div class="duration-text">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->diffInMinutes(\Carbon\Carbon::parse($result->waktu_berangkat)->addHours(1)->addMinutes(20)) }} menit</div>
+                    <div class="duration-line"></div>
+                    <div class="transit-info">1 transit</div>
                                 </div>
+
+                <div class="time-section">
+                    <div class="time">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->addHours(1)->addMinutes(20)->format('H:i') }}</div>
+                    <div class="city">{{ $result->tujuan }}</div>
                             </div>
-                        </div>
-                        <div class="flight-features">
-                            <div class="feature-item">
-                                <i class="fas fa-suitcase"></i>
-                                40kg Baggage
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-utensils"></i>
-                                Meals
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-tv"></i>
-                                Entertainment
-                            </div>
+
+                <div class="price-section">
+                    <div class="price-amount">IDR {{ number_format($result->total_harga, 0, ',', '.') }}</div>
+                    <div class="price-label">/pax</div>
+                    <div class="points">
+                        <i class="fas fa-circle"></i>
+                        {{ number_format($result->total_harga/1000, 0) }} poin
+                    </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="text-end">
-                            <div class="text-success mb-1">
-                                <i class="fas fa-tag"></i>
-                                Save Rp 2.681.275 /pax
-                            </div>
-                            <div class="flight-price">
-                                Rp {{ number_format($result->total_harga, 0, ',', '.') }}
-                                <small class="text-muted d-block">/pax</small>
-                            </div>
-                            <a href="{{ route('flight.show', $result->id_rute) }}" class="choose-btn mt-2 d-inline-block text-decoration-none">Choose</a>
-                        </div>
-                    </div>
+
+            <div class="flight-footer">
+                <div class="reschedule-badge">
+                    <i class="fas fa-sync-alt"></i>
+                    Bisa reschedule & refund
                 </div>
             </div>
+        </a>
             @endforeach
-        @endif
     </div>
+    @include('customer.partials.footer')
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
     <script>
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-                $('.ftco-navbar-light').addClass('scrolled');
-            } else {
-                $('.ftco-navbar-light').removeClass('scrolled');
+        // Date item click handler
+        $('.date-item').click(function() {
+            $('.date-item').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        // Filter button click handler
+        $('.filter-button').click(function() {
+            if (!$(this).hasClass('active')) {
+                $(this).toggleClass('active');
             }
         });
 
-        // Sort options functionality
-        const sortOptions = document.querySelectorAll('.sort-option');
-        sortOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                sortOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-            });
+        // Horizontal scroll for date navigation
+        const dateNav = document.querySelector('.date-scroll');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        dateNav.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - dateNav.offsetLeft;
+            scrollLeft = dateNav.scrollLeft;
         });
 
-        // Date selector functionality
-        const dateItems = document.querySelectorAll('.date-item');
-        dateItems.forEach(item => {
-            item.addEventListener('click', function() {
-                dateItems.forEach(date => date.classList.remove('active'));
-                this.classList.add('active');
-            });
+        dateNav.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        dateNav.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        dateNav.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - dateNav.offsetLeft;
+            const walk = (x - startX) * 2;
+            dateNav.scrollLeft = scrollLeft - walk;
         });
     </script>
 </body>

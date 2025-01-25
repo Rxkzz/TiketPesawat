@@ -3,304 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Details</title>
+    <title>Detail Penerbangan - {{ $flight->transportasi->nama }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-purple: #6E2EBF;
+            --light-purple: #F5F2FF;
+            --text-dark: #35405A;
+            --text-gray: #687182;
+            --border-color: #E7E8EA;
+            --success-green: #00AA5B;
+            --navbar-height: 84px;
+        }
+
         body {
-            background-color: #f5f5f5;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Open Sans', sans-serif;
+            background: #F7F7F7;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            padding-top: var(--navbar-height);
         }
 
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px 20px;
         }
 
-        .detail-header {
-            background: linear-gradient(135deg, #5CA0F2, #4A90E2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(74,144,226,0.15);
-            color: white;
-            opacity: 0.9;
-        }
-
-        .flight-card {
+        .detail-wrapper {
+            margin-top: var(--navbar-height);
+            padding: 24px 0;
             background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(110, 46, 191, 0.15);
+        }
+
+        .flight-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .route-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .route-info h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .passenger-info {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .flight-section {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .departure-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .time-location {
+            flex: 1;
+        }
+
+        .time {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .location {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .airline-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--light-purple);
+            border-radius: 8px;
+            margin-bottom: 16px;
         }
 
         .airline-logo {
-            width: 48px;
-            height: 48px;
-            margin-right: 15px;
+            width: 32px;
+            height: 32px;
         }
 
-        .flight-route {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .route-line {
-            flex: 1;
-            height: 2px;
-            background: #4A90E2;
-            margin: 0 20px;
-            position: relative;
-        }
-
-        .route-line::before,
-        .route-line::after {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #4A90E2;
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .route-line::before {
-            left: -6px;
-        }
-
-        .route-line::after {
-            right: -6px;
-        }
-
-        .time-label {
-            font-size: 24px;
-            font-weight: bold;
-            color: #212121;
-        }
-
-        .airport-label {
-            color: #757575;
+        .airline-info span {
+            display: block;
             font-size: 14px;
         }
 
-        .flight-details {
-            display: flex;
-            gap: 30px;
-            margin: 20px 0;
-            padding: 20px 0;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
+        .flight-number {
+            color: var(--text-gray);
         }
 
-        .detail-item {
-            flex: 1;
+        .included-facilities {
+            margin-top: 24px;
         }
 
-        .detail-item i {
-            color: #4A90E2;
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .detail-label {
-            color: #757575;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .detail-value {
-            font-weight: 500;
-            color: #212121;
-        }
-
-        .price-section {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 20px;
-        }
-
-        .price-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-
-        .total-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4A90E2;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #e0e0e0;
+        .facility-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
         }
 
         .facility-item {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            background: #F5F9FF;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin: 5px;
-            color: #4A90E2;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         .facility-item i {
-            margin-right: 8px;
+            color: var(--text-gray);
+            width: 20px;
         }
 
-        .back-btn {
-            background: transparent;
-            border: 2px solid #4A90E2;
-            color: #4A90E2;
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+        .facility-text {
+            font-size: 14px;
+        }
+
+        .see-more {
+            color: var(--primary-purple);
+            font-size: 14px;
             text-decoration: none;
-            display: inline-block;
-            margin-right: 10px;
+            cursor: pointer;
         }
 
-        .back-btn:hover {
-            background: #F5F9FF;
-            color: #4A90E2;
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
 
-        .book-btn {
-            background: #4A90E2;
-            color: white;
+        .modal-content {
+            position: relative;
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 24px;
+            top: 24px;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text-gray);
+        }
+
+        /* Modern Button Styles */
+        .btn-modern {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
             border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+            cursor: pointer;
         }
 
-        .book-btn:hover {
-            background: #357ABD;
-            transform: translateY(-1px);
+        .btn-primary-modern {
+            background: linear-gradient(135deg, var(--primary-purple), #8B5CF6);
             color: white;
+            box-shadow: 0 4px 12px rgba(110, 46, 191, 0.15);
         }
 
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(110, 46, 191, 0.25);
+        }
+
+        .btn-outline-modern {
+            background: white;
+            color: var(--primary-purple);
+            border: 2px solid var(--primary-purple);
+        }
+
+        .btn-outline-modern:hover {
+            background: var(--light-purple);
+            transform: translateY(-2px);
+        }
+
+        /* Flight Detail Card */
+        .flight-detail-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .price-summary {
+            background: var(--light-purple);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 15px;
+        }
+
+        .price-total {
+            border-top: 2px dashed var(--border-color);
+            margin-top: 12px;
+            padding-top: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-purple);
+        }
+
+        /* Form Controls */
+        .form-control-modern {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-modern:focus {
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 3px rgba(110, 46, 191, 0.1);
+            outline: none;
+        }
+
+        /* Action Buttons Container */
         .action-buttons {
-            margin-top: 30px;
-            text-align: right;
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-modern {
+                width: 100%;
+            }
         }
     </style>
 </head>
-<body style="background-image: url('{{ asset('images/bg_1.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
+<body>
+    @include('customer.partials.navbar')
+
     <div class="main-container">
-        <!-- Detail Header -->
-        <div class="detail-header">
-            <h4>Flight Details</h4>
-            <div>{{ $flight->rute_awal }} to {{ $flight->tujuan }}</div>
-            <div>{{ \Carbon\Carbon::parse($flight->tanggal_berangkat)->format('D, d M Y') }}</div>
-        </div>
-
-        <!-- Flight Card -->
-        <div class="flight-card">
-            <div class="d-flex align-items-center">
-                <img src="https://www.malaysiaairlines.com/content/dam/mas/global/favicon/favicon-96x96.png" alt="Airline Logo" class="airline-logo">
-                <div>
-                    <h5 class="mb-0">{{ $flight->transportasi->nama_transportasi }}</h5>
-                    <div class="text-muted">{{ $flight->transportasi->kode }} • {{ $flight->class->nama_class }}</div>
+        
+        <div class="detail-card">
+            <div class="flight-header">
+                <div class="route-info">
+                    <h1>{{ $flight->rute_awal }} → {{ $flight->tujuan }}</h1>
+                </div>
+                <div class="passenger-info">
+                    1 Dewasa
                 </div>
             </div>
 
-            <!-- Flight Route -->
-            <div class="flight-route">
-                <div class="text-center">
-                    <div class="time-label">{{ \Carbon\Carbon::parse($flight->waktu_keberangkatan)->format('H:i') }}</div>
-                    <div class="airport-label">{{ $flight->rute_awal }}</div>
+            <div class="flight-section">
+                <div class="departure-info">
+                    <div class="time-location">
+                        <div class="time">{{ \Carbon\Carbon::parse($flight->waktu_berangkat)->format('H:i') }}</div>
+                        <div class="location">Soekarno Hatta - Terminal 3 Domestik</div>
+                        <div class="date">{{ \Carbon\Carbon::parse($flight->tanggal_berangkat)->format('d M') }}</div>
+                    </div>
                 </div>
-                <div class="route-line"></div>
-                <div class="text-center">
-                    <div class="time-label">{{ \Carbon\Carbon::parse($flight->waktu_keberangkatan)->addHours(2)->format('H:i') }}</div>
-                    <div class="airport-label">{{ $flight->tujuan }}</div>
+
+                <div class="airline-detail">
+                    <img src="{{ asset('images/airlines/' . $flight->transportasi->kode . '.png') }}" alt="Airline Logo" class="airline-logo">
+                    <div class="airline-info">
+                        <span>{{ $flight->transportasi->nama }}</span>
+                        <span class="flight-number">{{ $flight->transportasi->kode }} • {{ $flight->class->nama_class }} • {{ \Carbon\Carbon::parse($flight->waktu_berangkat)->diffInMinutes(\Carbon\Carbon::parse($flight->waktu_tiba)) }}m</span>
+                    </div>
+                </div>
+
+                <div class="included-facilities">
+                    <div class="facility-title">Tiket Sudah Termasuk</div>
+                    <div class="facility-item">
+                        <i class="fas fa-suitcase"></i>
+                        <div class="facility-text">
+                            Kabin: 7 kg<br>
+                            Bagasi: 20 kg
+                        </div>
+                    </div>
+                    <div class="facility-item">
+                        <i class="fas fa-utensils"></i>
+                        <div class="facility-text">Tidak termasuk makanan</div>
+                    </div>
+                    <a class="see-more" onclick="showFacilities()">Lihat fasilitas lain</a>
                 </div>
             </div>
 
-            <!-- Flight Details -->
-            <div class="flight-details">
-                <div class="detail-item">
-                    <i class="fas fa-plane-departure"></i>
-                    <div class="detail-label">Departure</div>
-                    <div class="detail-value">{{ \Carbon\Carbon::parse($flight->tanggal_berangkat)->format('D, d M Y') }}</div>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-clock"></i>
-                    <div class="detail-label">Duration</div>
-                    <div class="detail-value">2h 0m</div>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-suitcase"></i>
-                    <div class="detail-label">Baggage</div>
-                    <div class="detail-value">{{ $flight->class->bagasi ?? '20' }}kg</div>
+            <div style="margin-top: 32px;">
+                <div class="action-buttons">
+                    <a href="{{ route('booking.create', ['flight' => $flight->id_rute]) }}" class="btn-modern btn-primary-modern">
+                        <i class="fas fa-ticket-alt"></i>
+                        Pesan Sekarang
+                    </a>
                 </div>
             </div>
-
-            <!-- Facilities -->
-            <div>
-                <h6>Facilities</h6>
-                <div class="facility-item">
-                    <i class="fas fa-suitcase"></i>
-                    Cabin Baggage 7kg
-                </div>
-                <div class="facility-item">
-                    <i class="fas fa-utensils"></i>
-                    Meals
-                </div>
-                @if($flight->class->hiburan)
-                <div class="facility-item">
-                    <i class="fas fa-tv"></i>
-                    Entertainment
-                </div>
-                @endif
-                <div class="facility-item">
-                    <i class="fas fa-wifi"></i>
-                    Wi-Fi
-                </div>
-            </div>
-        </div>
-
-        <!-- Price Section -->
-        <div class="price-section">
-            <h5>Price Details</h5>
-            <div class="price-item">
-                <span>Base Fare</span>
-                <span>Rp {{ number_format($flight->harga, 0, ',', '.') }}</span>
-            </div>
-            <div class="price-item">
-                <span>Class Addition ({{ $flight->class->nama_class }})</span>
-                <span>Rp {{ number_format($rute->class->harga_tambahan ?? 0, 0, ',', '.') }}</span>
-            </div>
-            <div class="price-item">
-                <span>Tax</span>
-                <span>Rp {{ number_format($flight->harga * 0.1, 0, ',', '.') }}</span>
-            </div>
-            <div class="price-item total-price">
-                <span>Total Price</span>
-                <span>Rp {{ number_format($flight->total_harga, 0, ',', '.') }}</span>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            
-            <a href="#" class="book-btn">
-                Continue to Book <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Facilities Modal -->
+    <div id="facilitiesModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeFacilities()">&times;</span>
+            <h3>Fasilitas Penerbangan</h3>
+            <div class="facility-list">
+                <div class="facility-item">
+                    <i class="fas fa-suitcase"></i>
+                    <div class="facility-text">
+                        <strong>Bagasi</strong><br>
+                        Kabin: 7 kg<br>
+                        Bagasi: 20 kg
+                    </div>
+                </div>
+                <div class="facility-item">
+                    <i class="fas fa-utensils"></i>
+                    <div class="facility-text">
+                        <strong>Makanan</strong><br>
+                        Tidak termasuk makanan
+                    </div>
+                </div>
+                <div class="facility-item">
+                    <i class="fas fa-wifi"></i>
+                    <div class="facility-text">
+                        <strong>WiFi</strong><br>
+                        Tersedia WiFi di pesawat
+                    </div>
+                </div>
+                <!-- Tambahkan fasilitas lain sesuai kebutuhan -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showFacilities() {
+            document.getElementById('facilitiesModal').style.display = 'block';
+        }
+
+        function closeFacilities() {
+            document.getElementById('facilitiesModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('facilitiesModal')) {
+                closeFacilities();
+            }
+        }
+    </script>
 </body>
-</html> 
+</html>

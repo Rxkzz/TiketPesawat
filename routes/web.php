@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -30,9 +31,14 @@ Route::middleware('auth:penumpang')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('customer.home');
 
     // Rute untuk halaman pencarian penerbangan
-    Route::post('/search/flights', [HomeController::class, 'search'])->name('search.flights');
-
+    Route::post('/search/flights', [FlightController::class, 'search'])->name('search.flights');
     Route::get('/flight/{id}', [FlightController::class, 'show'])->name('flight.show');
+
+    // Booking routes
+    Route::get('/booking/create/{flight}', [BookingController::class, 'createForm'])->name('booking.create');
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    Route::post('/booking/{id}/payment', [BookingController::class, 'processPayment'])->name('booking.payment');
 });
 
 // Admin routes akan ditangani oleh Filament secara otomatis

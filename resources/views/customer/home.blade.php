@@ -1,826 +1,935 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiketPesawat - Find Your Best Flight</title>
+    
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/animate.css">
-	
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
+    <style>
+        :root {
+            --primary-color: #6851FF;
+            --text-color: #1E1E1E;
+            --border-color: #E5E7EB;
+            --gradient-start: #2F80ED;
+            --gradient-end: #56CCF2;
+            --primary-purple: #6851FF;
+            --light-purple: #F5F3FF;
+        }
 
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="css/jquery.timepicker.css">
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            min-height: 100vh;
+            padding-top: 64px;
+        }
 
-	
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        /* Reset navbar styles yang bertabrakan */
+        .navbar {
+            background: white !important;
+            padding: 12px 0 !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            height: auto !important;
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .nav-link {
+            color: var(--text-color) !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            padding: 8px 16px !important;
+            transition: color 0.3s ease !important;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-purple) !important;
+        }
+
+        /* Override button styles */
+        .btn-light, .btn-primary {
+            border-radius: 20px !important;
+            padding: 8px 24px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-light {
+            background: var(--light-purple) !important;
+            color: var(--primary-purple) !important;
+            border: none !important;
+        }
+
+        .btn-primary {
+            background: var(--primary-purple) !important;
+            border: none !important;
+            color: white !important;
+        }
+
+        .btn-primary:hover {
+            background: #5842FF !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Search bar style */
+        .nav-search {
+            position: relative;
+            width: 300px;
+            margin: 0 24px;
+        }
+
+        .nav-search .search-input {
+            width: 100%;
+            padding: 8px 16px 8px 40px;
+            border: none;
+            border-radius: 8px;
+            background: #F3F4F6;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .nav-search .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6B7280;
+        }
+
+        /* Dropdown menu style */
+        .dropdown-menu {
+            border: none !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            border-radius: 12px !important;
+            padding: 8px !important;
+            min-width: 200px !important;
+        }
+
+        .dropdown-item {
+            padding: 8px 16px !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-purple) !important;
+            color: white !important;
+        }
+
+        /* Hapus style navbar yang bertabrakan */
+        .nav-menu,
+        .nav-item,
+        .navbar-right,
+        .auth-buttons,
+        .btn-login,
+        .btn-register {
+            all: unset;
+        }
+
+        .container{
+            margin-top:80px;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px auto;
+            max-width: 1000px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+        }
+
+        .trip-types {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            background: #F8F9FA;
+            padding: 8px;
+            border-radius: 12px;
+            width: fit-content;
+        }
+
+        .trip-type {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .trip-type.active {
+            background: #E3FCE9;
+            color: var(--primary-green);
+        }
+
+        .search-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 16px;
+            position: relative;
+            align-items: center;
+        }
+
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-input:hover {
+            border-color: var(--primary-green);
+            background: #F8F9FA;
+        }
+
+        .search-input i {
+            font-size: 16px;
+            color: var(--text-gray);
+        }
+
+        .search-input-content {
+            flex: 1;
+        }
+
+        .search-label {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+
+        .search-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .search-code {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .search-close {
+            color: var(--text-gray);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .search-close:hover {
+            background: #F3F4F6;
+            color: var(--text-dark);
+        }
+
+        .swap-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .swap-icon:hover {
+            background: #F8F9FA;
+            transform: rotate(180deg);
+        }
+
+        .search-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .search-field {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .search-field:hover {
+            border-color: var(--primary-green);
+            background: #F8F9FA;
+        }
+
+        .search-btn {
+			background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            width: 100%;
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(47, 128, 237, 0.4);
+        }
+
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 600px;
+            gap: 40px;
+            position: relative;
+            min-height: 600px;
+            padding: 40px 0;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-right: 40px;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .product-nav {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 8px;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .product-item.active {
+            background: white;
+            color: var(--gradient-start);
+        }
+
+        .product-item i {
+            font-size: 20px;
+        }
+
+        /* Deals Section */
+        .deals-section {
+            padding: 60px 0;
+            background: white;
+            position: relative;
+            z-index: 2;
+            margin-top: 40px;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .explore-link {
+            color: var(--gradient-start);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .deal-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(47, 128, 237, 0.1);
+        }
+
+        .deal-card:hover {
+            border-color: var(--gradient-start);
+            transform: translateY(-4px);
+        }
+
+        .deal-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .deal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .deal-content {
+            padding: 16px;
+        }
+
+        .deal-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .deal-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gradient-start);
+        }
+
+        .airplane-container {
+            position: relative;
+            width: 600px;
+            height: 500px;
+            perspective: 2000px;
+            transform-style: preserve-3d;
+            z-index: 1;
+        }
+
+        .airplane-3d {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            z-index: 10;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .airplane-3d img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.2));
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .cloud {
+            position: absolute;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0.9;
+            filter: brightness(1.1);
+        }
+
+        .cloud-1 {
+            width: 180px;
+            top: 15%;
+            right: 10%;
+        }
+
+        .cloud-2 {
+            width: 140px;
+            top: 35%;
+            right: 45%;
+        }
+
+        .cloud-3 {
+            width: 200px;
+            top: 60%;
+            right: 25%;
+        }
+
+        .cloud-4 {
+            width: 160px;
+            top: 80%;
+            right: 15%;
+        }
+
+        .cloud-5 {
+            width: 120px;
+            top: 25%;
+            right: 65%;
+        }
+
+        @keyframes initialFlight {
+            0% {
+                transform: translate(-50%, -50%) rotate3d(1, 1, 0, 45deg) translateZ(-500px);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate3d(0, 0, 0, 0deg) translateZ(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes flyToRight {
+            0% {
+                transform: translate(-50%, -50%) rotate3d(0, 1, 0, 0deg) translateX(0);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate3d(0, 1, 0, 10deg) translateX(200px);
+            }
+        }
+
+        @keyframes cloudMoveLeft {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-100px);
+                opacity: 0.6;
+            }
+        }
+
+        /* Tambahkan overlay gradient */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(47, 128, 237, 0.1),
+                rgba(86, 204, 242, 0.1)
+            );
+            z-index: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+            margin-top: 300px;
+            margin: 0;
+            padding: 0;
+            justify-self: center;
+        }
+
+        .nav-item {
+            font-size: 14px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-purple);
+        }
+
+        .nav-item.dropdown {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .navbar-right {
+            justify-self: end;
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-login {
+            color: var(--primary-purple);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--light-purple);
+        }
+
+        .btn-register {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--primary-purple);
+        }
+
+        /* Tambahkan style untuk form elements */
+        .search-select {
+            width: 100%;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .search-select:focus {
+            outline: none;
+        }
+
+        .field-input {
+            width: 100%;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .field-input:focus {
+            outline: none;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .passenger-select,
+        .class-select {
+            width: 100%;
+            border: none;
+            background: none;
+            font-size: 14px;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .passenger-select:focus,
+        .class-select:focus {
+            outline: none;
+        }
+
+        /* Update search button */
+        .search-btn {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(47, 128, 237, 0.4);
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-		<div class="container">
-		<a class="navbar-brand" href="index.html">Pacific Travel Agency</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="oi oi-menu"> Menu</span>
-			</button>
+    @include('customer.partials.navbar')
 
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a href="{{ route('customer.home') }}" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-					<li class="nav-item"><a href="destination.html" class="nav-link">Destination</a></li>
-					<li class="nav-item"><a href="hotel.html" class="nav-link">Hotel</a></li>
-					<li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-
-				@if(auth('penumpang')->check())
-					<!-- User is authenticated, show the dropdown -->
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Welcome, {{ auth('penumpang')->user()->nama_penumpang }}
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<!-- Edit Profile -->
-							<a class="dropdown-item" href="">
-								<i class="fas fa-user-edit mr-2"></i> Edit Profile
-							</a>
-							
-							<!-- Dashboard -->
-							<a class="dropdown-item" href="{{ route('customer.dashboard') }}">
-								<i class="fas fa-tachometer-alt mr-2"></i> Dashboard
-							</a>
-							
-							<!-- Divider -->
-							<div class="dropdown-divider"></div>
-							
-							<!-- Logout -->
-							<a class="dropdown-item text-danger" href="{{ route('logout') }}" 
-							   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-								<i class="fas fa-sign-out-alt mr-2"></i> Logout
-							</a>
-							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-						</div>
-					</li>
-				@else
-					<!-- User is not authenticated, show Sign In -->
-					<li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Sign In</a></li>
-				@endif
-			</ul>
-		</div>
-	</div>
-                            </nav>
-	<!-- END nav -->
-	
-	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_5.jpg');">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row no-gutters slider-text js-fullheight align-items-center" data-scrollax-parent="true">
-				<div class="col-md-7 ftco-animate">
-					<span class="subheading">Welcome to Pacific</span>
-					<h1 class="mb-4">Discover Your Favorite Place with Us</h1>
-					<p class="caps">Travel to the any corner of the world, without going around in circles</p>
-				</div>
-				<a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
-					<span class="fa fa-play"></span>
-				</a>
-			</div>
-		</div>
-	</div>
-
-	<section class="ftco-section ftco-no-pb ftco-no-pt">
+    <!-- Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="ftco-search d-flex justify-content-center">
-                    <div class="row">
-                        <div class="col-md-12 nav-link-wrap">
-                            <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Cari Penerbangan</a>
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Find cheap flights from 1000s of airlines and travel agents</h1>
+                
+                <div class="product-nav">
+                    <a href="#" class="product-item active">
+                        <i class="fas fa-plane"></i>
+                        <span>Flights</span>
+                    </a>
+                    <a href="#" class="product-item">
+                        <i class="fas fa-bed"></i>
+                        <span>Stays</span>
+                    </a>
+                    <a href="#" class="product-item">
+                        <i class="fas fa-car"></i>
+                        <span>car rental</span>
+                    </a>
+                </div>
 
-                                <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a>
-                            </div>
-                        </div>
-                        <div class="col-md-12 tab-wrap">
-                            <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                                    <form action="{{ route('search.flights') }}" method="POST" class="search-property-1">
-                                        @csrf
-                                        <div class="row no-gutters">
-                                            <div class="col-md d-flex">
-                                                <div class="form-group p-4 border-0">
-                                                    <label for="from">Dari</label>
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="fa fa-plane-departure"></span></div>
-                                                            <select name="from" id="from" class="form-control" required>
-                                                                <option value="">Pilih Kota Asal</option>
-                                                                @foreach($routes as $route)
-                                                                    <option value="{{ $route->id_transportasi }}">
-                                                                        {{ $route->rute_awal }} ({{ $route->transportasi->kode }})
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex">
-                                                <div class="form-group p-4 border-0">
-                                                    <label for="to">Ke</label>
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="fa fa-plane-arrival"></span></div>
-                                                            <select name="to" id="to" class="form-control" required>
-                                                                <option value="">Pilih Kota Tujuan</option>
-                                                                @foreach($routes as $route)
-                                                                    <option value="{{ $route->id_transportasi }}">
-                                                                        {{ $route->tujuan }} ({{ $route->transportasi->kode }})
-                                                                    </option>
-                                                                @endforeach
-                                                             </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex">
-                                                <div class="form-group p-4">
-                                                    <label for="tanggal_berangkat">Tanggal Berangkat</label>
-                                                    <div class="form-field">
-                                                        <div class="icon"><span class="fa fa-calendar"></span></div>
-                                                        <input type="text" id="tanggal_berangkat" name="tanggal_berangkat" class="form-control checkin_date" placeholder="Pilih Tanggal" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex">
-                                                <div class="form-group p-4">
-                                                    <label for="passenger_count">Jumlah Penumpang</label>
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="fa fa-user"></span></div>
-                                                            <select name="passenger_count" id="passenger_count" class="form-control" required>
-                                                                <option value="">Pilih Jumlah</option>
-                                                                @for($i = 1; $i <= 5; $i++)
-                                                                    <option value="{{ $i }}">{{ $i }} Penumpang</option>
-                                                                @endfor
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-											<div class="col-md d-flex">
-                                                <div class="form-group p-4 border-0">
-                                                    <label for="id_class">Kelas</label>
-                                                    <div class="form-field">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="fa fa-ticket-alt"></span></div>
-                                                            <select name="id_class" id="id_class" class="form-control" required>
-                                                                <option value="">Pilih Kelas</option>
-                                                                @foreach($classes as $class)
-                                                                    <option value="{{ $class->nama_class }}">
-                                                                        {{ $class->nama_class }} 
-                                                                        @if($class->harga_tambahan)
-                                                                            (+ Rp {{ number_format($class->harga_tambahan, 0, ',', '.') }})
-                                                                        @endif
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md d-flex">
-                                                <div class="form-group d-flex w-100 border-0">
-                                                    <div class="form-field w-100 align-items-center d-flex">
-                                                        <button type="submit" class="align-self-stretch form-control btn btn-primary">
-                                                            Cari Penerbangan
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                <div class="search-container">
+                    <form action="{{ route('search.flights') }}" method="POST">
+                        @csrf
+                        <div class="search-row">
+                            <div class="search-input">
+                                <i class="fas fa-plane-departure"></i>
+                                <div class="search-input-content">
+                                    <div class="search-label">From</div>
+                                    <select name="from" id="from" class="search-select" required>
+                                        <option value="">Pilih Kota Asal</option>
+                                        @foreach($routes as $route)
+                                            <option value="{{ $route->id_transportasi }}">
+                                                {{ $route->rute_awal }} ({{ $route->transportasi->kode }})
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
 
-                                <!-- Tab Hotel tetap sama seperti sebelumnya -->
-                                <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                                    <!-- ... kode hotel search ... -->
+                            <div class="swap-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+
+                            <div class="search-input">
+                                <i class="fas fa-plane-arrival"></i>
+                                <div class="search-input-content">
+                                    <div class="search-label">To</div>
+                                    <select name="to" id="to" class="search-select" required>
+                                        <option value="">Pilih Kota Tujuan</option>
+                                        @foreach($routes as $route)
+                                            <option value="{{ $route->id_transportasi }}">
+                                                {{ $route->tujuan }} ({{ $route->transportasi->kode }})
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="search-options">
+                            <div class="search-field">
+                                <div class="field-label">Departure</div>
+                                <input type="date" name="tanggal_berangkat" class="field-input" required>
+                            </div>
+
+                            <div class="search-field">
+                                <div class="field-label">Passengers & Class</div>
+                                <div class="field-group">
+                                    <select name="passenger_count" class="passenger-select" required>
+                                        <option value="">Jumlah Penumpang</option>
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <option value="{{ $i }}">{{ $i }} Penumpang</option>
+                                        @endfor
+                                    </select>
+                                    <select name="id_class" class="class-select" required>
+                                        <option value="">Pilih Kelas</option>
+                                        @foreach($classes as $class)
+                                            <option value="{{ $class->nama_class }}">
+                                                {{ $class->nama_class }}
+                                                @if($class->harga_tambahan)
+                                                    (+ Rp {{ number_format($class->harga_tambahan, 0, ',', '.') }})
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                            Cari Penerbangan
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="airplane-container">
+                <!-- Clouds -->
+                <img src="{{ url('images/cloud.png') }}" class="cloud cloud-1" alt="Cloud">
+                <img src="{{ url('images/cloud.png') }}" class="cloud cloud-2" alt="Cloud">
+                <img src="{{ url('images/cloud.png') }}" class="cloud cloud-3" alt="Cloud">
+                <img src="{{ url('images/cloud.png') }}" class="cloud cloud-4" alt="Cloud">
+                <img src="{{ url('images/cloud.png') }}" class="cloud cloud-5" alt="Cloud">
+                
+                <!-- 3D Airplane -->
+                <div class="airplane-3d">
+                    <img src="{{ url('images/airplane1.png') }}" alt="3D Airplane">
                 </div>
             </div>
         </div>
     </div>
-</section>
 
-		<section class="ftco-section services-section">
-			<div class="container">
-				<div class="row d-flex">
-					<div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
-						<div class="w-100">
-							<span class="subheading">Welcome to Pacific</span>
-							<h2 class="mb-4">It's time to start your adventure</h2>
-							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
-							A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							<p><a href="#" class="btn btn-primary py-3 px-4">Search Destination</a></p>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="row">
-							<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-								<div class="services services-1 color-1 d-block img" style="background-image: url(images/services-1.jpg);">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-paragliding"></span></div>
-									<div class="media-body">
-										<h3 class="heading mb-3">Activities</h3>
-										<p>A small river named Duden flows by their place and supplies it with the necessary</p>
-									</div>
-								</div>      
-							</div>
-							<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-								<div class="services services-1 color-2 d-block img" style="background-image: url(images/services-2.jpg);">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
-									<div class="media-body">
-										<h3 class="heading mb-3">Travel Arrangements</h3>
-										<p>A small river named Duden flows by their place and supplies it with the necessary</p>
-									</div>
-								</div>    
-							</div>
-							<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-								<div class="services services-1 color-3 d-block img" style="background-image: url(images/services-3.jpg);">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-tour-guide"></span></div>
-									<div class="media-body">
-										<h3 class="heading mb-3">Private Guide</h3>
-										<p>A small river named Duden flows by their place and supplies it with the necessary</p>
-									</div>
-								</div>      
-							</div>
-							<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate">
-								<div class="services services-1 color-4 d-block img" style="background-image: url(images/services-4.jpg);">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-map"></span></div>
-									<div class="media-body">
-										<h3 class="heading mb-3">Location Manager</h3>
-										<p>A small river named Duden flows by their place and supplies it with the necessary</p>
-									</div>
-								</div>      
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <!-- Deals Section -->
+    <section class="deals-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Travel deals under Rp 2,433,880</h2>
+                <a href="#" class="explore-link">
+                    Explore more
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
 
-		<section class="ftco-section img ftco-select-destination" style="background-image: url(images/bg_3.jpg);">
-			<div class="container">
-				<div class="row justify-content-center pb-4">
-					<div class="col-md-12 heading-section text-center ftco-animate">
-						<span class="subheading">Pacific Provide Places</span>
-						<h2 class="mb-4">Select Your Destination</h2>
-					</div>
-				</div>
-			</div>
-			<div class="container container-2">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="carousel-destination owl-carousel ftco-animate">
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url(images/place-1.jpg);">
-										<div class="text">
-											<h3>Philippines</h3>
-											<span>8 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url(images/place-2.jpg);">
-										<div class="text">
-											<h3>Canada</h3>
-											<span>2 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url(images/place-3.jpg);">
-										<div class="text">
-											<h3>Thailand</h3>
-											<span>5 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url(images/place-4.jpg);">
-										<div class="text">
-											<h3>Autralia</h3>
-											<span>5 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url(images/place-5.jpg);">
-										<div class="text">
-											<h3>Greece</h3>
-											<span>7 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="{{ asset('images/deals/deal1.jpg') }}" alt="Deal">
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Bali Adventure Package</h3>
+                        <div class="deal-price">Rp 1,999,000</div>
+                    </div>
+                </div>
+                <!-- Add more deal cards -->
+            </div>
+        </div>
+    </section>
 
-		<section class="ftco-section">
-			<div class="container">
-				<div class="row justify-content-center pb-4">
-					<div class="col-md-12 heading-section text-center ftco-animate">
-						<span class="subheading">Destination</span>
-						<h2 class="mb-4">Tour Destination</h2>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/destination-1.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">8 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-mountains"></span>Near Mountain</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/destination-2.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">10 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/destination-3.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">7 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+    @include('customer.partials.footer')
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
+    <script>
+        // Trip type selection
+        const tripTypes = document.querySelectorAll('.trip-type');
+        tripTypes.forEach(type => {
+            type.addEventListener('click', () => {
+                tripTypes.forEach(t => t.classList.remove('active'));
+                type.classList.add('active');
+            });
+        });
 
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/destination-4.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">8 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/destination-5.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">10 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/destination-6.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">7 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		<section class="ftco-section ftco-about img"style="background-image: url(images/bg_4.jpg);">
-			<div class="overlay"></div>
-			<div class="container py-md-5">
-				<div class="row py-md-5">
-					<div class="col-md d-flex align-items-center justify-content-center">
-						<a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
-							<span class="fa fa-play"></span>
-						</a>
-					</div>
-				</div>
-			</div>
-		</section>
+        document.addEventListener('DOMContentLoaded', () => {
+            const airplane = document.querySelector('.airplane-3d');
+            const clouds = document.querySelectorAll('.cloud');
+            let isFlying = false;
+            let lastScrollY = window.scrollY;
+            let scrollTimeout;
 
-		<section class="ftco-section ftco-about ftco-no-pt img">
-			<div class="container">
-				<div class="row d-flex">
-					<div class="col-md-12 about-intro">
-						<div class="row">
-							<div class="col-md-6 d-flex align-items-stretch">
-								<div class="img d-flex w-100 align-items-center justify-content-center" style="background-image:url(images/about-1.jpg);">
-								</div>
-							</div>
-							<div class="col-md-6 pl-md-5 py-5">
-								<div class="row justify-content-start pb-3">
-									<div class="col-md-12 heading-section ftco-animate">
-										<span class="subheading">About Us</span>
-										<h2 class="mb-4">Make Your Tour Memorable and Safe With Us</h2>
-										<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-										<p><a href="#" class="btn btn-primary">Book Your Destination</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+            // Initial animation
+            airplane.style.animation = 'initialFlight 2s cubic-bezier(0.23, 1, 0.32, 1)';
+            
+            // Scroll animation
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.scrollY;
+                
+                // Mulai animasi saat scroll minimal 10px
+                if (currentScroll > 10 && !isFlying) {
+                    isFlying = true;
+                    
+                    // Animasi pesawat ke kanan
+                    airplane.style.transform = `
+                        translate(-50%, -50%)
+                        rotate3d(0, 1, 0, 10deg)
+                        translate3d(200px, 0, 100px)
+                    `;
 
-		<section class="ftco-section testimony-section bg-bottom" style="background-image: url(images/bg_1.jpg);">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="row justify-content-center pb-4">
-					<div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-						<span class="subheading">Testimonial</span>
-						<h2 class="mb-4">Tourist Feedback</h2>
-					</div>
-				</div>
-				<div class="row ftco-animate">
-					<div class="col-md-12">
-						<div class="carousel-testimony owl-carousel">
-							<div class="item">
-								<div class="testimony-wrap py-4">
-									<div class="text">
-										<p class="star">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</p>
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-										<div class="d-flex align-items-center">
-											<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-											<div class="pl-3">
-												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony-wrap py-4">
-									<div class="text">
-										<p class="star">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</p>
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-										<div class="d-flex align-items-center">
-											<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-											<div class="pl-3">
-												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony-wrap py-4">
-									<div class="text">
-										<p class="star">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</p>
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-										<div class="d-flex align-items-center">
-											<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
-											<div class="pl-3">
-												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony-wrap py-4">
-									<div class="text">
-										<p class="star">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</p>
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-										<div class="d-flex align-items-center">
-											<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-											<div class="pl-3">
-												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony-wrap py-4">
-									<div class="text">
-										<p class="star">
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</p>
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-										<div class="d-flex align-items-center">
-											<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-											<div class="pl-3">
-												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                    // Animasi awan ke kiri
+                    clouds.forEach((cloud, index) => {
+                        const delay = index * 100;
+                        setTimeout(() => {
+                            cloud.style.transform = 'translateX(-100px)';
+                            cloud.style.opacity = '0.6';
+                        }, delay);
+                    });
+                }
+                
+                // Reset posisi saat scroll kembali ke atas
+                if (currentScroll <= 10) {
+                    isFlying = false;
+                    
+                    airplane.style.transform = 'translate(-50%, -50%) rotate3d(0, 0, 0, 0deg)';
+                    
+                    clouds.forEach(cloud => {
+                        cloud.style.transform = 'translateX(0)';
+                        cloud.style.opacity = '1';
+                    });
+                }
+            });
 
+            // Mouse move effect (tetap sama)
+            document.addEventListener('mousemove', (e) => {
+                if (!isFlying) {
+                    const { clientX, clientY } = e;
+                    const { innerWidth, innerHeight } = window;
+                    
+                    const rotateX = ((clientY / innerHeight) - 0.5) * 30;
+                    const rotateY = ((clientX / innerWidth) - 0.5) * 30;
+                    const translateZ = Math.abs(rotateX + rotateY) * 2;
 
-		<section class="ftco-section">
-			<div class="container">
-				<div class="row justify-content-center pb-4">
-					<div class="col-md-12 heading-section text-center ftco-animate">
-						<span class="subheading">Our Blog</span>
-						<h2 class="mb-4">Recent Post</h2>
-					</div>
-				</div>
-				<div class="row d-flex">
-					<div class="col-md-4 d-flex ftco-animate">
-						<div class="blog-entry justify-content-end">
-							<a href="blog-single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
-							</a>
-							<div class="text">
-								<div class="d-flex align-items-center mb-4 topp">
-									<div class="one">
-										<span class="day">11</span>
-									</div>
-									<div class="two">
-										<span class="yr">2020</span>
-										<span class="mos">September</span>
-									</div>
-								</div>
-								<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-								<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-								<p><a href="#" class="btn btn-primary">Read more</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 d-flex ftco-animate">
-						<div class="blog-entry justify-content-end">
-							<a href="blog-single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
-							</a>
-							<div class="text">
-								<div class="d-flex align-items-center mb-4 topp">
-									<div class="one">
-										<span class="day">11</span>
-									</div>
-									<div class="two">
-										<span class="yr">2020</span>
-										<span class="mos">September</span>
-									</div>
-								</div>
-								<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-								<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-								<p><a href="#" class="btn btn-primary">Read more</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 d-flex ftco-animate">
-						<div class="blog-entry">
-							<a href="blog-single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
-							</a>
-							<div class="text">
-								<div class="d-flex align-items-center mb-4 topp">
-									<div class="one">
-										<span class="day">11</span>
-									</div>
-									<div class="two">
-										<span class="yr">2020</span>
-										<span class="mos">September</span>
-									</div>
-								</div>
-								<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-								<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-								<p><a href="#" class="btn btn-primary">Read more</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                    airplane.style.transform = `
+                        translate(-50%, -50%)
+                        rotateX(${-rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        translateZ(${translateZ}px)
+                    `;
+                }
+            });
 
-		<section class="ftco-intro ftco-section ftco-no-pt">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-md-12 text-center">
-						<div class="img"  style="background-image: url(images/bg_2.jpg);">
-							<div class="overlay"></div>
-							<h2>We Are Pacific A Travel Agency</h2>
-							<p>We can manage your dream building A small river named Duden flows by their place</p>
-							<p class="mb-0"><a href="#" class="btn btn-primary px-4 py-3">Ask For A Quote</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+            // Reset transform on mouse leave
+            document.addEventListener('mouseleave', () => {
+                if (!isFlying) {
+                    airplane.style.transform = 'translate(-50%, -50%) rotate3d(0, 0, 0, 0deg)';
+                }
+            });
+        });
 
-		<footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url(images/bg_3.jpg);">
-			<div class="container">
-				<div class="row mb-5">
-					<div class="col-md pt-5">
-						<div class="ftco-footer-widget pt-md-5 mb-4">
-							<h2 class="ftco-heading-2">About</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-							<ul class="ftco-footer-social list-unstyled float-md-left float-lft">
-								<li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-								<li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-								<li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md pt-5 border-left">
-						<div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
-							<h2 class="ftco-heading-2">Infromation</h2>
-							<ul class="list-unstyled">
-								<li><a href="#" class="py-2 d-block">Online Enquiry</a></li>
-								<li><a href="#" class="py-2 d-block">General Enquiries</a></li>
-								<li><a href="#" class="py-2 d-block">Booking Conditions</a></li>
-								<li><a href="#" class="py-2 d-block">Privacy and Policy</a></li>
-								<li><a href="#" class="py-2 d-block">Refund Policy</a></li>
-								<li><a href="#" class="py-2 d-block">Call Us</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md pt-5 border-left">
-						<div class="ftco-footer-widget pt-md-5 mb-4">
-							<h2 class="ftco-heading-2">Experience</h2>
-							<ul class="list-unstyled">
-								<li><a href="#" class="py-2 d-block">Adventure</a></li>
-								<li><a href="#" class="py-2 d-block">Hotel and Restaurant</a></li>
-								<li><a href="#" class="py-2 d-block">Beach</a></li>
-								<li><a href="#" class="py-2 d-block">Nature</a></li>
-								<li><a href="#" class="py-2 d-block">Camping</a></li>
-								<li><a href="#" class="py-2 d-block">Party</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md pt-5 border-left">
-						<div class="ftco-footer-widget pt-md-5 mb-4">
-							<h2 class="ftco-heading-2">Have a Questions?</h2>
-							<div class="block-23 mb-3">
-								<ul>
-									<li><span class="icon fa fa-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-									<li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-									<li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">info@yourdomain.com</span></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 text-center">
-
-						<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
-			
-			
-
-			<!-- loader -->
-			<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-migrate-3.0.1.min.js"></script>
-			<script src="js/popper.min.js"></script>
-			<script src="js/bootstrap.min.js"></script>
-			<script src="js/jquery.easing.1.3.js"></script>
-			<script src="js/jquery.waypoints.min.js"></script>
-			<script src="js/jquery.stellar.min.js"></script>
-			<script src="js/owl.carousel.min.js"></script>
-			<script src="js/jquery.magnific-popup.min.js"></script>
-			<script src="js/jquery.animateNumber.min.js"></script>
-			<script src="js/bootstrap-datepicker.js"></script>
-			<script src="js/scrollax.min.js"></script>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-			<script src="js/google-map.js"></script>
-			<script src="js/main.js"></script>
-			<script>
-				$(document).ready(function() {
-					$('#tanggal_berangkat').datepicker({
-						dateFormat: 'mm/dd/yy', // Format yang diinginkan untuk tampilan
-						autoclose: true
-					});
-
-					$('form').on('submit', function() {
-						var date = $('#tanggal_berangkat').val(); // Ambil nilai tanggal yang dipilih
-						var parts = date.split('/'); // Memisahkan tanggal
-						if (parts.length === 3) {
-							// Mengonversi ke format Y-m-d
-							var formattedDate = parts[2] + '-' + parts[0] + '-' + parts[1]; // Y-m-d
-							$('#tanggal_berangkat').val(formattedDate); // Mengatur nilai input ke format yang benar
-						}
-					});
-				});
-			</script>
-		</body>
- 		</html>
+        // Tambahkan script untuk swap functionality
+        document.querySelector('.swap-icon').addEventListener('click', function() {
+            const fromSelect = document.getElementById('from');
+            const toSelect = document.getElementById('to');
+            const tempValue = fromSelect.value;
+            fromSelect.value = toSelect.value;
+            toSelect.value = tempValue;
+        });
+    </script>
+</body>
+</html>
