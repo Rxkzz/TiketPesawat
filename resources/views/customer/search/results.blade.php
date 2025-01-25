@@ -543,51 +543,79 @@
 </head>
 <body>
     @include('customer.partials.navbar')
-   
+    
     <!-- Search Bar -->
         <div class="search-bar">
-            <div class="search-form">
+            <form action="{{ route('search.flights') }}" method="POST" class="search-form">
+                @csrf
                 <div class="search-input-group">
                     <div class="location-input">
                         <i class="fas fa-plane-departure"></i>
                         <div>
-                            <span class="location-text">Jakarta</span>,
-                            <span class="location-code">SUBC</span>
+                            <select name="from" required style="border:none; background:none; outline:none;">
+                                <option value="">Pilih Kota Asal</option>
+                                @foreach($routes as $route)
+                                    <option value="{{ $route->id_transportasi }}" {{ $search_params['from'] == $route->id_transportasi ? 'selected' : '' }}>
+                                        {{ $route->rute_awal }} ({{ $route->transportasi->kode }})
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
-                    <button class="location-swap">
+                    <button type="button" class="location-swap">
                         <i class="fas fa-exchange-alt"></i>
                     </button>
 
                     <div class="location-input">
                         <i class="fas fa-plane-arrival"></i>
                         <div>
-                            <span class="location-text">Bali</span>,
-                            <span class="location-code">JKTC</span>
+                            <select name="to" required style="border:none; background:none; outline:none;">
+                                <option value="">Pilih Kota Tujuan</option>
+                                @foreach($routes as $route)
+                                    <option value="{{ $route->id_transportasi }}" {{ $search_params['to'] == $route->id_transportasi ? 'selected' : '' }}>
+                                        {{ $route->tujuan }} ({{ $route->transportasi->kode }})
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                            </div>
+                    </div>
 
                     <div class="location-input">
                         <i class="far fa-calendar"></i>
-                        <div class="location-text">
-                            Sat, 25 Jan 25 (Sekali Jalan)
-            </div>
-        </div>
+                        <div>
+                            <input type="date" name="tanggal_berangkat" value="{{ $search_params['tanggal_berangkat'] ?? '' }}" required style="border:none; background:none; outline:none;">
+                        </div>
+                    </div>
 
                     <div class="location-input">
                         <i class="fas fa-user"></i>
-                        <div class="location-text">
-                            1 penumpang, Ekonomi
+                        <div style="display: flex; gap: 10px;">
+                            <select name="passenger_count" required style="border:none; background:none; outline:none;">
+                                <option value="">Jumlah Penumpang</option>
+                                @for($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}" {{ ($search_params['passenger_count'] ?? '') == $i ? 'selected' : '' }}>
+                                        {{ $i }} Penumpang
+                                    </option>
+                                @endfor
+                            </select>
+                            <select name="id_class" required style="border:none; background:none; outline:none;">
+                                <option value="">Pilih Kelas</option>
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->nama_class }}" {{ ($search_params['id_class'] ?? '') == $class->nama_class ? 'selected' : '' }}>
+                                        {{ $class->nama_class }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <button class="search-btn">
-                    Cari
-                    </button>
-            </div>
-                </div>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
 
     <div class="main-container">
         <!-- Date Navigation -->

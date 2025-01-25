@@ -35,6 +35,33 @@ class HomeController extends Controller
         // Log untuk debugging
         Log::info('Search Parameters:', $request->all());
 
+        // Ambil data kelas
+        $classes = ClassModel::all();
+
+        // Ambil data rute untuk form pencarian
+        $routes = Rute::with(['transportasi', 'class'])
+            ->select('rute_awal', 'tujuan', 'id_transportasi', 'id_class')
+            ->distinct()
+            ->get();
+
+        // Ambil data maskapai untuk filter
+        $airlines = Rute::with(['transportasi.typeTransportasi'])
+            ->get()
+            ->map(function ($rute) {
+                return [
+                    'id_transportasi' => $rute->transportasi->id_transportasi,
+                    'kode' => $rute->transportasi->kode,
+                    'nama' => $rute->transportasi->nama,
+                    'type' => $rute->transportasi->typeTransportasi->nama_type,
+                    'keterangan' => $rute->transportasi->typeTransportasi->keterangan
+                ];
+            })
+            ->unique('id_transportasi')
+            ->values();
+
+        // Debug log untuk airlines
+        Log::info('Airlines Data:', $airlines->toArray());
+
         // Buat query dasar
         $query = Rute::with(['transportasi', 'class', 'transportasi.typeTransportasi']);
 
@@ -89,10 +116,13 @@ class HomeController extends Controller
                 'results' => $results,
                 'request' => $request,
                 'search_params' => $search_params,
+                'classes' => $classes,
+                'routes' => $routes,
+                'airlines' => $airlines,
                 'message' => 'Tidak ada penerbangan yang ditemukan untuk kriteria pencarian Anda.'
             ]);
         }
 
-        return view('customer.search.results', compact('results', 'request', 'search_params'));
+        return view('customer.search.results', compact('results', 'request', 'search_params', 'classes', 'routes', 'airlines'));
     }
 } 
