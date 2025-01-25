@@ -26,7 +26,7 @@ class Login extends Component
 
         // Coba login sebagai penumpang
         if (Auth::guard('penumpang')->attempt(['username' => $this->username, 'password' => $this->password])) {
-            return redirect()->intended(route('customer.home'));
+            return redirect()->intended(route('home'));
         }
 
         $this->addError('username', 'Kredensial yang diberikan tidak cocok dengan data kami.');
@@ -34,6 +34,7 @@ class Login extends Component
 
     public function render()
     {
-        return view('livewire.auth.login')->layout('layouts.guest');
+        return view('livewire.auth.login')
+            ->layout('layouts.guest');
     }
 } 

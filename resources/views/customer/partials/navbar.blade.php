@@ -1,14 +1,25 @@
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand" href="/">
-        <p class="fas fa-plane-departure">AeroGO</p>
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            <span class="font-semibold text-xl">AeroGO</span>
         </a>
 
         <!-- Search Bar -->
         <div class="nav-search">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" placeholder="Staycation di Bandung" class="search-input">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" placeholder="">
+                <div class="placeholder-animation">
+                    <div class="placeholder-text">Staycation di Bandung</div>
+                    <div class="placeholder-text">Liburan ke Bali</div>
+                    <div class="placeholder-text">Penerbangan ke Jakarta</div>
+                    <div class="placeholder-text">Hotel di Yogyakarta</div>
+                </div>
+            </div>
         </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -22,26 +33,26 @@
                     <a class="nav-link" href="/pesawat">Pesawat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/hotel">Hotel</a>
+                    <a class="nav-link" href="/">Hotel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/vila-apt">Vila & Apt.</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/todo">To Do</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/kereta">Kereta</a>
+                    <a class="nav-link" href="/">Kereta</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMore" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMore" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Lainnya
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/car-rental">Car Rental</a></li>
-                        <li><a class="dropdown-item" href="/events">Events</a></li>
-                        <li><a class="dropdown-item" href="/attractions">Attractions</a></li>
-                    </ul>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMore">
+                        <a class="dropdown-item" href="/car-rental">
+                            <i class="fas fa-car me-2"></i>Car Rental
+                        </a>
+                        <a class="dropdown-item" href="/events">
+                            <i class="fas fa-calendar-alt me-2"></i>Events
+                        </a>
+                        <a class="dropdown-item" href="/attractions">
+                            <i class="fas fa-map-marker-alt me-2"></i>Attractions
+                        </a>
+                    </div>
                 </li>
             </ul>
 
@@ -59,7 +70,7 @@
                             <a class="dropdown-item" href="">
                                 <i class="fas fa-user-edit me-2"></i>Edit Profile
                             </a>
-                            <a class="dropdown-item" href="/bookings">
+                            <a class="dropdown-item" href="{{ route('booking.history') }}">
                                 <i class="fas fa-ticket-alt me-2"></i>My Bookings
                             </a>
                             <div class="dropdown-divider"></div>
@@ -85,112 +96,32 @@
     </div>
 </nav>
 
-<style>
-:root {
-    --primary-color: #6851FF;
-    --text-color: #1E1E1E;
-    --border-color: #E5E7EB;
-}
-
-.navbar {
-    background: #FFFFFF;
-    padding: 8px 0;
-    height: 64px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.navbar-brand img {
-    height: 32px;
-}
-
-.nav-search {
-    position: relative;
-    width: 300px;
-    margin: 0 24px;
-}
-
-.search-input {
-    width: 100%;
-    padding: 8px 16px 8px 40px;
-    border: none;
-    border-radius: 8px;
-    background: #F3F4F6;
-    font-size: 14px;
-}
-
-.search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6B7280;
-}
-
-.nav-link {
-    color: var(--text-color);
-    font-size: 14px;
-    font-weight: 500;
-    padding: 8px 16px;
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-}
-
-.btn-light {
-    background: #F3F4F6;
-    border: none;
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.btn-primary {
-    background: var(--primary-color);
-    border: none;
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.btn-primary:hover {
-    background: #5842FF;
-}
-
-.dropdown-menu {
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 8px;
-}
-
-.dropdown-item {
-    font-size: 14px;
-    padding: 8px 16px;
-    border-radius: 4px;
-}
-
-@media (max-width: 991.98px) {
-    .nav-search {
-        width: 100%;
-        margin: 8px 0;
-    }
-
-    .navbar-collapse {
-        background: white;
-        padding: 16px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-    }
-}
-</style>
-
-<!-- Pastikan semua script dimuat -->
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Styles -->
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+<style>
+    .navbar-brand {
+        text-decoration: none;
+        color: #1a1a1a;
+        transition: all 0.2s;
+    }
+    
+    .navbar-brand:hover {
+        color: #6851FF;
+    }
+
+    .navbar-brand svg {
+        width: 32px;
+        height: 32px;
+        color: #6851FF;
+    }
+
+    .navbar-brand span {
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+</style> 

@@ -1,0 +1,44 @@
+/* Password Field Styles */
+.password-field {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6B7280;
+    padding: 4px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.password-toggle:hover {
+    background: rgba(104, 81, 255, 0.1);
+    color: var(--primary-color);
+}
+
+.password-toggle i {
+    font-size: 16px;
+}
+
+.form-control[type="password"] {
+    padding-right: 45px;
+}
+
+/* Animation for icon change */
+.password-toggle i {
+    transition: all 0.2s;
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.95);
+} 

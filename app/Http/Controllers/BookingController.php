@@ -155,4 +155,14 @@ class BookingController extends Controller
                 ->with('error', 'E-ticket tidak ditemukan.');
         }
     }
+
+    public function myBookings()
+    {
+        $bookings = Pemesanan::with(['rute.transportasi'])
+            ->where('id_pelanggan', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('customer.booking.my-bookings', compact('bookings'));
+    }
 } 

@@ -11,9 +11,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BookingController;
 
-Route::get('/', function () {
-    return redirect('/login');
-});
+// Route default mengarah ke home
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -23,9 +22,9 @@ Route::middleware('guest')->group(function () {
 
 // Customer routes
 Route::middleware('auth:penumpang')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('customer.dashboard');
-    })->name('customer.dashboard');
+    Route::get('/home', function () {
+        return view('customer.home');
+    })->name('customer.home');
 
     // Rute untuk halaman home
     Route::get('/home', [HomeController::class, 'index'])->name('customer.home');
@@ -41,12 +40,13 @@ Route::middleware('auth:penumpang')->group(function () {
     Route::get('/booking/{id}/payment', [BookingController::class, 'showPayment'])->name('booking.payment');
     Route::post('/booking/{id}/payment', [BookingController::class, 'processPayment'])->name('booking.process-payment');
     Route::get('/booking/{id}/ticket', [BookingController::class, 'showTicket'])->name('booking.ticket');
+    Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('booking.history');
 });
 
 // Admin routes akan ditangani oleh Filament secara otomatis
 
-// Tambahkan route logout
+// Logout route
 Route::post('/logout', function () {
     auth('penumpang')->logout();
-    return redirect('/');
+    return redirect()->route('home');
 })->name('logout');

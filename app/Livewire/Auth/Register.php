@@ -42,11 +42,12 @@ class Register extends Component
 
         auth('penumpang')->login($penumpang);
 
-        return redirect()->route('customer.home');
+        return redirect()->route('home');
     }
 
     public function render()
     {
-        return view('livewire.auth.register')->layout('layouts.guest');
+        return view('livewire.auth.register')
+            ->layout('layouts.guest');
     }
 } 

@@ -1,7 +1,174 @@
+/* Import external stylesheets */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'animate.css/animate.min.css';
+
+/* Custom styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+/* Dropdown styles */
+.nav-item.dropdown {
+    position: relative;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    min-width: 200px;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #1e2125;
+    background-color: #f8f9fa;
+    text-decoration: none;
+}
+
+/* Dropdown arrow */
+.nav-item.dropdown::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #fff;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.nav-item.dropdown.show::after {
+    opacity: 1;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Search styles */
+.nav-search {
+    position: relative;
+    width: 300px;
+    margin: 0 24px;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+}
+
+.search-input {
+    width: 100%;
+    height: 100%;
+    padding: 8px 16px 8px 40px;
+    border: none;
+    border-radius: 8px;
+    background: #F3F4F6;
+    font-size: 14px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6B7280;
+    z-index: 2;
+}
+
+.placeholder-animation {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 160px;
+    animation: slideUp 12s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+
+.placeholder-text {
+    height: 40px;
+    line-height: 40px;
+    color: #6B7280;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+@keyframes slideUp {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(-40px);
+    }
+    50%, 70% {
+        transform: translateY(-80px);
+    }
+    75%, 95% {
+        transform: translateY(-120px);
+    }
+    100% {
+        transform: translateY(-160px);
+    }
+}
+
+.search-input:focus + .placeholder-animation {
+    display: none;
+}
+
+.search-input:focus {
+    outline: none;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import 'animate.css';
-@import 'style.css';

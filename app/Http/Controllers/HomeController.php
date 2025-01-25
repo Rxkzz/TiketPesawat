@@ -6,12 +6,13 @@ use App\Models\Rute;
 use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil data rute beserta relasi class
+        // Ambil data rute beserta relasi class untuk semua user
         $routes = Rute::with(['transportasi', 'class'])
                      ->select('rute_awal', 'tujuan', 'id_transportasi', 'id_class')
                      ->distinct()
@@ -19,7 +20,13 @@ class HomeController extends Controller
         
         // Ambil semua kelas yang tersedia
         $classes = ClassModel::all();
+
+        // Jika user sudah login sebagai penumpang
+        if (Auth::guard('penumpang')->check()) {
+            return view('customer.home', compact('routes', 'classes'));
+        }
         
+        // Jika belum login, tampilkan halaman welcome dengan data yang sama
         return view('customer.home', compact('routes', 'classes'));
     }
 

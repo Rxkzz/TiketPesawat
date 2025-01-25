@@ -1,7 +1,3 @@
-@php
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-@endphp
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -311,4 +307,4 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
         }
     </script>
 </body>
-</html> 
+</html>
