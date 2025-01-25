@@ -332,7 +332,7 @@
                 <div class="included-facilities">
                     <div class="facility-title">Tiket Sudah Termasuk</div>
                     <div class="facility-item">
-                        <i class="fas fa-suitcase"></i>
+                    <i class="fas fa-suitcase"></i>
                         <div class="facility-text">
                             Kabin: 7 kg<br>
                             Bagasi: 20 kg
@@ -347,8 +347,8 @@
             </div>
 
             <div style="margin-top: 32px;">
-                <div class="action-buttons">
-                    <a href="{{ route('booking.create', ['flight' => $flight->id_rute]) }}" class="btn-modern btn-primary-modern">
+            <div class="action-buttons">
+                    <a href="{{ route('booking.create', $flight->id_rute) }}" class="btn-modern btn-primary-modern">
                         <i class="fas fa-ticket-alt"></i>
                         Pesan Sekarang
                     </a>
@@ -376,7 +376,7 @@
                     <div class="facility-text">
                         <strong>Makanan</strong><br>
                         Tidak termasuk makanan
-                    </div>
+                </div>
                 </div>
                 <div class="facility-item">
                     <i class="fas fa-wifi"></i>
@@ -407,4 +407,4 @@
         }
     </script>
 </body>
-</html>
+</html> 

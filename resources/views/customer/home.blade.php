@@ -713,8 +713,7 @@
                         <span>car rental</span>
                     </a>
                 </div>
-
-                <div class="search-container">
+				<div class="search-container">
                     <form action="{{ route('search.flights') }}" method="POST">
                         @csrf
                         <div class="search-row">
@@ -790,7 +789,6 @@
                     </form>
                 </div>
             </div>
-
             <div class="airplane-container">
                 <!-- Clouds -->
                 <img src="{{ url('images/cloud.png') }}" class="cloud cloud-1" alt="Cloud">

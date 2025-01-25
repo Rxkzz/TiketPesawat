@@ -591,6 +591,7 @@
 
     <div class="main-container">
         <!-- Date Navigation -->
+        @if($results->isNotEmpty())
         <div class="date-scroll-wrapper">
             <div class="date-scroll">
                 @for($i = -4; $i <= 4; $i++)
@@ -605,6 +606,12 @@
                 @endfor
             </div>
         </div>
+        @else
+        <div class="alert alert-info">
+            <p>Maaf, tidak ada penerbangan yang tersedia untuk pencarian Anda.</p>
+            <p>Silakan coba tanggal atau rute lain.</p>
+        </div>
+        @endif
 
         <!-- Filter Bar -->
         <div class="filter-bar">

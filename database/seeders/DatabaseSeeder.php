@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,28 +12,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Hapus semua data di tabel users
-        User::truncate();
+        // Nonaktifkan foreign key checks sementara
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Bersihkan tabel-tabel
+        DB::table('pemesanan')->truncate();
+        DB::table('users')->truncate();
+        DB::table('penumpangs')->truncate();
+        DB::table('rute')->truncate();
 
-        User::factory()->create([
-            'name' => 'admin',
+        // Aktifkan kembali foreign key checks
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        // Buat data dummy untuk testing
+        DB::table('users')->insert([
+            'name' => 'Admin',
             'email' => 'admin@admin.com',
+            'password' => bcrypt('password'),
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
-        \App\Models\Pemesanan::factory(10)->create();
-
         $this->call([
-            TypeTransportasiSeeder::class,
-            TransportasiSeeder::class,
-            ClassSeeder::class,
-            FasilitasSeeder::class,
-            ClassFasilitasSeeder::class,
-            RuteSeeder::class,
+            \Database\Seeders\ClassSeeder::class,
+            \Database\Seeders\FasilitasSeeder::class,
+            \Database\Seeders\TypeTransportasiSeeder::class,
+            \Database\Seeders\TransportasiSeeder::class,
+            \Database\Seeders\RuteSeeder::class,
         ]);
     }
 }

@@ -42,14 +42,14 @@ class Rute extends Model
         });
     }
 
-    public function transportasi(): BelongsTo
+    public function transportasi()
     {
-        return $this->belongsTo(Transportasi::class, 'id_transportasi', 'id_transportasi');
+        return $this->belongsTo(Transportasi::class, 'id_transportasi');
     }
 
-    public function class(): BelongsTo
+    public function class()
     {
-        return $this->belongsTo(ClassModel::class, 'id_class', 'id_class');
+        return $this->belongsTo(ClassModel::class, 'id_class');
     }
 
     public function fasilitas(): BelongsTo

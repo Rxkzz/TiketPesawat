@@ -51,6 +51,7 @@ class PemesananResource extends Resource
                 TextColumn::make('tanggal_pemesanan')->label('Tanggal Pemesanan')->sortable(),
                 TextColumn::make('tempat_pemesanan')->label('Tempat Pemesanan')->sortable(),
                 TextColumn::make('total_bayar')->label('Total Bayar')->sortable(),
+                TextColumn::make('status_pembayaran')->label('Status')->sortable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

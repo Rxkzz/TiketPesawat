@@ -185,26 +185,46 @@
                 
                 <span class="passenger-type">Penumpang 1 - Dewasa</span>
 
-                <form id="bookingForm">
+                <form id="bookingForm" method="POST" action="{{ route('booking.store') }}">
+                    @csrf
+                    <input type="hidden" name="flight_id" value="{{ $flight->id_rute }}">
+                    
                     <div class="form-group">
                         <label class="form-label">Nama Lengkap (sesuai KTP)</label>
-                        <input type="text" class="form-control-modern" name="full_name" required>
+                        <input type="text" class="form-control-modern" name="full_name" required value="{{ old('full_name') }}">
+                        @error('full_name')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Nomor KTP</label>
-                        <input type="text" class="form-control-modern" name="id_number" required>
+                        <input type="text" class="form-control-modern" name="id_number" required value="{{ old('id_number') }}">
+                        @error('id_number')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control-modern" name="email" required>
+                        <input type="email" class="form-control-modern" name="email" required value="{{ old('email') }}">
+                        @error('email')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Nomor Telepon</label>
-                        <input type="tel" class="form-control-modern" name="phone" required>
+                        <input type="tel" class="form-control-modern" name="phone" required value="{{ old('phone') }}">
+                        @error('phone')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
+
+                    <button type="submit" class="btn-pay">
+                        <i class="fas fa-lock"></i>
+                        Lanjut ke Pembayaran
+                    </button>
                 </form>
             </div>
         </div>
@@ -254,11 +274,6 @@
                         <span>IDR {{ number_format($flight->total_harga * 1.1, 0, ',', '.') }}</span>
                     </div>
                 </div>
-
-                <button type="submit" class="btn-pay" form="bookingForm">
-                    <i class="fas fa-lock"></i>
-                    Lanjut ke Pembayaran
-                </button>
             </div>
         </div>
     </div>

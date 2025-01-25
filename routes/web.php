@@ -31,14 +31,16 @@ Route::middleware('auth:penumpang')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('customer.home');
 
     // Rute untuk halaman pencarian penerbangan
-    Route::post('/search/flights', [FlightController::class, 'search'])->name('search.flights');
+    Route::post('/search/flights', [HomeController::class, 'search'])->name('search.flights');
     Route::get('/flight/{id}', [FlightController::class, 'show'])->name('flight.show');
 
     // Booking routes
-    Route::get('/booking/create/{flight}', [BookingController::class, 'createForm'])->name('booking.create');
-    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/{flight}/create', [BookingController::class, 'createForm'])->name('booking.create');
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
-    Route::post('/booking/{id}/payment', [BookingController::class, 'processPayment'])->name('booking.payment');
+    Route::get('/booking/{id}/payment', [BookingController::class, 'showPayment'])->name('booking.payment');
+    Route::post('/booking/{id}/payment', [BookingController::class, 'processPayment'])->name('booking.process-payment');
+    Route::get('/booking/{id}/ticket', [BookingController::class, 'showTicket'])->name('booking.ticket');
 });
 
 // Admin routes akan ditangani oleh Filament secara otomatis
