@@ -9,26 +9,28 @@ class TransportasiSeeder extends Seeder
 {
     public function run(): void
     {
-        $transportasi = [
-            [
-                'kode' => 'GA-001',
-                'jumlah_kursi' => 180,
-                'keterangan' => 'Garuda Indonesia Airways',
-                'id_type_transportasi' => 1, // Boeing 737
-            ],
-            [
-                'kode' => 'LA-001',
-                'jumlah_kursi' => 150,
-                'keterangan' => 'Lion Air',
-                'id_type_transportasi' => 2, // Airbus A320
-            ],
-            [
-                'kode' => 'BA-001',
-                'jumlah_kursi' => 200,
-                'keterangan' => 'Batik Air',
-                'id_type_transportasi' => 3, // Boeing 777
-            ]
+        $maskapai = [
+            ['kode' => 'GA', 'nama' => 'Garuda Indonesia', 'type' => 1],
+            ['kode' => 'LA', 'nama' => 'Lion Air', 'type' => 2],
+            ['kode' => 'BA', 'nama' => 'Batik Air', 'type' => 3],
+            ['kode' => 'CI', 'nama' => 'Citilink', 'type' => 1],
         ];
+
+        $transportasi = [];
+        $counter = 1;
+
+        // Generate 12 pesawat (4 untuk setiap kelas)
+        foreach ($maskapai as $m) {
+            for ($i = 1; $i <= 3; $i++) {
+                $transportasi[] = [
+                    'kode' => $m['kode'] . sprintf('-%03d', $counter),
+                    'jumlah_kursi' => rand(150, 250),
+                    'keterangan' => $m['nama'] . ' Airways',
+                    'id_type_transportasi' => $m['type'],
+                ];
+                $counter++;
+            }
+        }
 
         foreach ($transportasi as $transport) {
             Transportasi::create($transport);

@@ -1,191 +1,21 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiketPesawat - Find Your Best Flight</title>
+    
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/booking/my-bookings.css') }}">
 
-<style>
-    .bookings-container {
-        max-width: 1200px;
-        margin: 32px auto;
-        padding: 0 20px;
-    }
+</head>
 
-    .page-title {
-        font-size: 24px;
-        font-weight: 600;
-        color: #1a1a1a;
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
+<body>
+    @include('customer.partials.navbar')
 
-    .booking-card {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        margin-bottom: 20px;
-        overflow: hidden;
-        transition: transform 0.2s;
-    }
-
-    .booking-card:hover {
-        transform: translateY(-2px);
-    }
-
-    .booking-header {
-        background: linear-gradient(135deg, #6851FF, #8B74FF);
-        padding: 16px 20px;
-        color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .booking-code {
-        font-weight: 600;
-    }
-
-    .booking-status {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .status-paid {
-        background: #10B981;
-    }
-
-    .status-pending {
-        background: #F59E0B;
-    }
-
-    .status-cancelled {
-        background: #EF4444;
-    }
-
-    .booking-body {
-        padding: 20px;
-    }
-
-    .flight-info {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        padding: 16px;
-        background: #F8F9FA;
-        border-radius: 8px;
-        margin-bottom: 16px;
-    }
-
-    .airline-logo {
-        width: 48px;
-        height: 48px;
-        object-fit: contain;
-    }
-
-    .route-info {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 24px;
-    }
-
-    .city-pair {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .city {
-        font-size: 16px;
-        font-weight: 600;
-        color: #1a1a1a;
-    }
-
-    .time {
-        font-size: 14px;
-        color: #6B7280;
-    }
-
-    .booking-footer {
-        padding: 16px 20px;
-        border-top: 1px solid #E5E7EB;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .price-info {
-        font-weight: 600;
-        color: #1a1a1a;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 12px;
-    }
-
-    .btn-action {
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 500;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.2s;
-    }
-
-    .btn-view {
-        background: #6851FF;
-        color: white;
-    }
-
-    .btn-view:hover {
-        background: #5842FF;
-        color: white;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 48px 20px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .empty-icon {
-        font-size: 48px;
-        color: #6B7280;
-        margin-bottom: 16px;
-    }
-
-    .empty-text {
-        font-size: 16px;
-        color: #6B7280;
-        margin-bottom: 24px;
-    }
-
-    .btn-book {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #6851FF;
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background 0.2s;
-    }
-
-    .btn-book:hover {
-        background: #5842FF;
-        color: white;
-    }
-</style>
-
-@section('content')
 <div class="bookings-container">
     <h1 class="page-title">
         <i class="fas fa-ticket-alt text-primary"></i>
@@ -260,4 +90,4 @@
         @endforeach
     @endif
 </div>
-@endsection 
+</body>

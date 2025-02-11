@@ -7,213 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-purple: #6E2EBF;
-            --light-purple: #F5F2FF;
-            --text-dark: #35405A;
-            --text-gray: #687182;
-            --border-color: #E7E8EA;
-            --success-green: #00AA5B;
-            --navbar-height: 84px;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: #F7F7F7;
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            padding-top: var(--navbar-height);
-        }
-
-        .ticket-container {
-            max-width: 800px;
-            margin: 32px auto;
-            padding: 0 20px;
-        }
-
-        .ticket-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .ticket-header {
-            background: linear-gradient(135deg, var(--primary-purple), #8B5CF6);
-            padding: 24px;
-            color: white;
-            text-align: center;
-        }
-
-        .booking-code {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .booking-status {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--success-green);
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .ticket-body {
-            padding: 24px;
-        }
-
-        .flight-info {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            padding: 20px;
-            background: var(--light-purple);
-            border-radius: 12px;
-            margin-bottom: 24px;
-        }
-
-        .airline-logo {
-            width: 64px;
-            height: 64px;
-            object-fit: contain;
-        }
-
-        .route-info {
-            flex: 1;
-        }
-
-        .city-pair {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 8px;
-        }
-
-        .city {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .airport {
-            font-size: 14px;
-            color: var(--text-gray);
-        }
-
-        .flight-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .detail-item {
-            padding: 16px;
-            background: #F8F9FA;
-            border-radius: 12px;
-        }
-
-        .detail-label {
-            font-size: 14px;
-            color: var(--text-gray);
-            margin-bottom: 4px;
-        }
-
-        .detail-value {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .passenger-info {
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .qr-section {
-            text-align: center;
-            margin-top: 32px;
-            padding: 24px;
-            border-top: 1px dashed var(--border-color);
-        }
-
-        .qr-code {
-            width: 160px;
-            height: 160px;
-            margin-bottom: 12px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .btn-action {
-            flex: 1;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-download {
-            background: var(--primary-purple);
-            color: white;
-            border: none;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(110, 46, 191, 0.25);
-        }
-
-        .btn-share {
-            background: var(--light-purple);
-            color: var(--primary-purple);
-            border: 2px solid var(--primary-purple);
-        }
-
-        .btn-share:hover {
-            background: var(--primary-purple);
-            color: white;
-        }
-
-        @media print {
-            .no-print {
-                display: none;
-            }
-            
-            body {
-                padding: 0;
-                background: white;
-            }
-            
-            .ticket-container {
-                margin: 0;
-                padding: 0;
-            }
-            
-            .ticket-card {
-                box-shadow: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/booking/ticket.css') }}">
 </head>
 <body>
     @include('customer.partials.navbar')
+
+    @if(session('email_sent'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            E-ticket telah dikirim ke {{ $booking->email }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('email_error'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ session('email_error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="ticket-container">
         <div class="ticket-card">

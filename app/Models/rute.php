@@ -22,8 +22,10 @@ class Rute extends Model
         'total_harga',
         'id_transportasi',
         'tanggal_berangkat',
-        'waktu_keberangkatan',
-        'id_class'
+        'waktu_berangkat',
+        'waktu_tiba',
+        'id_class',
+        'gambar'
     ];
 
     protected static function boot()

@@ -12,6 +12,8 @@
    use Filament\Tables;
    use Filament\Tables\Table;
    use Filament\Tables\Columns\TextColumn;
+   use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 
    class TransportasiResource extends Resource
    {
@@ -42,6 +44,22 @@
                        ->label('Tipe Transportasi')
                        ->required()
                     ->relationship('typeTransportasi', 'nama_Type'),
+                    FileUpload::make('image')
+                    ->label('Gambar Maskapai')
+                    ->image()
+                    ->directory('maskapai-images')
+                    ->preserveFilenames()
+                    ->maxSize(5120)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
+                    ->disk('public')
+                    ->downloadable()
+                    ->openable()
+                    ->previewable()
+                    ->imageEditor()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->imageResizeTargetWidth('1920')
+                    ->imageResizeTargetHeight('1080'),
                ]);
        }
  
@@ -63,6 +81,10 @@
                 TextColumn::make('keterangan')
                     ->label('Keterangan')
                     ->wrap(),
+                    Tables\Columns\ImageColumn::make('image')
+                    ->label('Gambar')
+                    ->circular()
+                    ->disk('public'),
                 
                ])
                ->actions([

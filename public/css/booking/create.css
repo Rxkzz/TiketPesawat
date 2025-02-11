@@ -1,0 +1,160 @@
+:root {
+    --primary-purple: #6E2EBF;
+    --light-purple: #F5F2FF;
+    --text-dark: #35405A;
+    --text-gray: #687182;
+    --border-color: #E7E8EA;
+    --success-green: #00AA5B;
+    --navbar-height: 84px;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: #F7F7F7;
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    padding-top: var(--navbar-height);
+}
+
+.booking-container {
+    max-width: 1200px;
+    margin: 32px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.booking-section {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-title i {
+    color: var(--primary-purple);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-gray);
+}
+
+.form-control-modern {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control-modern:focus {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 3px rgba(110, 46, 191, 0.1);
+    outline: none;
+}
+
+.flight-summary {
+    background: var(--light-purple);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.airline-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.airline-logo {
+    width: 32px;
+    height: 32px;
+}
+
+.route-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.time-info {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.city-info {
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.price-summary {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.price-total {
+    border-top: 2px dashed var(--border-color);
+    margin-top: 12px;
+    padding-top: 12px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.btn-pay {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary-purple), #8B5CF6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 24px;
+}
+
+.btn-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(110, 46, 191, 0.25);
+}
+
+.passenger-type {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--light-purple);
+    color: var(--primary-purple);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}

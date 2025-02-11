@@ -7,537 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/search/results.css') }}">
+    
     <style>
-        :root {
-            --primary-purple: #6E2EBF;
-            --light-purple: #F5F2FF;
-            --text-dark: #35405A;
-            --text-gray: #687182;
-            --border-color: #E7E8EA;
-            --success-green: #00AA5B;
-            --navbar-height: 84px;
-        }
-
         body {
-            font-family: 'Open Sans', sans-serif;
-            /* background: linear-gradient(135deg, #00C4CC 0%, #7D2AE7 100%); */
-            background-image: url('{{ asset('images/bg_2.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            padding-top: var(--navbar-height);
-        }
-
-        /* Search Bar */
-        .search-wrapper {
-            background: #F8F9FE;
-            padding: 16px 0;
-            margin-top: var(--navbar-height);
-        }
-
-        .search-bar {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .search-form {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .search-input-group {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 8px;
-        }
-
-        .location-input {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 16px;
-            flex: 1;
-            cursor: pointer;
-            min-height: 48px;
-        }
-
-        .location-input i {
-            color: var(--text-gray);
-            font-size: 16px;
-        }
-
-        .location-text {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .location-code {
-            color: var(--text-gray);
-            font-size: 15px;
-        }
-
-        .location-swap {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .location-swap i {
-            color: var(--text-gray);
-            font-size: 16px;
-        }
-
-        .search-btn {
-            background: var(--primary-purple);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 32px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            height: 48px;
-            min-width: 100px;
-        }
-
-        .search-btn:hover {
-            background: #5B26A6;
-        }
-
-        /* Container styles */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Date Navigation Styles */
-        .date-scroll-wrapper {
-            background: white;
-            border-radius: 12px;
-            padding: 2px;
-            margin: 24px 0;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-        }
-
-        .date-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 0;
-            scrollbar-width: none;
-        }
-
-        .date-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .date-item {
-            flex: 1;
-            min-width: 140px;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .date-item.active {
-            background: var(--light-purple);
-        }
-
-        .date-item .date {
-            font-size: 14px;
-            color: var(--text-gray);
-        }
-
-        .date-item .price {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-top: 4px;
-        }
-
-        .date-item.active .price {
-            color: var(--primary-purple);
-        }
-
-        /* Filter Bar */
-        .filter-bar {
-            display: flex;
-            gap: 8px;
-            margin: 16px 0;
-            flex-wrap: wrap;
-        }
-
-        .filter-button {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            background: white;
-            font-size: 14px;
-            color: var(--text-dark);
-            cursor: pointer;
-        }
-
-        .filter-button i {
-            font-size: 12px;
-            color: var(--text-gray);
-        }
-
-        .filter-button.active {
-            background: var(--light-purple);
-            border-color: var(--primary-purple);
-            color: var(--primary-purple);
-        }
-
-        /* Promo Banner */
-        .promo-banner {
-            background: linear-gradient(90deg, #00C4CC 0%, #7D2AE7 100%);
-            border-radius: 12px;
-            padding: 16px 24px;
-            margin: 24px 0;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: white;
-        }
-
-        .promo-banner i {
-            font-size: 24px;
-        }
-
-        .promo-text {
-            flex: 1;
-        }
-
-        .promo-title {
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 4px;
-        }
-
-        .promo-subtitle {
-            font-size: 13px;
-            opacity: 0.8;
-        }
-
-        /* Flight Cards */
-        .flight-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-        }
-
-        .flight-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(110, 46, 191, 0.15);
-        }
-
-        .airline-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .airline-logo {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-        }
-
-        .airline-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .airline-facilities {
-            display: flex;
-            gap: 8px;
-        }
-
-        .facility-icon {
-            width: 16px;
-            height: 16px;
-            opacity: 0.6;
-        }
-
-        .flight-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .time-section {
-            text-align: left;
-        }
-
-        .time {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-dark);
-            line-height: 1.2;
-        }
-
-        .city {
-            font-size: 14px;
-            color: var(--text-gray);
-        }
-
-        .flight-duration {
-            text-align: center;
-            position: relative;
-            padding: 0 20px;
-        }
-
-        .duration-text {
-            font-size: 14px;
-            color: var(--text-gray);
-            margin-bottom: 4px;
-        }
-
-        .transit-info {
-            font-size: 14px;
-            color: var(--text-gray);
-        }
-
-        .duration-line {
-            position: relative;
-            height: 2px;
-            background: #E7E8EA;
-            margin: 8px 0;
-        }
-
-        .duration-line::before,
-        .duration-line::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #E7E8EA;
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .duration-line::before {
-            left: -4px;
-        }
-
-        .duration-line::after {
-            right: -4px;
-        }
-
-        .price-section {
-            text-align: right;
-        }
-
-        .price-amount {
-            font-size: 24px;
-            font-weight: 700;
-            color: #FF5E1F;
-            line-height: 1.2;
-        }
-
-        .price-label {
-            font-size: 14px;
-            color: var(--text-gray);
-        }
-
-        .points {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 4px;
-            margin-top: 4px;
-            font-size: 13px;
-            color: var(--primary-purple);
-        }
-
-        .points i {
-            font-size: 6px;
-        }
-
-        .flight-footer {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .reschedule-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            background: #E6F8EF;
-            color: #00AA5B;
-            border-radius: 4px;
-            font-size: 13px;
-        }
-
-        .flight-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 12px;
-        }
-
-        .transit-link {
-            color: var(--primary-purple);
-            font-size: 14px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .transit-link i {
-            font-size: 12px;
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            background: white;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .navbar-left {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            justify-self: start;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 32px;
-        }
-
-        .search-global {
-            background: var(--light-purple);
-            border-radius: 8px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 300px;
-        }
-
-        .search-global input {
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 14px;
-            width: 100%;
-            color: var(--text-dark);
-        }
-
-        .search-global input::placeholder {
-            color: var(--text-gray);
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            justify-self: center;
-        }
-
-        .nav-item {
-            font-size: 14px;
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .nav-item:hover {
-            color: var(--primary-purple);
-        }
-
-        .nav-item.dropdown {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .navbar-right {
-            justify-self: end;
-        }
-
-        .auth-buttons {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn-login {
-            color: var(--primary-purple);
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: var(--light-purple);
-        }
-
-        .btn-register {
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: var(--primary-purple);
+            background-image: url("{{ asset('images/bg_2.jpg') }}");
         }
     </style>
 </head>
@@ -643,33 +117,190 @@
 
         <!-- Filter Bar -->
         <div class="filter-bar">
-            <button class="filter-button">
-                <i class="fas fa-filter"></i>
-                Filter
-            </button>
-            <button class="filter-button">
-                <i class="fas fa-sort"></i>
-                Urutkan
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <button class="filter-button">
-                <i class="fas fa-plane"></i>
-                Transit
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <button class="filter-button">
-                <i class="fas fa-clock"></i>
-                Waktu
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <button class="filter-button">
-                <i class="fas fa-plane-departure"></i>
-                Maskapai
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <button class="filter-button active">
-                Semua
-            </button>
+            
+            <div class="dropdown">
+                <button class="filter-button" type="button" id="urutanFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort"></i>
+                    Urutkan
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="urutanFilterButton" id="urutanList">
+                    <li><a class="dropdown-item active" href="#" data-sort="all">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Semua</span>
+                        </div>
+                    </a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" data-sort="rekomendasi">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Rekomendasi</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-sort="harga_terendah">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Harga terendah</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-sort="berangkat_awal">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Keberangkatan paling awal</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-sort="berangkat_akhir">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Keberangkatan paling akhir</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-sort="tiba_awal">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Kedatangan paling awal</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-sort="tiba_akhir">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Kedatangan paling akhir</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-sort="durasi_pendek">
+                        <div class="urutan-item">
+                            <span class="urutan-name">Durasi terpendek</span>
+                        </div>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="filter-button" type="button" id="transitFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-plane"></i>
+                    Transit
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="transitFilterButton" id="transitList">
+                    <li><a class="dropdown-item active" href="#" data-transit="all">
+                        <div class="transit-item">
+                            <span class="transit-name">Semua</span>
+                        </div>
+                    </a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" data-transit="langsung">
+                        <div class="transit-item">
+                            <span class="transit-name">Langsung</span>
+                        </div>
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-transit="1-transit">
+                        <div class="transit-item">
+                            <span class="transit-name">1 Transit</span>
+                        </div>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="filter-button" type="button" id="waktuFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-clock"></i>
+                    Waktu
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg" aria-labelledby="waktuFilterButton" id="waktuList">
+                    <div class="waktu-filter-container">
+                        <div class="waktu-section">
+                            <h6 class="dropdown-header">Waktu Pergi</h6>
+                            <li><a class="dropdown-item active" href="#" data-waktu-type="all" data-start="" data-end="">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">Semua Waktu</span>
+                                </div>
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="pergi" data-start="00:00" data-end="06:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">00:00 - 06:00</span>
+                                    <small class="text-muted d-block">Dini hari</small>
+                                </div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="pergi" data-start="06:00" data-end="12:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">06:00 - 12:00</span>
+                                    <small class="text-muted d-block">Pagi</small>
+                                </div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="pergi" data-start="12:00" data-end="18:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">12:00 - 18:00</span>
+                                    <small class="text-muted d-block">Siang</small>
+                                </div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="pergi" data-start="18:00" data-end="24:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">18:00 - 24:00</span>
+                                    <small class="text-muted d-block">Malam</small>
+                                </div>
+                            </a></li>
+                        </div>
+
+                        <div class="waktu-divider"></div>
+
+                        <div class="waktu-section">
+                            <h6 class="dropdown-header">Waktu Tiba</h6>
+                            <li><a class="dropdown-item active" href="#" data-waktu-type="all" data-start="" data-end="">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">Semua Waktu</span>
+                                </div>
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="tiba" data-start="00:00" data-end="06:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">00:00 - 06:00</span>
+                                    <small class="text-muted d-block">Dini hari</small>
+                                </div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="tiba" data-start="06:00" data-end="12:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">06:00 - 12:00</span>
+                                    <small class="text-muted d-block">Pagi</small>
+                                </div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="tiba" data-start="12:00" data-end="18:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">12:00 - 18:00</span>
+                                    <small class="text-muted d-block">Siang</small>
+                                </div>
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" data-waktu-type="tiba" data-start="18:00" data-end="24:00">
+                                <div class="waktu-item">
+                                    <span class="waktu-range">18:00 - 24:00</span>
+                                    <small class="text-muted d-block">Malam</small>
+                                </div>
+                            </a></li>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="filter-button" type="button" id="typeFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-plane"></i>
+                    Type Pesawat
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="typeFilterButton" id="typePesawatList">
+                    <li><a class="dropdown-item active" href="#" data-type-id="all">
+                        <div class="type-item">
+                            <span class="type-name">Semua Type Pesawat</span>
+                            <small class="text-muted d-block">Tampilkan semua tipe pesawat yang tersedia</small>
+                        </div>
+                    </a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    @foreach($airlines->unique('type') as $airline)
+                    <li>
+                        <a class="dropdown-item" href="#" data-type-id="{{ $airline['type'] }}">
+                            <div class="type-item">
+                                <span class="type-name">{{ $airline['type'] }}</span>
+                                @if(isset($airline['keterangan_type']))
+                                <small class="text-muted d-block">{{ $airline['keterangan_type'] }}</small>
+                                @endif
+                            </div>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
             </div>
 
         <!-- Promo Banner -->
@@ -682,93 +313,273 @@
             <i class="fas fa-chevron-right"></i>
         </div>
 
-        <!-- Flight Results -->
-        @foreach($results as $result)
-        <a href="{{ route('flight.show', $result->id_rute) }}" class="flight-card">
-            <div class="airline-header">
-                <img src="{{ asset('images/airlines/' . $result->transportasi->kode . '.png') }}" alt="Airline Logo" class="airline-logo">
-                <span class="airline-name">{{ $result->transportasi->nama }}</span>
-            </div>
-
-                        <div class="flight-info">
-                <div class="time-section">
-                    <div class="time">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->format('H:i') }}</div>
-                    <div class="city">{{ $result->rute_awal }}</div>
-                                </div>
-
-                                <div class="flight-duration">
-                    <div class="duration-text">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->diffInMinutes(\Carbon\Carbon::parse($result->waktu_berangkat)->addHours(1)->addMinutes(20)) }} menit</div>
-                    <div class="duration-line"></div>
-                    <div class="transit-info">1 transit</div>
-                                </div>
-
-                <div class="time-section">
-                    <div class="time">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->addHours(1)->addMinutes(20)->format('H:i') }}</div>
-                    <div class="city">{{ $result->tujuan }}</div>
-                            </div>
-
-                <div class="price-section">
-                    <div class="price-amount">IDR {{ number_format($result->total_harga, 0, ',', '.') }}</div>
-                    <div class="price-label">/pax</div>
-                    <div class="points">
-                        <i class="fas fa-circle"></i>
-                        {{ number_format($result->total_harga/1000, 0) }} poin
-                    </div>
-                        </div>
-                    </div>
-
-            <div class="flight-footer">
-                <div class="reschedule-badge">
-                    <i class="fas fa-sync-alt"></i>
-                    Bisa reschedule & refund
-                </div>
-            </div>
-        </a>
-            @endforeach
+        <!-- Results Section -->
+        <div id="searchResults">
+            @include('customer.search.partials.results')
+        </div>
     </div>
     @include('customer.partials.footer')
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Date item click handler
-        $('.date-item').click(function() {
-            $('.date-item').removeClass('active');
-            $(this).addClass('active');
-        });
+        $(document).ready(function() {
+            // Handle reset filter untuk semua dropdown
+            function resetFilter(dropdownId, buttonId, defaultText) {
+                $(`#${dropdownId} .dropdown-item`).removeClass('active');
+                $(`#${dropdownId} .dropdown-item[data-sort="all"], 
+                   #${dropdownId} .dropdown-item[data-transit="all"],
+                   #${dropdownId} .dropdown-item[data-waktu-type="all"],
+                   #${dropdownId} .dropdown-item[data-type-id="all"]`).addClass('active');
+                
+                const button = $(`#${buttonId}`);
+                button.html(defaultText);
+                button.removeClass('active');
 
-        // Filter button click handler
-        $('.filter-button').click(function() {
-            if (!$(this).hasClass('active')) {
-                $(this).toggleClass('active');
+                // Reload hasil pencarian default
+                $.ajax({
+                    url: "{{ route('search.flights') }}",
+                    method: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        $('#searchResults').html(response);
+                    }
+                });
             }
-        });
 
-        // Horizontal scroll for date navigation
-        const dateNav = document.querySelector('.date-scroll');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+            // Handle klik opsi "Semua" untuk setiap dropdown
+            $(document).on('click', '[data-sort="all"]', function(e) {
+                e.preventDefault();
+                resetFilter('urutanList', 'urutanFilterButton', `
+                    <i class="fas fa-sort"></i>
+                    Urutkan
+                    <i class="fas fa-chevron-down"></i>
+                `);
+            });
 
-        dateNav.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - dateNav.offsetLeft;
-            scrollLeft = dateNav.scrollLeft;
-        });
+            $(document).on('click', '[data-transit="all"]', function(e) {
+                e.preventDefault();
+                resetFilter('transitList', 'transitFilterButton', `
+                    <i class="fas fa-plane"></i>
+                    Transit
+                    <i class="fas fa-chevron-down"></i>
+                `);
+            });
 
-        dateNav.addEventListener('mouseleave', () => {
-            isDown = false;
-        });
+            $(document).on('click', '[data-waktu-type="all"]', function(e) {
+                e.preventDefault();
+                resetFilter('waktuList', 'waktuFilterButton', `
+                    <i class="fas fa-clock"></i>
+                    Waktu
+                    <i class="fas fa-chevron-down"></i>
+                `);
+            });
 
-        dateNav.addEventListener('mouseup', () => {
-            isDown = false;
-        });
+            $(document).on('click', '[data-type-id="all"]', function(e) {
+                e.preventDefault();
+                resetFilter('typePesawatList', 'typeFilterButton', `
+                    <i class="fas fa-plane"></i>
+                    Type Pesawat
+                    <i class="fas fa-chevron-down"></i>
+                `);
+            });
 
-        dateNav.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - dateNav.offsetLeft;
-            const walk = (x - startX) * 2;
-            dateNav.scrollLeft = scrollLeft - walk;
+            // Handle klik tipe pesawat
+            $(document).on('click', '#typePesawatList .dropdown-item', function(e) {
+                e.preventDefault();
+                let typeId = $(this).data('type-id');
+                
+                // Update active state
+                $('#typePesawatList .dropdown-item').removeClass('active');
+                $(this).addClass('active');
+
+                // Update button text
+                if (typeId === 'all') {
+                    $('#typeFilterButton').html(`
+                        <i class="fas fa-plane"></i>
+                        Semua Tipe Pesawat
+                        <i class="fas fa-chevron-down"></i>
+                    `);
+                } else {
+                    $('#typeFilterButton').html(`
+                        <i class="fas fa-plane"></i>
+                        ${$(this).find('.type-name').text()}
+                        <i class="fas fa-chevron-down"></i>
+                    `);
+                }
+
+                // Filter results
+                $.ajax({
+                    url: "{{ route('search.filter-type') }}",
+                    method: 'POST',
+                    data: {
+                        type_id: typeId === 'all' ? null : typeId,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        $('#searchResults').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            // Date item click handler
+            $('.date-item').click(function() {
+                $('.date-item').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Filter button click handler
+            $('.filter-button').click(function() {
+                // Jika button ini adalah bagian dari dropdown, jangan lakukan apa-apa
+                if ($(this).hasClass('dropdown-toggle')) {
+                    return;
+                }
+                
+                // Toggle active class pada button yang diklik
+                $(this).toggleClass('active');
+                
+                // Jika button menjadi tidak aktif, reset filter
+                if (!$(this).hasClass('active')) {
+                    // Di sini bisa ditambahkan logika untuk reset filter
+                    // Misalnya reload hasil pencarian default
+                    $.ajax({
+                        url: "{{ route('search.flights') }}",
+                        method: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            $('#searchResults').html(response);
+                        }
+                    });
+                }
+            });
+
+            // Handle dropdown menu close
+            $('.dropdown').on('hide.bs.dropdown', function () {
+                const button = $(this).find('.filter-button');
+                const activeItems = $(this).find('.dropdown-item.active');
+                
+                // Jika tidak ada item yang aktif, hapus kelas active dari button
+                if (activeItems.length === 0) {
+                    button.removeClass('active');
+                }
+            });
+
+            // Handle dropdown item click
+            $('.dropdown-menu .dropdown-item').click(function() {
+                const dropdownButton = $(this).closest('.dropdown').find('.filter-button');
+                dropdownButton.addClass('active');
+            });
+
+            // Handle klik di luar dropdown untuk menutup
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+
+            // Tambahkan handler untuk reset filter ketika mengklik item "Semua" atau "Reset"
+            $('.dropdown-item[data-type-id="all"], .dropdown-item[data-sort="rekomendasi"]').click(function() {
+                const dropdownButton = $(this).closest('.dropdown').find('.filter-button');
+                dropdownButton.removeClass('active');
+            });
+
+            // Handle klik waktu
+            $(document).on('click', '#waktuList .dropdown-item', function(e) {
+                e.preventDefault();
+                let waktuType = $(this).data('waktu-type');
+                let startTime = $(this).data('start');
+                let endTime = $(this).data('end');
+                
+                // Update active state dalam section yang sama
+                const section = $(this).closest('.waktu-section');
+                section.find('.dropdown-item').removeClass('active');
+                $(this).addClass('active');
+
+                // Update button text
+                if (waktuType === 'all') {
+                    $('#waktuFilterButton').html(`
+                        <i class="fas fa-clock"></i>
+                        Waktu
+                        <i class="fas fa-chevron-down"></i>
+                    `);
+                    
+                    // Reset filter waktu
+                    $.ajax({
+                        url: "{{ route('search.flights') }}",
+                        method: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            $('#searchResults').html(response);
+                        }
+                    });
+                    return;
+                }
+
+                $('#waktuFilterButton').html(`
+                    <i class="fas fa-clock"></i>
+                    ${waktuType === 'pergi' ? 'Pergi' : 'Tiba'} ${startTime}-${endTime}
+                    <i class="fas fa-chevron-down"></i>
+                `);
+
+                // Filter results
+                $.ajax({
+                    url: "{{ route('search.filter-waktu') }}",
+                    method: 'POST',
+                    data: {
+                        waktu_type: waktuType,
+                        start_time: startTime,
+                        end_time: endTime,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        $('#searchResults').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            // Handle klik urutan
+            $(document).on('click', '#urutanList .dropdown-item', function(e) {
+                e.preventDefault();
+                let sortBy = $(this).data('sort');
+                
+                // Update active state
+                $('#urutanList .dropdown-item').removeClass('active');
+                $(this).addClass('active');
+
+                // Update button text
+                $('#urutanFilterButton').html(`
+                    <i class="fas fa-sort"></i>
+                    ${$(this).find('.urutan-name').text()}
+                    <i class="fas fa-chevron-down"></i>
+                `);
+
+                // Filter results
+                $.ajax({
+                    url: "{{ route('search.filter-urutan') }}",
+                    method: 'POST',
+                    data: {
+                        sort_by: sortBy,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        $('#searchResults').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
         });
     </script>
 </body>

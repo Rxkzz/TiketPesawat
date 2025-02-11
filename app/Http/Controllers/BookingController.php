@@ -26,9 +26,6 @@ class BookingController extends Controller
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Debug: Log request data
-        \Log::info('Booking Request:', $request->all());
-
         // Validasi input
         $validated = $request->validate([
             'flight_id' => 'required|exists:rute,id_rute',
@@ -56,8 +53,8 @@ class BookingController extends Controller
                 'id_rute' => $flight->id_rute,
                 'tujuan' => $flight->tujuan,
                 'tanggal_berangkat' => $flight->tanggal_berangkat,
-                'jam_cekin' => Carbon::parse($flight->waktu_keberangkatan)->subHours(2)->format('H:i:s'),
-                'jam_berangkat' => $flight->waktu_keberangkatan,
+                'jam_cekin' => Carbon::parse($flight->waktu_berangkat)->subHours(2)->format('H:i:s'),
+                'jam_berangkat' => $flight->waktu_berangkat,
                 'total_bayar' => $flight->total_harga,
                 'nama_penumpang' => $validated['full_name'],
                 'nomor_identitas' => $validated['id_number'],
@@ -66,14 +63,7 @@ class BookingController extends Controller
                 'status_pembayaran' => 'PENDING'
             ]);
 
-            if (!$pemesanan) {
-                throw new \Exception('Gagal menyimpan pemesanan');
-            }
-
             DB::commit();
-
-            // Debug: Log created booking
-            \Log::info('Pemesanan created:', ['id' => $pemesanan->id_pemesanan]);
 
             return redirect()->route('booking.payment', ['id' => $pemesanan->id_pemesanan])
                 ->with('success', 'Pemesanan berhasil dibuat. Silahkan lakukan pembayaran.');
@@ -98,7 +88,6 @@ class BookingController extends Controller
 
             return view('customer.booking.payment', compact('booking'));
         } catch (\Exception $e) {
-            \Log::error('Payment View Error: ' . $e->getMessage());
             return redirect()->route('home')
                 ->with('error', 'Pemesanan tidak ditemukan atau sudah dibayar.');
         }
@@ -107,6 +96,8 @@ class BookingController extends Controller
     public function processPayment(Request $request, $id)
     {
         try {
+            DB::beginTransaction();
+            
             $booking = Pemesanan::where('id_pemesanan', $id)
                 ->where('id_pelanggan', auth('penumpang')->id())
                 ->where('status_pembayaran', 'PENDING')
@@ -121,20 +112,22 @@ class BookingController extends Controller
             $path = $request->file('payment_proof')->store('payment_proofs', 'public');
 
             // Update status pembayaran
-            $booking->update([
-                'status_pembayaran' => 'PAID',
-                'payment_method' => $request->payment_method,
-                'payment_proof' => $path,
-                'paid_at' => now()
-            ]);
+            $booking->status_pembayaran = 'PAID';
+            $booking->payment_method = $request->payment_method;
+            $booking->payment_proof = $path;
+            $booking->paid_at = now();
+            $booking->save();
+
+            DB::commit();
 
             return redirect()->route('booking.ticket', ['id' => $booking->id_pemesanan])
-                ->with('success', 'Pembayaran berhasil. E-ticket telah dikirim ke email Anda.');
+                ->with('success', 'Pembayaran berhasil. Silahkan lihat e-ticket Anda.');
 
         } catch (\Exception $e) {
-            \Log::error('Payment Process Error: ' . $e->getMessage());
+            DB::rollback();
+            \Log::error('Payment Error: ' . $e->getMessage());
             return back()
-                ->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage())
+                ->with('error', 'Terjadi kesalahan saat memproses pembayaran: ' . $e->getMessage())
                 ->withInput();
         }
     }
@@ -150,7 +143,6 @@ class BookingController extends Controller
 
             return view('customer.booking.ticket', compact('booking'));
         } catch (\Exception $e) {
-            \Log::error('Ticket View Error: ' . $e->getMessage());
             return redirect()->route('home')
                 ->with('error', 'E-ticket tidak ditemukan.');
         }

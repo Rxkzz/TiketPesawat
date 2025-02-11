@@ -21,6 +21,7 @@ class transportasi extends Model
         'kode',
         'jumlah_kursi',
         'keterangan',
+        'image',
         'id_type_transportasi',
     ];
 

@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('rute_awal');
             $table->string('rute_akhir');
             $table->integer('harga');
+            $table->string('gambar')->nullable();
             $table->foreignId('id_transportasi')->constrained('transportasi', 'id_transportasi');
             $table->date('tanggal_berangkat');
-            $table->time('waktu_keberangkatan');
+            $table->time('waktu_berangkat');
+            $table->time('waktu_tiba');
             $table->timestamps();
         });
     }

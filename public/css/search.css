@@ -1,0 +1,259 @@
+.filter-section {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.maskapai-dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.maskapai-dropdown .dropdown-menu {
+    padding: 8px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+}
+
+.maskapai-dropdown .dropdown-item {
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.maskapai-dropdown .dropdown-item:hover,
+.maskapai-dropdown .dropdown-item.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.flight-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+}
+
+.airline-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.airline-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.airline-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.airline-name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.flight-type {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.flight-code {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.flight-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.departure, .arrival {
+    text-align: center;
+}
+
+.time {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.city {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.flight-duration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.duration-line {
+    width: 120px;
+    height: 2px;
+    background: #e9ecef;
+    position: relative;
+}
+
+.duration-line i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+}
+
+.duration-text {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.price-info {
+    text-align: right;
+}
+
+.price {
+    margin-bottom: 8px;
+}
+
+.currency {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.per-person {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.class-info {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 12px;
+}
+
+.book-btn {
+    padding: 8px 24px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.book-btn i {
+    font-size: 12px;
+}
+
+.maskapai-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 8px;
+}
+
+.maskapai-info, .type-info {
+    flex: 1;
+}
+
+.maskapai-name {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.type-name {
+    color: #666;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.text-muted {
+    color: #888;
+    font-size: 12px;
+}
+
+.dropdown-item:hover .maskapai-name {
+    color: var(--primary-color);
+}
+
+.dropdown-item.active .maskapai-name {
+    color: white;
+}
+
+.dropdown-item.active .text-muted {
+    color: rgba(255,255,255,0.8);
+}
+
+.dropdown-header {
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 8px 16px;
+    font-size: 14px;
+    background: #f8f9fa;
+    margin-top: 4px;
+}
+
+.dropdown-divider {
+    margin: 4px 0;
+    border-color: #e9ecef;
+}
+
+.maskapai-item {
+    padding: 8px 0;
+}
+
+.maskapai-info {
+    padding-left: 16px;
+}
+
+.maskapai-name {
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.text-muted {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.dropdown-item:hover .maskapai-name {
+    color: var(--primary-color);
+}
+
+.dropdown-item.active .maskapai-name,
+.dropdown-item.active .text-muted {
+    color: white;
+} 

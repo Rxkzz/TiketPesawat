@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode');
             $table->integer('jumlah_kursi');
             $table->text('keterangan')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('id_type_transportasi')->constrained('type_transportasi', 'id_type_transportasi');
             $table->timestamps();
         });

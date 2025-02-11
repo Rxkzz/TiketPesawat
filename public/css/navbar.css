@@ -157,4 +157,25 @@
         right: 0;
         z-index: 1000;
     }
+}
+
+.navbar-brand {
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: all 0.2s;
+}
+
+.navbar-brand:hover {
+    color: #6851FF;
+}
+
+.navbar-brand svg {
+    width: 32px;
+    height: 32px;
+    color: #6851FF;
+}
+
+.navbar-brand span {
+    font-weight: 600;
+    font-size: 1.25rem;
 } 

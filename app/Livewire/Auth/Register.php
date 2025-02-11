@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class Register extends Component
 {
     public $username;
+    public $email;
     public $password;
     public $nama_penumpang;
     public $alamat_penumpang;
@@ -18,6 +19,7 @@ class Register extends Component
 
     protected $rules = [
         'username' => 'required|unique:penumpangs|min:3',
+        'email' => 'required|email|unique:penumpangs',
         'password' => 'required|min:6',
         'nama_penumpang' => 'required|min:3',
         'alamat_penumpang' => 'required',
@@ -32,6 +34,7 @@ class Register extends Component
 
         $penumpang = Penumpang::create([
             'username' => $this->username,
+            'email' => $this->email,
             'password' => Hash::make($this->password),
             'nama_penumpang' => $this->nama_penumpang,
             'alamat_penumpang' => $this->alamat_penumpang,

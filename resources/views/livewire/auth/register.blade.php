@@ -38,6 +38,26 @@
                             </div>
                             @error('username') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
+
+                        <!-- Email field -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="email">
+                                Email
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </span>
+                                <input wire:model="email" 
+                                    class="pl-10 w-full rounded-lg border border-gray-300/50 bg-white/90 px-4 py-2.5 text-gray-700 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300" 
+                                    id="email" 
+                                    type="email"
+                                    placeholder="Masukkan email">
+                            </div>
+                            @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
                         
                         <!-- Password field -->
                         <div>

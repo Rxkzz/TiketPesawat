@@ -30,26 +30,26 @@
             <!-- Main Nav Menu -->
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/pesawat">Pesawat</a>
+                    <a class="nav-link" href="/">Pesawat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Hotel</a>
+                    <a class="nav-link" href="#">Hotel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Kereta</a>
+                    <a class="nav-link" href="#">Kereta</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMore" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Lainnya
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMore">
-                        <a class="dropdown-item" href="/car-rental">
+                        <a class="dropdown-item" href="#">
                             <i class="fas fa-car me-2"></i>Car Rental
                         </a>
-                        <a class="dropdown-item" href="/events">
+                        <a class="dropdown-item" href="#">
                             <i class="fas fa-calendar-alt me-2"></i>Events
                         </a>
-                        <a class="dropdown-item" href="/attractions">
+                        <a class="dropdown-item" href="#">
                             <i class="fas fa-map-marker-alt me-2"></i>Attractions
                         </a>
                     </div>
@@ -70,7 +70,7 @@
                             <a class="dropdown-item" href="">
                                 <i class="fas fa-user-edit me-2"></i>Edit Profile
                             </a>
-                            <a class="dropdown-item" href="{{ route('booking.history') }}">
+                            <a class="dropdown-item" href="{{ route('booking.my-bookings') }}">
                                 <i class="fas fa-ticket-alt me-2"></i>My Bookings
                             </a>
                             <div class="dropdown-divider"></div>
@@ -103,25 +103,3 @@
 
 <!-- Styles -->
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-<style>
-    .navbar-brand {
-        text-decoration: none;
-        color: #1a1a1a;
-        transition: all 0.2s;
-    }
-    
-    .navbar-brand:hover {
-        color: #6851FF;
-    }
-
-    .navbar-brand svg {
-        width: 32px;
-        height: 32px;
-        color: #6851FF;
-    }
-
-    .navbar-brand span {
-        font-weight: 600;
-        font-size: 1.25rem;
-    }
-</style> 

@@ -19,6 +19,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TimePicker;
 use Carbon\Carbon;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 
 class RuteResource extends Resource
 {
@@ -45,6 +46,22 @@ class RuteResource extends Resource
                     ->label('Rute Akhir')
                     ->required() 
                     ->maxLength(255),           
+                FileUpload::make('gambar')
+                    ->label('Gambar Rute')
+                    ->image()
+                    ->directory('rute-images')
+                    ->preserveFilenames()
+                    ->maxSize(5120)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
+                    ->disk('public')
+                    ->downloadable()
+                    ->openable()
+                    ->previewable()
+                    ->imageEditor()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->imageResizeTargetWidth('1920')
+                    ->imageResizeTargetHeight('1080'),
                 TextInput::make('harga')
                     ->label('Harga Dasar')
                     ->required() 
@@ -86,9 +103,14 @@ class RuteResource extends Resource
                     ->label('Tanggal Berangkat')
                     ->required()
                     ->format('Y-m-d'),
-                TimePicker::make('waktu_keberangkatan')
-                    ->label('Waktu Keberangkatan')
-                    ->required(),
+                TimePicker::make('waktu_berangkat')
+                    ->label('Waktu Berangkat')
+                    ->required()
+                    ->format('H:i:s'),
+                TimePicker::make('waktu_tiba')
+                    ->label('Waktu Tiba')
+                    ->required()
+                    ->format('H:i:s'),
             ]);
     }
   
@@ -108,6 +130,9 @@ class RuteResource extends Resource
                 TextColumn::make('rute_akhir')
                     ->label('Rute Akhir')
                     ->searchable(),             
+                Tables\Columns\ImageColumn::make('gambar')
+                    ->label('Gambar')
+                    ->circular(),
                 TextColumn::make('harga')
                     ->label('Harga Dasar')
                     ->money('idr'),   
@@ -123,8 +148,11 @@ class RuteResource extends Resource
                 TextColumn::make('tanggal_berangkat')
                     ->label('Tanggal Berangkat')
                     ->date(),
-                TextColumn::make('waktu_keberangkatan')
-                    ->label('Waktu Keberangkatan')
+                TextColumn::make('waktu_berangkat')
+                    ->label('Waktu Berangkat')
+                    ->time(),
+                TextColumn::make('waktu_tiba')
+                    ->label('Waktu Tiba')
                     ->time(),
                 TextColumn::make('class.nama_class')
                     ->label('Kelas')

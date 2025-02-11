@@ -24,8 +24,13 @@ class Login extends Component
             return redirect()->intended(route('filament.admin.pages.dashboard'));
         }
 
-        // Coba login sebagai penumpang
+        // Coba login sebagai penumpang dengan username
         if (Auth::guard('penumpang')->attempt(['username' => $this->username, 'password' => $this->password])) {
+            return redirect()->intended(route('home'));
+        }
+
+        // Coba login sebagai penumpang dengan email
+        if (Auth::guard('penumpang')->attempt(['email' => $this->username, 'password' => $this->password])) {
             return redirect()->intended(route('home'));
         }
 

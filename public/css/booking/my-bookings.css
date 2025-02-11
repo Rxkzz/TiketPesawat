@@ -1,0 +1,184 @@
+.bookings-container {
+    max-width: 1200px;
+    margin: 32px auto;
+    padding: 60px 20px 32px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.booking-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.booking-card:hover {
+    transform: translateY(-2px);
+}
+
+.booking-header {
+    background: linear-gradient(135deg, #6851FF, #8B74FF);
+    padding: 16px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-code {
+    font-weight: 600;
+}
+
+.booking-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status-paid {
+    background: #10B981;
+}
+
+.status-pending {
+    background: #F59E0B;
+}
+
+.status-cancelled {
+    background: #EF4444;
+}
+
+.booking-body {
+    padding: 20px;
+}
+
+.flight-info {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 16px;
+    background: #F8F9FA;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.airline-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.route-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.city-pair {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.departure, .arrival {
+    text-align: center;
+}
+
+.city {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.time {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.booking-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #F8F9FA;
+}
+
+.price-info {
+    font-weight: 600;
+    color: #6851FF;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-view {
+    background: #6851FF;
+    color: white;
+}
+
+.btn-view:hover {
+    background: #5842FF;
+    color: white;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.empty-icon {
+    font-size: 48px;
+    color: #6B7280;
+    margin-bottom: 16px;
+}
+
+.empty-text {
+    color: #6B7280;
+    margin-bottom: 24px;
+}
+
+.btn-book {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #6851FF;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-book:hover {
+    background: #5842FF;
+    color: white;
+}

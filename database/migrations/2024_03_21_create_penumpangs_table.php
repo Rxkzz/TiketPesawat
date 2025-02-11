@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('penumpangs', function (Blueprint $table) {
             $table->id('id_penumpang');
             $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('nama_penumpang');
             $table->text('alamat_penumpang');
