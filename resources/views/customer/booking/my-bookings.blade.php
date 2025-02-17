@@ -11,6 +11,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/booking/my-bookings.css') }}">
 
+    <style>
+        .status-waiting {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+        
+        .btn-waiting {
+            background-color: #FEF3C7;
+            color: #D97706;
+            border: 1px solid #D97706;
+        }
+        
+        .btn-waiting:hover {
+            background-color: #FDE68A;
+            color: #D97706;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
@@ -41,14 +65,25 @@
                         <i class="fas fa-hashtag"></i>
                         {{ $booking->kode_pemesanan }}
                     </div>
-                    <div class="booking-status {{ $booking->status_pembayaran == 'PAID' ? 'status-paid' : ($booking->status_pembayaran == 'PENDING' ? 'status-pending' : 'status-cancelled') }}">
-                        {{ $booking->status_pembayaran }}
+                    <div class="status-badge 
+                        @if($booking->status_pembayaran == 'PAID')
+                            status-paid
+                        @elseif($booking->status_pembayaran == 'PENDING')
+                            status-pending
+                        @elseif($booking->status_pembayaran == 'WAITING_CONFIRMATION')
+                            status-waiting
+                        @endif">
+                        @if($booking->status_pembayaran == 'WAITING_CONFIRMATION')
+                            MENUNGGU VERIFIKASI
+                        @else
+                            {{ $booking->status_pembayaran }}
+                        @endif
                     </div>
                 </div>
 
                 <div class="booking-body">
                     <div class="flight-info">
-                        <img src="{{ asset('images/airlines/' . $booking->rute->transportasi->kode . '.png') }}" 
+                        <img src="{{ $booking->rute->transportasi->image ? asset('storage/' . $booking->rute->transportasi->image) : asset('storage/maskapai-images/garuda.png') }}" 
                              alt="Airline Logo" 
                              class="airline-logo">
                         
@@ -78,6 +113,11 @@
                                 <i class="fas fa-eye"></i>
                                 Lihat E-Ticket
                             </a>
+                        @elseif($booking->status_pembayaran == 'WAITING_CONFIRMATION')
+                            <a href="{{ route('booking.payment', $booking->id_pemesanan) }}" class="btn-action btn-waiting">
+                                <i class="fas fa-clock"></i>
+                                Sedang Diverifikasi
+                            </a>
                         @else
                             <a href="{{ route('booking.payment', $booking->id_pemesanan) }}" class="btn-action btn-view">
                                 <i class="fas fa-credit-card"></i>
@@ -91,3 +131,4 @@
     @endif
 </div>
 </body>
+</html>

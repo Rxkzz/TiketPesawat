@@ -2,20 +2,66 @@
     --primary-color: #6851FF;
     --text-color: #1E1E1E;
     --border-color: #E5E7EB;
+    --gradient-start: #2F80ED;
+    --gradient-end: #56CCF2;
+    --primary-purple: #6851FF;
+    --light-purple: #F5F3FF;
 }
 
+/* Reset navbar styles */
 .navbar {
-    background: #FFFFFF;
-    padding: 8px 0;
-    height: 64px;
-    border-bottom: 1px solid var(--border-color);
+    background: white !important;
+    padding: 12px 0 !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    height: auto !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
-.navbar-brand img {
+.navbar .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Logo styles */
+.navbar-brand {
+    text-decoration: none;
+    color: var(--primary-purple);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+
+.navbar-brand svg {
     height: 32px;
+    width: 32px;
+    margin-right: 8px;
 }
 
-/* Search styles */
+.navbar-brand span {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* Navigation links */
+.nav-link {
+    color: var(--text-color) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+    transition: color 0.3s ease !important;
+}
+
+.nav-link:hover {
+    color: var(--primary-purple) !important;
+}
+
+/* Search bar style */
 .nav-search {
     position: relative;
     width: 300px;
@@ -37,6 +83,7 @@
     border-radius: 8px;
     background: #F3F4F6;
     font-size: 14px;
+    color: var(--text-dark);
 }
 
 .search-icon {
@@ -82,61 +129,65 @@
     }
 }
 
-.search-input:focus + .placeholder-animation {
-    display: none;
-}
-
-.search-input:focus {
-    outline: none;
-    background: #FFFFFF;
-    box-shadow: 0 0 0 2px var(--primary-color);
-}
-
-/* Navigation styles */
-.nav-link {
-    color: var(--text-color);
-    font-size: 14px;
-    font-weight: 500;
-    padding: 8px 16px;
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-}
-
 /* Button styles */
+.btn-light, .btn-primary {
+    border-radius: 20px !important;
+    padding: 8px 24px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
 .btn-light {
-    background: #F3F4F6;
-    border: none;
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 500;
+    background: var(--light-purple) !important;
+    color: var(--primary-purple) !important;
+    border: none !important;
 }
 
 .btn-primary {
-    background: var(--primary-color);
-    border: none;
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 500;
+    background: var(--primary-purple) !important;
+    border: none !important;
+    color: white !important;
 }
 
 .btn-primary:hover {
-    background: #5842FF;
+    background: #5842FF !important;
+    transform: translateY(-1px) !important;
 }
 
-/* Dropdown styles */
+/* Dropdown menu style */
 .dropdown-menu {
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 8px;
+    border: none !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+    min-width: 200px !important;
 }
 
 .dropdown-item {
-    font-size: 14px;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.dropdown-item:hover {
+    background: var(--light-purple) !important;
+    color: var(--primary-purple) !important;
+}
+
+.dropdown-divider {
+    margin: 4px 0;
+    border-color: #e9ecef;
+}
+
+/* User profile */
+.rounded-circle {
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 /* Responsive styles */
@@ -153,29 +204,13 @@
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         position: absolute;
         top: 100%;
-        left: 0;
-        right: 0;
+        left: 16px;
+        right: 16px;
         z-index: 1000;
     }
-}
 
-.navbar-brand {
-    text-decoration: none;
-    color: #1a1a1a;
-    transition: all 0.2s;
-}
-
-.navbar-brand:hover {
-    color: #6851FF;
-}
-
-.navbar-brand svg {
-    width: 32px;
-    height: 32px;
-    color: #6851FF;
-}
-
-.navbar-brand span {
-    font-weight: 600;
-    font-size: 1.25rem;
+    .auth-buttons {
+        margin-top: 16px;
+        justify-content: center;
+    }
 } 

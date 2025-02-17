@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/search/results.css') }}">
     
     <style>
@@ -120,10 +121,10 @@
             
             <div class="dropdown">
                 <button class="filter-button" type="button" id="urutanFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-sort"></i>
-                    Urutkan
-                    <i class="fas fa-chevron-down"></i>
-                </button>
+                <i class="fas fa-sort"></i>
+                Urutkan
+                <i class="fas fa-chevron-down"></i>
+            </button>
                 <ul class="dropdown-menu" aria-labelledby="urutanFilterButton" id="urutanList">
                     <li><a class="dropdown-item active" href="#" data-sort="all">
                         <div class="urutan-item">
@@ -170,10 +171,10 @@
             </div>
             <div class="dropdown">
                 <button class="filter-button" type="button" id="transitFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-plane"></i>
-                    Transit
-                    <i class="fas fa-chevron-down"></i>
-                </button>
+                <i class="fas fa-plane"></i>
+                Transit
+                <i class="fas fa-chevron-down"></i>
+            </button>
                 <ul class="dropdown-menu" aria-labelledby="transitFilterButton" id="transitList">
                     <li><a class="dropdown-item active" href="#" data-transit="all">
                         <div class="transit-item">
@@ -195,10 +196,10 @@
             </div>
             <div class="dropdown">
                 <button class="filter-button" type="button" id="waktuFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-clock"></i>
-                    Waktu
-                    <i class="fas fa-chevron-down"></i>
-                </button>
+                <i class="fas fa-clock"></i>
+                Waktu
+                <i class="fas fa-chevron-down"></i>
+            </button>
                 <ul class="dropdown-menu dropdown-menu-lg" aria-labelledby="waktuFilterButton" id="waktuList">
                     <div class="waktu-filter-container">
                         <div class="waktu-section">
@@ -277,8 +278,8 @@
                 <button class="filter-button" type="button" id="typeFilterButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-plane"></i>
                     Type Pesawat
-                    <i class="fas fa-chevron-down"></i>
-                </button>
+                <i class="fas fa-chevron-down"></i>
+            </button>
                 <ul class="dropdown-menu" aria-labelledby="typeFilterButton" id="typePesawatList">
                     <li><a class="dropdown-item active" href="#" data-type-id="all">
                         <div class="type-item">
@@ -316,7 +317,7 @@
         <!-- Results Section -->
         <div id="searchResults">
             @include('customer.search.partials.results')
-        </div>
+            </div>
     </div>
     @include('customer.partials.footer')
 
@@ -426,14 +427,14 @@
                 });
             });
 
-            // Date item click handler
-            $('.date-item').click(function() {
-                $('.date-item').removeClass('active');
-                $(this).addClass('active');
-            });
+        // Date item click handler
+        $('.date-item').click(function() {
+            $('.date-item').removeClass('active');
+            $(this).addClass('active');
+        });
 
-            // Filter button click handler
-            $('.filter-button').click(function() {
+        // Filter button click handler
+        $('.filter-button').click(function() {
                 // Jika button ini adalah bagian dari dropdown, jangan lakukan apa-apa
                 if ($(this).hasClass('dropdown-toggle')) {
                     return;
@@ -550,7 +551,7 @@
 
             // Handle klik urutan
             $(document).on('click', '#urutanList .dropdown-item', function(e) {
-                e.preventDefault();
+            e.preventDefault();
                 let sortBy = $(this).data('sort');
                 
                 // Update active state

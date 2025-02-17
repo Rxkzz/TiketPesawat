@@ -17,110 +17,6 @@ body {
     padding-top: 64px;
 }
 
-/* Reset navbar styles yang bertabrakan */
-.navbar {
-    background: white !important;
-    padding: 12px 0 !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    height: auto !important;
-}
-
-.navbar .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 16px;
-}
-
-.nav-link {
-    color: var(--text-color) !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    padding: 8px 16px !important;
-    transition: color 0.3s ease !important;
-}
-
-.nav-link:hover {
-    color: var(--primary-purple) !important;
-}
-
-/* Override button styles */
-.btn-light, .btn-primary {
-    border-radius: 20px !important;
-    padding: 8px 24px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-}
-
-.btn-light {
-    background: var(--light-purple) !important;
-    color: var(--primary-purple) !important;
-    border: none !important;
-}
-
-.btn-primary {
-    background: var(--primary-purple) !important;
-    border: none !important;
-    color: white !important;
-}
-
-.btn-primary:hover {
-    background: #5842FF !important;
-    transform: translateY(-1px) !important;
-}
-
-/* Search bar style */
-.nav-search {
-    position: relative;
-    width: 300px;
-    margin: 0 24px;
-}
-
-.nav-search .search-input {
-    width: 100%;
-    padding: 8px 16px 8px 40px;
-    border: none;
-    border-radius: 8px;
-    background: #F3F4F6;
-    font-size: 14px;
-    color: var(--text-dark);
-}
-
-.nav-search .search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6B7280;
-}
-
-/* Dropdown menu style */
-.dropdown-menu {
-    border: none !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-    border-radius: 12px !important;
-    padding: 8px !important;
-    min-width: 200px !important;
-}
-
-.dropdown-item {
-    padding: 8px 16px !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    transition: all 0.3s ease !important;
-}
-
-
-/* Hapus style navbar yang bertabrakan */
-.nav-menu,
-.nav-item,
-.navbar-right,
-.auth-buttons,
-.btn-login,
-.btn-register {
-    all: unset;
-}
-
 .container{
     margin-top:80px;
 }
@@ -616,65 +512,6 @@ body {
     z-index: 1;
 }
 
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    list-style: none;
-    margin-top: 300px;
-    margin: 0;
-    padding: 0;
-    justify-self: center;
-}
-
-.nav-item {
-    font-size: 14px;
-    color: var(--text-dark);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.nav-item:hover {
-    color: var(--primary-purple);
-}
-
-.nav-item.dropdown {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.navbar-right {
-    justify-self: end;
-}
-
-.auth-buttons {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.btn-login {
-    color: var(--primary-purple);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    background: var(--light-purple);
-}
-
-.btn-register {
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    background: var(--primary-purple);
-}
-
-
 .search-select {
     width: 100%;
     border: none;
@@ -725,7 +562,6 @@ body {
     outline: none;
 }
 
-
 .search-btn {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     color: white;
@@ -747,26 +583,4 @@ body {
 .search-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(47, 128, 237, 0.4);
-}
-
-.dropdown-menu {
-border: none !important;
-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-border-radius: 12px !important;
-padding: 8px !important;
-min-width: 200px !important;
-left: auto !important;  
-right: auto !important; 
-transform: none !important; 
-margin-top: 8px !important; 
-}
-
-.nav-item.dropdown {
-position: relative !important; 
-}
-
-.dropdown-menu[data-bs-popper] {
-left: 0 !important; 
-right: auto !important; 
-top: 100% !important; 
 }

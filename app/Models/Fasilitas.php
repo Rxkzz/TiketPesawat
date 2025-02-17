@@ -15,7 +15,8 @@ class Fasilitas extends Model
     
     protected $fillable = [
         'nama_fasilitas',
-        'deskripsi'
+        'deskripsi',
+        'icon'
     ];
 
     public function classes(): BelongsToMany

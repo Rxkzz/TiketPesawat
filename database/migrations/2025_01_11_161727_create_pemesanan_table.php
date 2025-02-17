@@ -17,19 +17,20 @@ return new class extends Migration
             // Foreign key columns
             $table->unsignedBigInteger('id_pelanggan');
             $table->unsignedBigInteger('id_rute');
+            $table->integer('jumlah_penumpang');
             $table->unsignedBigInteger('id_petugas')->nullable();
             
-            $table->string('kode_kursi');
+            $table->string('kode_kursi')->nullable();
             $table->string('tujuan');
             $table->date('tanggal_berangkat');
-            $table->time('jam_cekin');
+            $table->time('jam_cekin')->nullable();
             $table->time('jam_berangkat');
             $table->decimal('total_bayar', 10, 2);
             $table->string('nama_penumpang');
             $table->string('nomor_identitas');
             $table->string('email');
             $table->string('nomor_telepon');
-            $table->enum('status_pembayaran', ['PENDING', 'PAID'])->default('PENDING');
+            $table->enum('status_pembayaran', ['PENDING', 'WAITING_CONFIRMATION', 'PAID'])->default('PENDING');
             $table->string('payment_method')->nullable();
             $table->string('payment_proof')->nullable();
             $table->timestamp('paid_at')->nullable();

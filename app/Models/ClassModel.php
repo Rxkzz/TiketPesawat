@@ -13,23 +13,15 @@ class ClassModel extends Model
 
     protected $table = 'class';
     protected $primaryKey = 'id_class';
-    
-    protected $fillable = [
-        'nama_class',
-        'harga_tambahan',
-        'bagasi',
-        'hiburan',
-        'keterangan'
-    ];
+    protected $guarded = [];
 
-    public function fasilitas(): BelongsToMany
+    public function fasilitas()
     {
-        return $this->belongsToMany(Fasilitas::class, 'class_fasilitas', 'id_class', 'id_fasilitas')
-                    ->withTimestamps();
+        return $this->belongsToMany(Fasilitas::class, 'class_fasilitas', 'id_class', 'id_fasilitas');
     }
 
-    public function rute(): HasMany
+    public function rute()
     {
-        return $this->hasMany(Rute::class, 'id_class', 'id_class');
+        return $this->hasMany(Rute::class, 'id_class');
     }
 } 

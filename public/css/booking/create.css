@@ -123,6 +123,7 @@ body {
 
 .price-total {
     border-top: 2px dashed var(--border-color);
+    color: #0d6efd;
     margin-top: 12px;
     padding-top: 12px;
     font-weight: 700;

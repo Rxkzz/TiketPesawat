@@ -29,83 +29,93 @@
     @endif
 
     <div class="ticket-container">
-        <div class="ticket-card">
-            <div class="ticket-header">
-                <div class="booking-code">{{ $booking->kode_pemesanan }}</div>
-                <div class="booking-status">E-Ticket</div>
-            </div>
+        @php
+            $nama_penumpang = explode(', ', $booking->nama_penumpang);
+            $nomor_identitas = explode(', ', $booking->nomor_identitas);
+        @endphp
+        
+        @for($i = 0; $i < count($nama_penumpang); $i++)
+            <div class="ticket-card mb-4">
+                <div class="ticket-header">
+                    <div class="booking-code">{{ $booking->kode_pemesanan }}-{{ $i + 1 }}</div>
+                    <div class="booking-status">E-Ticket</div>
+                </div>
 
-            <div class="ticket-body">
-                <div class="flight-info">
-                    <img src="{{ asset('images/airlines/' . $booking->rute->transportasi->kode . '.png') }}" 
-                         alt="Airline Logo" 
-                         class="airline-logo">
-                    <div class="route-info">
-                        <div class="city-pair">
-                            <div>
-                                <div class="city">{{ $booking->rute->rute_awal }}</div>
-                                <div class="airport">Terminal 3</div>
+                <div class="ticket-body">
+                    <div class="flight-info">
+                        <img src="{{ $booking->rute->transportasi->image ? asset('storage/' . $booking->rute->transportasi->image) : asset('storage/maskapai-images/garuda.png') }}" 
+                            alt="Airline Logo" 
+                            class="airline-logo">
+                        <div class="route-info">
+                            <div class="city-pair">
+                                <div>
+                                    <div class="city">{{ $booking->rute->rute_awal }}</div>
+                                    <div class="airport">Terminal 3</div>
+                                </div>
+                                <i class="fas fa-plane"></i>
+                                <div>
+                                    <div class="city">{{ $booking->rute->tujuan }}</div>
+                                    <div class="airport">Terminal 2</div>
+                                </div>
                             </div>
-                            <i class="fas fa-plane"></i>
-                            <div>
-                                <div class="city">{{ $booking->rute->tujuan }}</div>
-                                <div class="airport">Terminal 2</div>
+                            <div class="flight-number">
+                                {{ $booking->rute->transportasi->keterangan }} - {{ $booking->rute->transportasi->kode }}
                             </div>
                         </div>
-                        <div class="flight-number">
-                            {{ $booking->rute->transportasi->nama }} - {{ $booking->rute->transportasi->kode }}
+                    </div>
+
+                    <div class="flight-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Tanggal Keberangkatan</div>
+                            <div class="detail-value">
+                                {{ \Carbon\Carbon::parse($booking->tanggal_berangkat)->format('d M Y') }}
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Waktu Keberangkatan</div>
+                            <div class="detail-value">{{ $booking->jam_berangkat }}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Check-in</div>
+                            <div class="detail-value">{{ $booking->jam_cekin }}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Nomor Kursi</div>
+                            <div class="detail-value">{{ $booking->kode_kursi ? explode(', ', $booking->kode_kursi)[$i] ?? 'TBA' : 'TBA' }}</div>
                         </div>
                     </div>
-                </div>
 
-                <div class="flight-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Tanggal Keberangkatan</div>
-                        <div class="detail-value">
-                            {{ \Carbon\Carbon::parse($booking->tanggal_berangkat)->format('d M Y') }}
+                    <div class="passenger-info">
+                        <h3 class="section-title">Detail Penumpang</h3>
+                        <div class="passenger-item">
+                            <h4 class="passenger-title">Penumpang {{ $i + 1 }}</h4>
+                            <div class="detail-item">
+                                <div class="detail-label">Nama Lengkap</div>
+                                <div class="detail-value">{{ $nama_penumpang[$i] }}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Nomor Identitas</div>
+                                <div class="detail-value">{{ $nomor_identitas[$i] }}</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Waktu Keberangkatan</div>
-                        <div class="detail-value">{{ $booking->jam_berangkat }}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Check-in</div>
-                        <div class="detail-value">{{ $booking->jam_cekin }}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Nomor Kursi</div>
-                        <div class="detail-value">{{ $booking->kode_kursi }}</div>
-                    </div>
-                </div>
 
-                <div class="passenger-info">
-                    <h3 class="section-title">Detail Penumpang</h3>
-                    <div class="detail-item">
-                        <div class="detail-label">Nama Lengkap</div>
-                        <div class="detail-value">{{ $booking->nama_penumpang }}</div>
+                    <div class="qr-section">
+                        {!! QrCode::size(160)->generate($booking->kode_pemesanan . '-' . ($i + 1)) !!}
+                        <div class="detail-label">Scan untuk check-in</div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Nomor Identitas</div>
-                        <div class="detail-value">{{ $booking->nomor_identitas }}</div>
+
+                    <div class="action-buttons no-print">
+                        <button onclick="window.print()" class="btn-action btn-download">
+                            <i class="fas fa-download"></i> Download E-Ticket
+                        </button>
+                        <button onclick="shareTicket()" class="btn-action btn-share">
+                            <i class="fas fa-share-alt"></i> Bagikan
+                        </button>
                     </div>
-                </div>
-
-                <div class="qr-section">
-                    {!! QrCode::size(160)->generate($booking->kode_pemesanan) !!}
-                    <div class="detail-label">Scan untuk check-in</div>
-                </div>
-
-                <div class="action-buttons no-print">
-                    <button onclick="window.print()" class="btn-action btn-download">
-                        <i class="fas fa-download"></i> Download E-Ticket
-                    </button>
-                    <button onclick="shareTicket()" class="btn-action btn-share">
-                        <i class="fas fa-share-alt"></i> Bagikan
-                    </button>
                 </div>
             </div>
-        </div>
+        @endfor
     </div>
 
     <script>

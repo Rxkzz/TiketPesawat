@@ -19,7 +19,6 @@ class transportasi extends Model
     // Menentukan atribut yang dapat diisi secara massal
     protected $fillable = [
         'kode',
-        'jumlah_kursi',
         'keterangan',
         'image',
         'id_type_transportasi',

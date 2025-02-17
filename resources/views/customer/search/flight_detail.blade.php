@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Penerbangan - {{ $flight->transportasi->nama }}</title>
+    <title>Detail Penerbangan - {{ $flight->transportasi->keterangan }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/search/flight_detail.css') }}">
     <style>
         body {
@@ -18,60 +19,131 @@
     @include('customer.partials.navbar')
 
     <div class="main-container">
-        
         <div class="detail-card">
             <div class="flight-header">
                 <div class="route-info">
                     <h1>{{ $flight->rute_awal }} → {{ $flight->tujuan }}</h1>
                 </div>
                 <div class="passenger-info">
-                    1 Dewasa
+                    <div class="passenger-counter">
+                        <label>Jumlah Penumpang:</label>
+                        <div class="counter-controls">
+                            <button type="button" class="btn-counter" onclick="updatePassengers(-1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" id="passenger-count" value="1" min="1" max="{{ $flight->kursi_tersedia }}" readonly>
+                            <button type="button" class="btn-counter" onclick="updatePassengers(1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="flight-section">
-                <div class="departure-info">
-                    <div class="time-location">
-                        <div class="time">{{ \Carbon\Carbon::parse($flight->waktu_berangkat)->format('H:i') }}</div>
-                        <div class="location">Soekarno Hatta - Terminal 3 Domestik</div>
-                        <div class="date">{{ \Carbon\Carbon::parse($flight->tanggal_berangkat)->format('d M') }}</div>
-                    </div>
-                </div>
-
-                <div class="airline-detail">
+                <div class="airline-info">
                     <img src="{{ $flight->transportasi->image ? asset('storage/' . $flight->transportasi->image) : asset('storage/maskapai-images/garuda.png') }}" 
                          alt="{{ $flight->transportasi->keterangan }}" 
                          class="airline-logo">
-                    <div class="airline-info">
-                        <span>{{ $flight->transportasi->keterangan }}</span>
-                        <span class="flight-number">{{ $flight->transportasi->kode }} • {{ $flight->class->nama_class }} • {{ \Carbon\Carbon::parse($flight->waktu_berangkat)->diffInMinutes(\Carbon\Carbon::parse($flight->waktu_tiba)) }}m</span>
+                    <div class="airline-details">
+                        <span class="airline-name">{{ $flight->transportasi->keterangan }}</span>
+                        <span class="flight-code">{{ $flight->transportasi->kode }}</span>
+                    </div>
+                </div>
+
+                <div class="flight-schedule">
+                    <div class="time-info">
+                        <div class="departure">
+                            <div class="time">{{ \Carbon\Carbon::parse($flight->waktu_berangkat)->format('H:i') }}</div>
+                            <div class="date">{{ \Carbon\Carbon::parse($flight->tanggal_berangkat)->format('d M Y') }}</div>
+                            <div class="airport">{{ $flight->rute_awal }}</div>
+                            <div class="terminal">Terminal 1 Domestik</div>
+                        </div>
+                        <div class="duration">
+                            <div class="duration-line">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                            <div class="duration-time">
+                                {{ \Carbon\Carbon::parse($flight->waktu_berangkat)->diffInMinutes(\Carbon\Carbon::parse($flight->waktu_tiba)) }} menit
+                            </div>
+                            <div class="flight-type">Langsung</div>
+                        </div>
+                        <div class="arrival">
+                            <div class="time">{{ \Carbon\Carbon::parse($flight->waktu_tiba)->format('H:i') }}</div>
+                            <div class="date">{{ \Carbon\Carbon::parse($flight->tanggal_berangkat)->format('d M Y') }}</div>
+                            <div class="airport">{{ $flight->tujuan }}</div>
+                            <div class="terminal">Terminal 1 Domestik</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="included-facilities">
                     <div class="facility-title">Tiket Sudah Termasuk</div>
-                    <div class="facility-item">
-                    <i class="fas fa-suitcase"></i>
-                        <div class="facility-text">
-                            Kabin: 7 kg<br>
-                            Bagasi: 20 kg
+                    @if($flight->class && $flight->class->fasilitas)
+                        @foreach($flight->class->fasilitas->take(2) as $fasilitas)
+                        <div class="facility-item">
+                            @if(Str::contains(strtolower($fasilitas->nama_fasilitas), 'bagasi'))
+                                <i class="fas fa-suitcase"></i>
+                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'makanan'))
+                                <i class="fas fa-utensils"></i>
+                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['wifi', 'internet', 'wi-fi']))
+                                <i class="fas fa-wifi"></i>
+                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'hiburan'))
+                                <i class="fas fa-film"></i>
+                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'kursi'))
+                                <i class="fas fa-chair"></i>
+                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['selimut', 'bantal']))
+                                <i class="fas fa-bed"></i>
+                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['stop kontak', 'colokan']))
+                                <i class="fas fa-plug"></i>
+                            @else
+                                <i class="fas fa-check-circle"></i>
+                            @endif
+                            <div class="facility-text">
+                                <strong>{{ $fasilitas->nama_fasilitas }}</strong><br>
+                                {{ $fasilitas->deskripsi }}
+                            </div>
+                        </div>
+                        @endforeach
+                        @if($flight->class->fasilitas->count() > 2)
+                            <a class="see-more" onclick="showFacilities()">Lihat {{ $flight->class->fasilitas->count() - 2 }} fasilitas lainnya</a>
+                        @endif
+                    @else
+                        <div class="facility-item">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="facility-text">
+                                Tidak ada fasilitas yang tersedia
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="price-section">
+                    <div class="price-details">
+                        <div class="price-per-person">
+                            <span>Harga per orang:</span>
+                            <span class="amount">Rp {{ number_format($flight->total_harga, 0, ',', '.') }}</span>
+                        </div>
+                        <div class="total-price">
+                            <span>Total harga:</span>
+                            <span class="total-amount" id="total-price">Rp {{ number_format($flight->total_harga, 0, ',', '.') }}</span>
                         </div>
                     </div>
-                    <div class="facility-item">
-                        <i class="fas fa-utensils"></i>
-                        <div class="facility-text">Tidak termasuk makanan</div>
-                    </div>
-                    <a class="see-more" onclick="showFacilities()">Lihat fasilitas lain</a>
                 </div>
             </div>
 
-            <div style="margin-top: 32px;">
-            <div class="action-buttons">
-                    <a href="{{ route('booking.create', $flight->id_rute) }}" class="btn-modern btn-primary-modern">
+            <div class="action-section">
+                <div class="seats-info">
+                    <i class="fas fa-chair"></i>
+                    <span>{{ $flight->kursi_tersedia }} kursi tersedia</span>
+                </div>
+                <form action="{{ route('booking.create', $flight->id_rute) }}" method="GET" class="booking-form">
+                    <input type="hidden" name="jumlah_penumpang" id="hidden-passenger-count" value="1">
+                    <button type="submit" class="btn-modern btn-primary-modern">
                         <i class="fas fa-ticket-alt"></i>
                         Pesan Sekarang
-                    </a>
-                </div>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -80,36 +152,69 @@
     <div id="facilitiesModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeFacilities()">&times;</span>
-            <h3>Fasilitas Penerbangan</h3>
+            <h3>Fasilitas Kelas {{ $flight->class->nama_class }}</h3>
             <div class="facility-list">
-                <div class="facility-item">
-                    <i class="fas fa-suitcase"></i>
-                    <div class="facility-text">
-                        <strong>Bagasi</strong><br>
-                        Kabin: 7 kg<br>
-                        Bagasi: 20 kg
+                @if($flight->class && $flight->class->fasilitas)
+                    @foreach($flight->class->fasilitas as $fasilitas)
+                    <div class="facility-item">
+                        @if(Str::contains(strtolower($fasilitas->nama_fasilitas), 'bagasi'))
+                            <i class="fas fa-suitcase"></i>
+                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'makanan'))
+                            <i class="fas fa-utensils"></i>
+                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['wifi', 'internet', 'wi-fi']))
+                            <i class="fas fa-wifi"></i>
+                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'hiburan'))
+                            <i class="fas fa-film"></i>
+                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'kursi'))
+                            <i class="fas fa-chair"></i>
+                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['selimut', 'bantal']))
+                            <i class="fas fa-bed"></i>
+                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['stop kontak', 'colokan']))
+                            <i class="fas fa-plug"></i>
+                        @else
+                            <i class="fas fa-check-circle"></i>
+                        @endif
+                        <div class="facility-text">
+                            <strong>{{ $fasilitas->nama_fasilitas }}</strong><br>
+                            {{ $fasilitas->deskripsi }}
+                        </div>
                     </div>
-                </div>
-                <div class="facility-item">
-                    <i class="fas fa-utensils"></i>
-                    <div class="facility-text">
-                        <strong>Makanan</strong><br>
-                        Tidak termasuk makanan
-                </div>
-                </div>
-                <div class="facility-item">
-                    <i class="fas fa-wifi"></i>
-                    <div class="facility-text">
-                        <strong>WiFi</strong><br>
-                        Tersedia WiFi di pesawat
+                    @endforeach
+                @else
+                    <div class="facility-item">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="facility-text">
+                            Tidak ada fasilitas yang tersedia untuk kelas ini
+                        </div>
                     </div>
-                </div>
-                <!-- Tambahkan fasilitas lain sesuai kebutuhan -->
+                @endif
             </div>
         </div>
     </div>
 
     <script>
+        const basePrice = {{ $flight->total_harga }};
+        const maxSeats = {{ $flight->kursi_tersedia }};
+
+        function updatePassengers(change) {
+            const input = document.getElementById('passenger-count');
+            const hiddenInput = document.getElementById('hidden-passenger-count');
+            let currentValue = parseInt(input.value);
+            let newValue = currentValue + change;
+
+            if (newValue >= 1 && newValue <= maxSeats) {
+                input.value = newValue;
+                hiddenInput.value = newValue;
+                updateTotalPrice(newValue);
+            }
+        }
+
+        function updateTotalPrice(passengers) {
+            const totalPrice = basePrice * passengers;
+            document.getElementById('total-price').textContent = 
+                'Rp ' + totalPrice.toLocaleString('id-ID');
+        }
+
         function showFacilities() {
             document.getElementById('facilitiesModal').style.display = 'block';
         }

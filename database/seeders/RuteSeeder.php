@@ -17,6 +17,8 @@ class RuteSeeder extends Seeder
                 'rute_awal' => 'Surabaya',
                 'rute_akhir' => 'Jakarta',
                 'harga' => 1500000, // harga dasar
+                'jumlah_kursi' => 200,
+                'kursi_tersedia' => 200,
                 'id_transportasi' => 1,
                 'tanggal_berangkat' => Carbon::now()->addDays(1),
                 'waktu_berangkat' => '08:00:00',
@@ -28,6 +30,8 @@ class RuteSeeder extends Seeder
                 'rute_awal' => 'Jakarta',
                 'rute_akhir' => 'Bali',
                 'harga' => 2000000, // harga dasar
+                'jumlah_kursi' => 160,
+                'kursi_tersedia' => 160,
                 'id_transportasi' => 2,
                 'tanggal_berangkat' => Carbon::now()->addDays(2),
                 'waktu_berangkat' => '10:00:00',
@@ -39,6 +43,8 @@ class RuteSeeder extends Seeder
                 'rute_awal' => 'Surabaya',
                 'rute_akhir' => 'Yogyakarta',
                 'harga' => 1200000, // harga dasar
+                'jumlah_kursi' => 180,
+                'kursi_tersedia' => 180,
                 'id_transportasi' => 3,
                 'tanggal_berangkat' => Carbon::now()->addDays(3),
                 'waktu_berangkat' => '14:00:00',
