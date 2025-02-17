@@ -12,6 +12,7 @@
         "hasnayeen/themes": "^3.0",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "*",
         "symfony/http-client": "^7.2",

@@ -17,6 +17,11 @@ use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
+use App\Exports\PemesananExport;
+use Maatwebsite\Excel\Excel;
+use Carbon\Carbon;
 
 class PemesananResource extends Resource
 {
@@ -119,6 +124,51 @@ class PemesananResource extends Resource
                             ->body('Pembayaran berhasil diverifikasi')
                     ),
                 Tables\Actions\ViewAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Export Data')
+                    ->color('success')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->form([
+                        DatePicker::make('start_date')
+                            ->label('Tanggal Mulai')
+                            ->default(now()->startOfMonth()),
+                        DatePicker::make('end_date')
+                            ->label('Tanggal Akhir')
+                            ->default(now()),
+                        Select::make('status_pembayaran')
+                            ->label('Status Pembayaran')
+                            ->options([
+                                'all' => 'Semua Status',
+                                'PAID' => 'Lunas',
+                                'WAITING_CONFIRMATION' => 'Menunggu Konfirmasi',
+                                'PENDING' => 'Pending'
+                            ])
+                            ->default('all'),
+                    ])
+                    ->action(function (array $data) {
+                        $startDate = Carbon::parse($data['start_date']);
+                        $endDate = Carbon::parse($data['end_date']);
+                        $status = $data['status_pembayaran'];
+
+                        $fileName = 'laporan_pemesanan_tiket';
+                        if ($startDate && $endDate) {
+                            $fileName .= '_' . $startDate->format('d-m-Y') . '_sampai_' . $endDate->format('d-m-Y');
+                        }
+                        if ($status !== 'all') {
+                            $fileName .= '_' . strtolower($status);
+                        }
+                        $fileName .= '.xlsx';
+
+                        return app(Excel::class)->download(
+                            new PemesananExport($startDate, $endDate, $status),
+                            $fileName
+                        );
+                    })
+                    ->modalHeading('Export Data Pemesanan')
+                    ->modalDescription('Pilih periode dan status pembayaran untuk mengexport data pemesanan.')
+                    ->modalSubmitActionLabel('Export')
             ])
             ->bulkActions([])
             ->defaultSort('created_at', 'desc');
