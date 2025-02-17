@@ -10,6 +10,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ProfileController;
 
 // Route default mengarah ke home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -33,6 +34,10 @@ Route::get('/flight/{id}', [FlightController::class, 'show'])->name('flight.show
 Route::middleware('auth:penumpang')->group(function () {
     // Rute untuk halaman home customer
     Route::get('/home', [HomeController::class, 'index'])->name('customer.home');
+
+    // Profile routes
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     // Booking routes
     Route::get('/booking/{flight}/create', [BookingController::class, 'createForm'])->name('booking.create');

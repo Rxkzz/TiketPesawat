@@ -61,13 +61,13 @@
                 @if(auth('penumpang')->check())
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                            <img src="{{ auth('penumpang')->user()->profile_photo_url ?? asset('images/default-avatar.png') }}" 
-                                 alt="{{ auth('penumpang')->user()->nama_penumpang }}" 
-                                 class="rounded-circle me-2" width="32">
+                            <img src="{{ auth('penumpang')->user()->profile_photo ? asset('storage/' . auth('penumpang')->user()->profile_photo) : asset('images/default-avatar.png') }}" 
+                                 alt="Profile" 
+                                 class="rounded-circle me-2" width="32" height="32">
                             <span>{{ auth('penumpang')->user()->nama_penumpang }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                 <i class="fas fa-user-edit me-2"></i>Edit Profile
                             </a>
                             <a class="dropdown-item" href="{{ route('booking.my-bookings') }}">

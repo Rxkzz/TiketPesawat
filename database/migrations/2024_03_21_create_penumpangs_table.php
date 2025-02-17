@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('profile_photo')->nullable();
             $table->string('nama_penumpang');
             $table->text('alamat_penumpang');
             $table->date('tanggal_lahir');

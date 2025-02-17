@@ -151,67 +151,6 @@
         </div>
     </div>
 
-    <style>
-    .status-banner {
-        background: var(--light-purple);
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .status-banner i {
-        font-size: 32px;
-        color: var(--primary-purple);
-    }
-
-    .status-message h3 {
-        color: var(--primary-purple);
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .status-message p {
-        color: var(--text-color);
-        font-size: 14px;
-        margin: 0;
-    }
-
-    .alert {
-        border-radius: 12px;
-        margin-bottom: 20px;
-        padding: 16px 24px;
-    }
-
-    .alert-warning {
-        background-color: #FFF8E6;
-        border: 1px solid #F59E0B;
-        color: #F59E0B;
-    }
-
-    .alert-danger {
-        background-color: #FEE2E2;
-        border: 1px solid #EF4444;
-        color: #EF4444;
-    }
-
-    .alert i {
-        margin-right: 12px;
-    }
-
-    .btn-close {
-        opacity: 0.5;
-        transition: opacity 0.2s;
-    }
-
-    .btn-close:hover {
-        opacity: 1;
-    }
-    </style>
-
     <script>
         // Payment method selection
         const paymentMethods = document.querySelectorAll('.payment-method');
