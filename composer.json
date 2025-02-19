@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "bezhansalleh/filament-shield": "3.2.6",
+        "erusev/parsedown": "^1.7",
         "filament/filament": "^3.2",
         "hasnayeen/themes": "^3.0",
         "laravel/framework": "^11.31",

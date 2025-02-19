@@ -95,10 +95,36 @@ class RuteResource extends Resource
                     ->disabled()
                     ->dehydrated(true)
                     ->prefix('Rp'),
-                Forms\Components\Select::make('id_transportasi')
-                    ->label('Kode')
-                    ->required() 
-                    ->relationship('Transportasi', 'kode'),            
+                Select::make('id_transportasi')
+                    ->label('Transportasi')
+                    ->relationship('transportasi', 'kode')
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        if ($state) {
+                            $transportasi = \App\Models\Transportasi::find($state);
+                            if ($transportasi) {
+                                $set('jumlah_kursi', $transportasi->jumlah_kursi);
+                                $set('kursi_tersedia', $transportasi->jumlah_kursi);
+                            }
+                        }
+                    }),
+                TextInput::make('jumlah_kursi')
+                    ->label('Total Kursi')
+                    ->required()
+                    ->numeric()
+                    ->minValue(1)
+                    ->maxValue(1000)
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        $set('kursi_tersedia', $state);
+                    })
+                    ->default(0),
+                TextInput::make('kursi_tersedia')
+                    ->label('Kursi Tersedia')
+                    ->disabled()
+                    ->dehydrated(true)
+                    ->numeric(),
                 DatePicker::make('tanggal_berangkat')
                     ->label('Tanggal Berangkat')
                     ->required()
@@ -133,6 +159,19 @@ class RuteResource extends Resource
                 Tables\Columns\ImageColumn::make('gambar')
                     ->label('Gambar')
                     ->circular(),
+                TextColumn::make('transportasi.kode')
+                    ->label('Transportasi')
+                    ->searchable(),
+                TextColumn::make('jumlah_kursi')
+                    ->label('Total Kursi')
+                    ->numeric()
+                    ->alignCenter(),
+                TextColumn::make('kursi_tersedia')
+                    ->label('Kursi Tersedia')
+                    ->numeric()
+                    ->sortable()
+                    ->alignCenter()
+                    ->color(fn ($state): string => $state > 0 ? 'success' : 'danger'),
                 TextColumn::make('harga')
                     ->label('Harga Dasar')
                     ->money('idr'),   
@@ -143,8 +182,6 @@ class RuteResource extends Resource
                     ->label('Total Harga')
                     ->money('idr')
                     ->sortable(),
-                TextColumn::make('transportasi.kode')
-                    ->label('Kode'),   
                 TextColumn::make('tanggal_berangkat')
                     ->label('Tanggal Berangkat')
                     ->date(),

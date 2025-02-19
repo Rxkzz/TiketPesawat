@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DocumentationController;
 
 // Route default mengarah ke home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -56,3 +57,6 @@ Route::post('/logout', function () {
     auth('penumpang')->logout();
     return redirect()->route('home');
 })->name('logout');
+
+// Documentation route
+Route::get('/docs', [DocumentationController::class, 'index'])->name('documentation');

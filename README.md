@@ -1,66 +1,196 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aplikasi TiketPesawat
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi TiketPesawat adalah sistem pemesanan tiket pesawat berbasis web yang dibangun menggunakan framework Laravel. Aplikasi ini memungkinkan pengguna untuk melakukan pemesanan tiket pesawat secara online dengan mudah dan aman.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Untuk Pengguna (Customer)
+1. **Pencarian dan Pemesanan Tiket Pesawat**
+   - Pencarian penerbangan berdasarkan kota asal dan tujuan
+   - Filter berdasarkan tanggal keberangkatan
+   - Pemilihan kelas penerbangan (Ekonomi, Bisnis, First Class)
+   - Informasi detail harga dan waktu penerbangan
+   - Pemilihan kursi penumpang
+   - Form pemesanan yang user-friendly
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. **Manajemen Profil Pengguna**
+   - Edit informasi pribadi
+   - Update foto profil
+   - Ubah password
+   - Riwayat aktivitas akun
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. **Riwayat Pemesanan Tiket**
+   - Daftar semua pemesanan tiket
+   - Status pemesanan (Pending, Dibayar, Dibatalkan)
+   - Detail setiap pemesanan
+   - Filter berdasarkan status dan tanggal
 
-## Learning Laravel
+4. **Sistem Pembayaran**
+   - Multiple metode pembayaran
+   - Konfirmasi pembayaran otomatis
+   - Invoice digital
+   - Riwayat pembayaran
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. **Cetak Tiket Elektronik**
+   - Generate e-ticket dalam format PDF
+   - Barcode/QR Code tiket
+   - Detail penerbangan lengkap
+   - Informasi penumpang
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+6. **Manajemen Data Penumpang**
+   - Tambah/edit data penumpang
+   - Simpan data penumpang untuk pemesanan berikutnya
+   - Validasi data penumpang
+   - Upload dokumen pendukung
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Untuk Admin
+1. **Dashboard Admin menggunakan Filament**
+   - Overview statistik pemesanan
+   - Grafik pendapatan
+   - Monitoring aktivitas user
+   - Notifikasi real-time
 
-## Laravel Sponsors
+2. **Manajemen Data Penerbangan**
+   - Tambah/edit/hapus jadwal penerbangan
+   - Atur harga tiket
+   - Kelola rute penerbangan
+   - Atur ketersediaan kursi
+   - Manajemen maskapai
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Manajemen Data Pemesanan**
+   - Lihat semua pemesanan
+   - Filter dan pencarian pemesanan
+   - Update status pemesanan
+   - Pembatalan pemesanan
+   - Detail transaksi
 
-### Premium Partners
+4. **Laporan Pemesanan**
+   - Generate laporan dalam berbagai format (PDF, Excel)
+   - Laporan pendapatan harian/bulanan/tahunan
+   - Statistik pemesanan
+   - Analisis tren pemesanan
+   - Export data pemesanan
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. **Manajemen Pengguna**
+   - Kelola akun customer
+   - Kelola akun admin
+   - Reset password
+   - Blokir/aktivasi akun
+   - Log aktivitas pengguna
 
-## Contributing
+6. **Konfigurasi Sistem**
+   - Pengaturan aplikasi
+   - Manajemen role dan permission
+   - Konfigurasi email
+   - Pengaturan pembayaran
+   - Backup database
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Teknologi yang Digunakan
 
-## Code of Conduct
+- Laravel 10
+- MySQL
+- Tailwind CSS
+- Filament Admin Panel
+- Node.js & NPM
+- Composer
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Persyaratan Sistem
 
-## Security Vulnerabilities
+- PHP >= 8.1
+- Composer
+- Node.js & NPM
+- MySQL
+- Web Server (Apache/Nginx)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Cara Instalasi
 
-## License
+1. Clone repository ini
+```bash
+git clone [URL_REPOSITORY]
+cd TiketPesawat
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. Install dependensi PHP menggunakan Composer
+```bash
+composer install
+```
+
+3. Install dependensi JavaScript menggunakan NPM
+```bash
+npm install
+```
+
+4. Salin file .env.example menjadi .env
+```bash
+cp .env.example .env
+```
+
+5. Generate application key
+```bash
+php artisan key:generate
+```
+
+6. Konfigurasi database di file .env
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=tiket_pesawat
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+7. Jalankan migrasi database
+```bash
+php artisan migrate
+```
+
+8. Jalankan seeder (opsional)
+```bash
+php artisan db:seed
+```
+
+9. Compile assets
+```bash
+npm run dev
+```
+
+10. Jalankan server development
+```bash
+php artisan serve
+```
+
+## Penggunaan
+
+1. Akses aplikasi melalui browser di `http://localhost:8000`
+2. Login sebagai admin:
+   - Email: admin@admin.com
+   - Password: password
+
+3. Login sebagai customer:
+   - Buat akun baru melalui halaman registrasi
+
+
+## Struktur Folder
+
+- `app/` - Berisi logika utama aplikasi
+- `config/` - File konfigurasi
+- `database/` - Migrasi dan seeder
+- `public/` - Asset publik
+- `resources/` - Views, asset mentah, dan translasi
+- `routes/` - Definisi route
+- `storage/` - File yang di-upload, cache, dan log
+- `tests/` - Unit dan feature tests
+
+## Kontribusi
+
+Jika Anda ingin berkontribusi pada proyek ini, silakan:
+1. Fork repository
+2. Buat branch baru
+3. Commit perubahan Anda
+4. Push ke branch
+5. Buat Pull Request
+
+## Lisensi
+
+Aplikasi ini dilisensikan di bawah [MIT License](https://opensource.org/licenses/MIT).
