@@ -9,12 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/search/results.css') }}">
-    
-    <style>
-        body {
-            background-image: url("{{ asset('images/bg_2.jpg') }}");
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     @include('customer.partials.navbar')
@@ -316,272 +311,86 @@
 
         <!-- Results Section -->
         <div id="searchResults">
-            @include('customer.search.partials.results')
+            @foreach($results as $result)
+                <div class="flight-card {{ $result->kursi_tersedia <= 0 ? 'sold-out' : '' }}">
+                    @if($result->kursi_tersedia > 0)
+                        <a href="{{ route('flight.show', $result->id_rute) }}" class="flight-content">
+                    @else
+                        <div class="flight-content" onclick="showSoldOutAlert()">
+                    @endif
+                        <div class="airline-header">
+                            <img src="{{ $result->transportasi->image ? asset('storage/' . $result->transportasi->image) : asset('storage/maskapai-images/garuda.png') }}" 
+                                 alt="{{ $result->transportasi->keterangan }}" 
+                                 class="airline-logo">
+                            <span class="airline-name">{{ $result->transportasi->keterangan }}</span>
+                            <span class="flight-type">{{ $result->transportasi->typeTransportasi->nama_type }}</span>
+                            @if($result->kursi_tersedia <= 0)
+                                <span class="sold-out-badge">
+                                    <i class="fas fa-times-circle"></i>
+                                    Tiket Habis
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="flight-info">
+                            <div class="time-section">
+                                <div class="time">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->format('H:i') }}</div>
+                                <div class="city">{{ $result->rute_awal }}</div>
+                            </div>
+
+                            <div class="flight-duration">
+                                <div class="duration-text">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->diffInMinutes(\Carbon\Carbon::parse($result->waktu_berangkat)->addHours(1)->addMinutes(20)) }} menit</div>
+                                <div class="duration-line"></div>
+                                <div class="transit-info">1 transit</div>
+                            </div>
+
+                            <div class="time-section">
+                                <div class="time">{{ \Carbon\Carbon::parse($result->waktu_berangkat)->addHours(1)->addMinutes(20)->format('H:i') }}</div>
+                                <div class="city">{{ $result->tujuan }}</div>
+                            </div>
+
+                            <div class="price-section">
+                                <div class="price-amount">IDR {{ number_format($result->total_harga, 0, ',', '.') }}</div>
+                                <div class="price-label">/pax</div>
+                                <div class="points">
+                                    <i class="fas fa-circle"></i>
+                                    {{ number_format($result->total_harga/1000, 0) }} poin
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flight-footer">
+                            <div class="reschedule-badge">
+                                <i class="fas fa-sync-alt"></i>
+                                Bisa reschedule & refund
+                            </div>
+                            @if($result->kursi_tersedia <= 0)
+                                <div class="sold-out-info">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    Klik untuk mencari penerbangan lain
+                                </div>
+                            @else
+                                <div class="seats-badge {{ $result->kursi_tersedia <= 5 ? 'seats-warning' : '' }}">
+                                    <i class="fas fa-chair"></i>
+                                    {{ $result->kursi_tersedia }} kursi tersisa
+                                </div>
+                            @endif
+                        </div>
+                    @if($result->kursi_tersedia > 0)
+                        </a>
+                    @else
+                        </div>
+                    @endif
+                </div>
+            @endforeach
             </div>
     </div>
+
     @include('customer.partials.footer')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // Handle reset filter untuk semua dropdown
-            function resetFilter(dropdownId, buttonId, defaultText) {
-                $(`#${dropdownId} .dropdown-item`).removeClass('active');
-                $(`#${dropdownId} .dropdown-item[data-sort="all"], 
-                   #${dropdownId} .dropdown-item[data-transit="all"],
-                   #${dropdownId} .dropdown-item[data-waktu-type="all"],
-                   #${dropdownId} .dropdown-item[data-type-id="all"]`).addClass('active');
-                
-                const button = $(`#${buttonId}`);
-                button.html(defaultText);
-                button.removeClass('active');
-
-                // Reload hasil pencarian default
-                $.ajax({
-                    url: "{{ route('search.flights') }}",
-                    method: 'POST',
-                    data: {
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        $('#searchResults').html(response);
-                    }
-                });
-            }
-
-            // Handle klik opsi "Semua" untuk setiap dropdown
-            $(document).on('click', '[data-sort="all"]', function(e) {
-                e.preventDefault();
-                resetFilter('urutanList', 'urutanFilterButton', `
-                    <i class="fas fa-sort"></i>
-                    Urutkan
-                    <i class="fas fa-chevron-down"></i>
-                `);
-            });
-
-            $(document).on('click', '[data-transit="all"]', function(e) {
-                e.preventDefault();
-                resetFilter('transitList', 'transitFilterButton', `
-                    <i class="fas fa-plane"></i>
-                    Transit
-                    <i class="fas fa-chevron-down"></i>
-                `);
-            });
-
-            $(document).on('click', '[data-waktu-type="all"]', function(e) {
-                e.preventDefault();
-                resetFilter('waktuList', 'waktuFilterButton', `
-                    <i class="fas fa-clock"></i>
-                    Waktu
-                    <i class="fas fa-chevron-down"></i>
-                `);
-            });
-
-            $(document).on('click', '[data-type-id="all"]', function(e) {
-                e.preventDefault();
-                resetFilter('typePesawatList', 'typeFilterButton', `
-                    <i class="fas fa-plane"></i>
-                    Type Pesawat
-                    <i class="fas fa-chevron-down"></i>
-                `);
-            });
-
-            // Handle klik tipe pesawat
-            $(document).on('click', '#typePesawatList .dropdown-item', function(e) {
-                e.preventDefault();
-                let typeId = $(this).data('type-id');
-                
-                // Update active state
-                $('#typePesawatList .dropdown-item').removeClass('active');
-                $(this).addClass('active');
-
-                // Update button text
-                if (typeId === 'all') {
-                    $('#typeFilterButton').html(`
-                        <i class="fas fa-plane"></i>
-                        Semua Tipe Pesawat
-                        <i class="fas fa-chevron-down"></i>
-                    `);
-                } else {
-                    $('#typeFilterButton').html(`
-                        <i class="fas fa-plane"></i>
-                        ${$(this).find('.type-name').text()}
-                        <i class="fas fa-chevron-down"></i>
-                    `);
-                }
-
-                // Filter results
-                $.ajax({
-                    url: "{{ route('search.filter-type') }}",
-                    method: 'POST',
-                    data: {
-                        type_id: typeId === 'all' ? null : typeId,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        $('#searchResults').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-
-        // Date item click handler
-        $('.date-item').click(function() {
-            $('.date-item').removeClass('active');
-            $(this).addClass('active');
-        });
-
-        // Filter button click handler
-        $('.filter-button').click(function() {
-                // Jika button ini adalah bagian dari dropdown, jangan lakukan apa-apa
-                if ($(this).hasClass('dropdown-toggle')) {
-                    return;
-                }
-                
-                // Toggle active class pada button yang diklik
-                $(this).toggleClass('active');
-                
-                // Jika button menjadi tidak aktif, reset filter
-                if (!$(this).hasClass('active')) {
-                    // Di sini bisa ditambahkan logika untuk reset filter
-                    // Misalnya reload hasil pencarian default
-                    $.ajax({
-                        url: "{{ route('search.flights') }}",
-                        method: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(response) {
-                            $('#searchResults').html(response);
-                        }
-                    });
-                }
-            });
-
-            // Handle dropdown menu close
-            $('.dropdown').on('hide.bs.dropdown', function () {
-                const button = $(this).find('.filter-button');
-                const activeItems = $(this).find('.dropdown-item.active');
-                
-                // Jika tidak ada item yang aktif, hapus kelas active dari button
-                if (activeItems.length === 0) {
-                    button.removeClass('active');
-                }
-            });
-
-            // Handle dropdown item click
-            $('.dropdown-menu .dropdown-item').click(function() {
-                const dropdownButton = $(this).closest('.dropdown').find('.filter-button');
-                dropdownButton.addClass('active');
-            });
-
-            // Handle klik di luar dropdown untuk menutup
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown').length) {
-                    $('.dropdown-menu').removeClass('show');
-                }
-            });
-
-            // Tambahkan handler untuk reset filter ketika mengklik item "Semua" atau "Reset"
-            $('.dropdown-item[data-type-id="all"], .dropdown-item[data-sort="rekomendasi"]').click(function() {
-                const dropdownButton = $(this).closest('.dropdown').find('.filter-button');
-                dropdownButton.removeClass('active');
-            });
-
-            // Handle klik waktu
-            $(document).on('click', '#waktuList .dropdown-item', function(e) {
-                e.preventDefault();
-                let waktuType = $(this).data('waktu-type');
-                let startTime = $(this).data('start');
-                let endTime = $(this).data('end');
-                
-                // Update active state dalam section yang sama
-                const section = $(this).closest('.waktu-section');
-                section.find('.dropdown-item').removeClass('active');
-                $(this).addClass('active');
-
-                // Update button text
-                if (waktuType === 'all') {
-                    $('#waktuFilterButton').html(`
-                        <i class="fas fa-clock"></i>
-                        Waktu
-                        <i class="fas fa-chevron-down"></i>
-                    `);
-                    
-                    // Reset filter waktu
-                    $.ajax({
-                        url: "{{ route('search.flights') }}",
-                        method: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(response) {
-                            $('#searchResults').html(response);
-                        }
-                    });
-                    return;
-                }
-
-                $('#waktuFilterButton').html(`
-                    <i class="fas fa-clock"></i>
-                    ${waktuType === 'pergi' ? 'Pergi' : 'Tiba'} ${startTime}-${endTime}
-                    <i class="fas fa-chevron-down"></i>
-                `);
-
-                // Filter results
-                $.ajax({
-                    url: "{{ route('search.filter-waktu') }}",
-                    method: 'POST',
-                    data: {
-                        waktu_type: waktuType,
-                        start_time: startTime,
-                        end_time: endTime,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        $('#searchResults').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-
-            // Handle klik urutan
-            $(document).on('click', '#urutanList .dropdown-item', function(e) {
-            e.preventDefault();
-                let sortBy = $(this).data('sort');
-                
-                // Update active state
-                $('#urutanList .dropdown-item').removeClass('active');
-                $(this).addClass('active');
-
-                // Update button text
-                $('#urutanFilterButton').html(`
-                    <i class="fas fa-sort"></i>
-                    ${$(this).find('.urutan-name').text()}
-                    <i class="fas fa-chevron-down"></i>
-                `);
-
-                // Filter results
-                $.ajax({
-                    url: "{{ route('search.filter-urutan') }}",
-                    method: 'POST',
-                    data: {
-                        sort_by: sortBy,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        $('#searchResults').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-        });
+        const homeRoute = '{{ route("home") }}';
     </script>
+    <script src="{{ asset('js/search/results.js') }}"></script>
 </body>
 </html>

@@ -33,13 +33,7 @@ class TransportasiResource extends Resource
                 ->label('Kode')
                 ->required()
                 ->maxLength(10),
-                TextInput::make('jumlah_kursi')
-                    ->label('Jumlah Kursi')
-                    ->required()
-                    ->numeric()
-                    ->minValue(1)
-                    ->maxValue(1000)
-                    ->step(1),
+              
                     
                 Textarea::make('keterangan')
                 ->label('Keterangan')
@@ -81,8 +75,6 @@ class TransportasiResource extends Resource
              TextColumn::make('kode')
                  ->label('Kode')
                  ->searchable(),
-             TextColumn::make('jumlah_kursi')
-                 ->label('Jumlah Kursi'),
              TextColumn::make('keterangan')
                  ->label('Keterangan')
                  ->wrap(),

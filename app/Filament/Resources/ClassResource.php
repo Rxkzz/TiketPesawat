@@ -44,19 +44,12 @@ class ClassResource extends Resource
                     ->relationship('fasilitas', 'nama_fasilitas')
                     ->preload()
                     ->searchable(),
-                RichEditor::make('deskripsi')
-                    ->label('Keterangan')
-                    ->columnSpanFull(),
                 TextInput::make('bagasi')
                     ->required()
                     ->numeric()
                     ->suffix('kg')
                     ->label('Berat Bagasi'),
-                Toggle::make('hiburan')
-                    ->required()
-                    ->label('Hiburan')
-                    ->helperText('Apakah kelas ini menyediakan hiburan?')
-                    ->default(false),
+            
             ]);
     }
 
@@ -85,10 +78,7 @@ class ClassResource extends Resource
                     ->suffix(' kg')
                     ->numeric()
                     ->sortable(),
-                IconColumn::make('hiburan')
-                    ->label('Hiburan')
-                    ->boolean()
-                    ->sortable(),
+               
             ])
             ->filters([
                 //
