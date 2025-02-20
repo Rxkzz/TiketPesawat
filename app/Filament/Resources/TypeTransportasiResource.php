@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TypeTransportasiResource\Pages;
-   use App\Filament\Resources\TypeTransportasiResource\RelationManagers;
+use App\Filament\Resources\TypeTransportasiResource\RelationManagers;
 use App\Models\TypeTransportasi;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -15,7 +15,12 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Actions\DeleteAction;
+use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\Collection;
+use Filament\Notifications\Notification;
+use Filament\Support\Colors\Color;
+use Filament\Actions\Exceptions\Halt;
 
 class TypeTransportasiResource extends Resource
 {
@@ -35,7 +40,7 @@ class TypeTransportasiResource extends Resource
                 ->label('Type')
                 ->required()
                 ->maxLength(50),
-                RichEditor::make('keterangan')
+                Textarea::make('keterangan')
                 ->label('Keterangan')
                 ->required()
                 ->maxLength(255),
@@ -53,17 +58,100 @@ class TypeTransportasiResource extends Resource
                 ->label('Type')
                 ->searchable(),
                 TextColumn::make('keterangan')->label('Keterangan')->wrap(),
+                TextColumn::make('transportasi_count')
+                    ->label('Jumlah Transportasi')
+                    ->counts('transportasi')
+                    ->color(fn (int $state): string => $state > 0 ? 'danger' : 'success')
+                    ->description(fn (int $state): string => $state > 0 ? 'Tidak dapat dihapus' : 'Dapat dihapus'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->modalDescription(fn (TypeTransportasi $record) => 
+                        $record->transportasi()->exists() 
+                            ? "Tipe transportasi ini sedang digunakan oleh beberapa transportasi. Tidak dapat dihapus."
+                            : "Apakah Anda yakin ingin menghapus tipe transportasi ini?"
+                    )
+                    ->modalSubmitActionLabel('Hapus')
+                    ->modalCancelActionLabel('Batal')
+                    ->hidden(fn (TypeTransportasi $record): bool => $record->transportasi()->exists())
+                    ->before(function (TypeTransportasi $record) {
+                        if ($record->transportasi()->exists()) {
+                            $transportasiList = $record->transportasi()
+                                ->pluck('keterangan')
+                                ->join(', ');
+                                
+                            Notification::make()
+                                ->danger()
+                                ->title('Tidak Dapat Menghapus')
+                                ->body("Tipe transportasi ini sedang digunakan oleh: {$transportasiList}")
+                                ->persistent()
+                                ->actions([
+                                    \Filament\Notifications\Actions\Action::make('view')
+                                        ->button()
+                                        ->color(Color::Red)
+                                        ->label('Lihat Detail')
+                                        ->url(route('filament.admin.resources.transportasis.index'))
+                                ])
+                                ->send();
+
+                            return false;
+                        }
+                        return true;
+                    })
+                    ->successNotification(
+                        Notification::make()
+                            ->success()
+                            ->title('Berhasil')
+                            ->body('Type transportasi berhasil dihapus.')
+                            ->duration(5000)
+                    ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->requiresConfirmation()
+                        ->modalDescription('Apakah Anda yakin ingin menghapus tipe transportasi yang dipilih?')
+                        ->modalSubmitActionLabel('Hapus Semua')
+                        ->modalCancelActionLabel('Batal')
+                        ->deselectRecordsAfterCompletion()
+                        ->before(function (Collection $records) {
+                            foreach ($records as $record) {
+                                if ($record->transportasi()->exists()) {
+                                    $transportasiList = $record->transportasi()
+                                        ->pluck('keterangan')
+                                        ->join(', ');
+
+                                    Notification::make()
+                                        ->danger()
+                                        ->title('Tidak Dapat Menghapus')
+                                        ->body("Beberapa tipe transportasi masih digunakan oleh: {$transportasiList}")
+                                        ->persistent()
+                                        ->actions([
+                                            \Filament\Notifications\Actions\Action::make('view')
+                                                ->button()
+                                                ->color(Color::Red)
+                                                ->label('Lihat Detail')
+                                                ->url(route('filament.admin.resources.transportasis.index'))
+                                        ])
+                                        ->send();
+
+                                    return false;
+                                }
+                            }
+                            return true;
+                        })
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Berhasil')
+                                ->body('Type transportasi yang dipilih berhasil dihapus.')
+                                ->duration(5000)
+                        ),
                 ]),
             ]);
     }

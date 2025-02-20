@@ -11,9 +11,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\Textarea;
 
 class FasilitasResource extends Resource
 {
@@ -33,7 +33,7 @@ class FasilitasResource extends Resource
                     ->required()
                     ->maxLength(255),
             
-                RichEditor::make('deskripsi')
+                Textarea::make('deskripsi')
                     ->label('Keterangan')
                     ->required()
                     ->maxLength(65535)

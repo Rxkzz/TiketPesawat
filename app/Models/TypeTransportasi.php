@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TypeTransportasi extends Model
 {
@@ -16,4 +17,9 @@ class TypeTransportasi extends Model
         'nama_type',
         'keterangan'
     ];
+
+    public function transportasi(): HasMany
+    {
+        return $this->hasMany(Transportasi::class, 'id_type_transportasi', 'id_type_transportasi');
+    }
 }

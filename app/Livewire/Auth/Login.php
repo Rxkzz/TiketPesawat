@@ -25,7 +25,7 @@ class Login extends Component
         }
 
         // Coba login sebagai penumpang dengan username
-        if (Auth::guard('penumpang')->attempt(['username' => $this->username, 'password' => $this->password])) {
+        if (Auth::guard('penumpang')->attempt(['phphusername' => $this->username, 'password' => $this->password])) {
             return redirect()->intended(route('home'));
         }
 
