@@ -7,7 +7,7 @@
     @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TiketPesawat - Find Your Best Flight</title>
+    <title>TiketPesawat - Temukan Penerbangan Terbaik Anda</title>
     
     <!-- CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,20 +24,20 @@
     <div class="container">
         <div class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title">Find cheap flights from 1000s of airlines and travel agents</h1>
+                <h1 class="hero-title">Temukan tiket pesawat murah dari ribuan maskapai dan agen perjalanan</h1>
                 
                 <div class="product-nav">
                     <a href="#" class="product-item active">
                         <i class="fas fa-plane"></i>
-                        <span>Flights</span>
+                        <span>Penerbangan</span>
                     </a>
                     <a href="#" class="product-item">
                         <i class="fas fa-bed"></i>
-                        <span>Stays</span>
+                        <span>Penginapan</span>
                     </a>
                     <a href="#" class="product-item">
                         <i class="fas fa-car"></i>
-                        <span>car rental</span>
+                        <span>Rental Mobil</span>
                     </a>
                 </div>
 
@@ -48,7 +48,7 @@
                             <div class="search-input">
                                 <i class="fas fa-plane-departure"></i>
                                 <div class="search-input-content">
-                                    <div class="search-label">From</div>
+                                    <div class="search-label">Dari</div>
                                     <select name="from" id="from" class="search-select" required>
                                         <option value="">Pilih Kota Asal</option>
                                         @foreach($routes as $route)
@@ -67,7 +67,7 @@
                             <div class="search-input">
                                 <i class="fas fa-plane-arrival"></i>
                                 <div class="search-input-content">
-                                    <div class="search-label">To</div>
+                                    <div class="search-label">Ke</div>
                                     <select name="to" id="to" class="search-select" required>
                                         <option value="">Pilih Kota Tujuan</option>
                                         @foreach($routes as $route)
@@ -82,12 +82,12 @@
 
                         <div class="search-options">
                             <div class="search-field">
-                                <div class="field-label">Departure</div>
+                                <div class="field-label">Tanggal Keberangkatan</div>
                                 <input type="date" name="tanggal_berangkat" class="field-input" required>
                             </div>
 
                             <div class="search-field">
-                                <div class="field-label">Passengers & Class</div>
+                                <div class="field-label">Penumpang & Kelas</div>
                                 <div class="field-group">
                                     <select name="passenger_count" class="passenger-select" required>
                                         <option value="">Jumlah Penumpang</option>
@@ -100,9 +100,6 @@
                                         @foreach($classes as $class)
                                             <option value="{{ $class->nama_class }}">
                                                 {{ $class->nama_class }}
-                                                @if($class->harga_tambahan)
-                                                    (+ Rp {{ number_format($class->harga_tambahan, 0, ',', '.') }})
-                                                @endif
                                             </option>
                                         @endforeach
                                     </select>
@@ -138,11 +135,11 @@
         <div class="container">
             <div class="section-header">
                 <div class="header-content">
-                    <h2 class="section-title">Featured Flight Deals</h2>
-                    <p class="section-subtitle">Discover our best prices on popular routes</p>
+                    <h2 class="section-title">Penawaran Penerbangan Unggulan</h2>
+                    <p class="section-subtitle">Temukan harga terbaik untuk rute populer</p>
                 </div>
                 <a href="#" class="explore-link">
-                    View all deals
+                    Lihat Semua Penawaran
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -156,7 +153,7 @@
                                 <div class="deal-card">
                                     <div class="deal-image">
                                         <img src="{{ $deal['gambar'] ? asset('storage/' . $deal['gambar']) : asset('images/default-destination.jpg') }}" alt="{{ $deal['to'] }}">
-                                        <div class="deal-badge">Best Value</div>
+                                        <div class="deal-badge">Harga Terbaik</div>
                                     </div>
                                     <div class="deal-content">
                                         <div class="deal-route">
@@ -169,7 +166,7 @@
                                                 {{ \Carbon\Carbon::parse($deal['tanggal_berangkat'])->isoFormat('D MMMM Y') }}
                                             </div>
                                             <div class="deal-price">
-                                                <span class="price-from">From</span>
+                                                <span class="price-from">Mulai dari</span>
                                                 <span class="price-amount">Rp {{ number_format($deal['price'], 0, ',', '.') }}</span>
                                             </div>
                                         </div>

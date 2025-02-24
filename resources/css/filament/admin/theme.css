@@ -1,0 +1,52 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+/* Gaya untuk preview gambar */
+.fi-ta-image {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.fi-ta-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Gaya untuk form */
+.fi-form-component {
+    transition: all 0.3s ease;
+}
+
+.fi-form-component:hover {
+    transform: translateY(-2px);
+}
+
+/* Gaya untuk tabel */
+.fi-ta-cell {
+    padding: 1rem;
+}
+
+.fi-ta-text {
+    font-size: 0.875rem;
+}
+
+/* Gaya untuk tombol */
+.fi-btn {
+    transition: all 0.2s ease;
+}
+
+.fi-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Gaya untuk card */
+.fi-section {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.fi-section:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+} 

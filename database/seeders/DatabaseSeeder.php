@@ -34,11 +34,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            \Database\Seeders\ClassSeeder::class,
-            \Database\Seeders\FasilitasSeeder::class,
-            \Database\Seeders\TypeTransportasiSeeder::class,
-            \Database\Seeders\TransportasiSeeder::class,
-            \Database\Seeders\RuteSeeder::class,
+            TypeTransportasiSeeder::class,
+            TransportasiSeeder::class,
+            FasilitasSeeder::class,
+            ClassSeeder::class,
+            RuteSeeder::class,
         ]);
     }
 }

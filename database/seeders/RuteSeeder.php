@@ -18,19 +18,29 @@ class RuteSeeder extends Seeder
             Storage::disk('public')->makeDirectory('rute-images');
         }
 
+        // Ambil data kelas
+        $ekonomi = ClassModel::where('nama_class', 'Ekonomi')->first();
+        $bisnis = ClassModel::where('nama_class', 'Bisnis')->first();
+        $firstClass = ClassModel::where('nama_class', 'First Class')->first();
+
+        // Tentukan jumlah kursi berdasarkan kelas
+        $kursiEkonomi = 180;
+        $kursiBisnis = 60;
+        $kursiFirstClass = 20;
+
         $rutes = [
             [
                 'tujuan' => 'Jakarta',
                 'rute_awal' => 'Surabaya',
                 'rute_akhir' => 'Jakarta',
                 'harga' => 1500000,
-                'jumlah_kursi' => 200,
-                'kursi_tersedia' => 200,
+                'jumlah_kursi' => $kursiEkonomi,
+                'kursi_tersedia' => $kursiEkonomi,
                 'id_transportasi' => 1,
                 'tanggal_berangkat' => Carbon::now()->addDays(1),
                 'waktu_berangkat' => '08:00:00',
                 'waktu_tiba' => '09:30:00',
-                'id_class' => 1,
+                'id_class' => $ekonomi->id_class,
                 'gambar' => 'rute-images/jakarta.jpg',
                 'image_url' => 'https://images.unsplash.com/photo-1555899434-94d1368aa7af?q=80&w=1000&auto=format&fit=crop'
             ],
@@ -39,13 +49,13 @@ class RuteSeeder extends Seeder
                 'rute_awal' => 'Jakarta',
                 'rute_akhir' => 'Bali',
                 'harga' => 2000000,
-                'jumlah_kursi' => 160,
-                'kursi_tersedia' => 160,
+                'jumlah_kursi' => $kursiBisnis,
+                'kursi_tersedia' => $kursiBisnis,
                 'id_transportasi' => 2,
                 'tanggal_berangkat' => Carbon::now()->addDays(2),
                 'waktu_berangkat' => '10:00:00',
                 'waktu_tiba' => '12:15:00',
-                'id_class' => 2,
+                'id_class' => $bisnis->id_class,
                 'gambar' => 'rute-images/bali.jpg',
                 'image_url' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1000&auto=format&fit=crop'
             ],
@@ -54,13 +64,13 @@ class RuteSeeder extends Seeder
                 'rute_awal' => 'Surabaya',
                 'rute_akhir' => 'Yogyakarta',
                 'harga' => 1200000,
-                'jumlah_kursi' => 180,
-                'kursi_tersedia' => 180,
+                'jumlah_kursi' => $kursiFirstClass,
+                'kursi_tersedia' => $kursiFirstClass,
                 'id_transportasi' => 3,
                 'tanggal_berangkat' => Carbon::now()->addDays(3),
                 'waktu_berangkat' => '14:00:00',
                 'waktu_tiba' => '15:30:00',
-                'id_class' => 3,
+                'id_class' => $firstClass->id_class,
                 'gambar' => 'rute-images/yogyakarta.jpg',
                 'image_url' => 'https://images.unsplash.com/photo-1584810359583-96fc3448beaa?q=80&w=1000&auto=format&fit=crop'
             ]

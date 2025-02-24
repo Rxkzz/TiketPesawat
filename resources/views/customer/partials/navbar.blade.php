@@ -44,13 +44,13 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMore">
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-car me-2"></i>Car Rental
+                            <i class="fas fa-car me-2"></i>Rental Mobil
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-calendar-alt me-2"></i>Events
+                            <i class="fas fa-calendar-alt me-2"></i>Acara
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-map-marker-alt me-2"></i>Attractions
+                            <i class="fas fa-map-marker-alt me-2"></i>Tempat Wisata
                         </a>
                     </div>
                 </li>
@@ -68,15 +68,15 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                <i class="fas fa-user-edit me-2"></i>Edit Profile
+                                <i class="fas fa-user-edit me-2"></i>Ubah Profil
                             </a>
                             <a class="dropdown-item" href="{{ route('booking.my-bookings') }}">
-                                <i class="fas fa-ticket-alt me-2"></i>My Bookings
+                                <i class="fas fa-ticket-alt me-2"></i>Pemesanan Saya
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="{{ route('logout') }}" 
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                <i class="fas fa-sign-out-alt me-2"></i>Keluar
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf

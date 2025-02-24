@@ -13,6 +13,24 @@
         body {
             background-image: url("{{ asset('images/bg_2.jpg') }}");
         }
+        
+        .facility-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        .flight-class {
+            margin-top: 8px;
+        }
+
+        .flight-class .badge {
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -23,6 +41,9 @@
             <div class="flight-header">
                 <div class="route-info">
                     <h1>{{ $flight->rute_awal }} → {{ $flight->tujuan }}</h1>
+                    <div class="flight-class">
+                        <span class="badge bg-primary">Kelas {{ $flight->class->nama_class }}</span>
+                    </div>
                 </div>
                 <div class="passenger-info">
                     <div class="passenger-counter">
@@ -82,23 +103,7 @@
                     @if($flight->class && $flight->class->fasilitas)
                         @foreach($flight->class->fasilitas->take(2) as $fasilitas)
                         <div class="facility-item">
-                            @if(Str::contains(strtolower($fasilitas->nama_fasilitas), 'bagasi'))
-                                <i class="fas fa-suitcase"></i>
-                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'makanan'))
-                                <i class="fas fa-utensils"></i>
-                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['wifi', 'internet', 'wi-fi']))
-                                <i class="fas fa-wifi"></i>
-                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'hiburan'))
-                                <i class="fas fa-film"></i>
-                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'kursi'))
-                                <i class="fas fa-chair"></i>
-                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['selimut', 'bantal']))
-                                <i class="fas fa-bed"></i>
-                            @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['stop kontak', 'colokan']))
-                                <i class="fas fa-plug"></i>
-                            @else
-                                <i class="fas fa-check-circle"></i>
-                            @endif
+                            <img src="{{ asset($fasilitas->icon_url) }}" alt="{{ $fasilitas->nama_fasilitas }}" class="facility-icon">
                             <div class="facility-text">
                                 <strong>{{ $fasilitas->nama_fasilitas }}</strong><br>
                                 {{ $fasilitas->deskripsi }}
@@ -157,23 +162,7 @@
                 @if($flight->class && $flight->class->fasilitas)
                     @foreach($flight->class->fasilitas as $fasilitas)
                     <div class="facility-item">
-                        @if(Str::contains(strtolower($fasilitas->nama_fasilitas), 'bagasi'))
-                            <i class="fas fa-suitcase"></i>
-                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'makanan'))
-                            <i class="fas fa-utensils"></i>
-                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['wifi', 'internet', 'wi-fi']))
-                            <i class="fas fa-wifi"></i>
-                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'hiburan'))
-                            <i class="fas fa-film"></i>
-                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), 'kursi'))
-                            <i class="fas fa-chair"></i>
-                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['selimut', 'bantal']))
-                            <i class="fas fa-bed"></i>
-                        @elseif(Str::contains(strtolower($fasilitas->nama_fasilitas), ['stop kontak', 'colokan']))
-                            <i class="fas fa-plug"></i>
-                        @else
-                            <i class="fas fa-check-circle"></i>
-                        @endif
+                        <img src="{{ asset($fasilitas->icon_url) }}" alt="{{ $fasilitas->nama_fasilitas }}" class="facility-icon">
                         <div class="facility-text">
                             <strong>{{ $fasilitas->nama_fasilitas }}</strong><br>
                             {{ $fasilitas->deskripsi }}

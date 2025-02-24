@@ -21,6 +21,7 @@ use App\Filament\Resources\PetugasResource;
 use App\Filament\Resources\TransportasiResource;
 use App\Filament\Resources\TypeTransportasiResource;
 use App\Filament\Resources\RuteResource;
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -52,8 +53,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                \App\Filament\Widgets\StatsOverview::class,
-                \App\Filament\Widgets\PemasukanStats::class,
+                Widgets\FilamentInfoWidget::class,
              ])
             ->middleware([
                 EncryptCookies::class,
@@ -73,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 \Hasnayeen\Themes\ThemesPlugin::make(),
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }

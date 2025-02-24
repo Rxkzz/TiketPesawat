@@ -7,34 +7,42 @@ use App\Models\ClassModel;
 
 class ClassSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
+        // Data kelas
         $classes = [
             [
                 'nama_class' => 'Ekonomi',
+                'keterangan' => 'Kelas ekonomi dengan kenyamanan dasar',
                 'harga_tambahan' => 0,
-                'keterangan' => 'Kelas ekonomi dengan layanan standar',
                 'bagasi' => 20,
-                'hiburan' => false
+                'fasilitas' => [1, 3, 9] // Makanan Ringan, WiFi, Selimut & Bantal
             ],
             [
                 'nama_class' => 'Bisnis',
-                'harga_tambahan' => 500000,
-                'keterangan' => 'Kelas bisnis dengan layanan premium',
+                'keterangan' => 'Kelas bisnis dengan kenyamanan ekstra',
+                'harga_tambahan' => 1000000,
                 'bagasi' => 30,
-                'hiburan' => true
+                'fasilitas' => [1, 2, 3, 4, 6, 7, 9] // Tambah Makanan Berat, Kursi Rebah, Lounge, Priority Check-in
             ],
             [
                 'nama_class' => 'First Class',
-                'harga_tambahan' => 1000000,
-                'keterangan' => 'Kelas first class dengan layanan eksklusif',
+                'keterangan' => 'Kelas utama dengan fasilitas terlengkap',
+                'harga_tambahan' => 2500000,
                 'bagasi' => 40,
-                'hiburan' => true
-            ],
+                'fasilitas' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // Semua fasilitas
+            ]
         ];
 
+        // Buat record kelas dan hubungkan dengan fasilitas
         foreach ($classes as $class) {
-            ClassModel::create($class);
+            $fasilitas = $class['fasilitas'];
+            unset($class['fasilitas']);
+            
+            $newClass = ClassModel::create($class);
+            
+            // Hubungkan kelas dengan fasilitas menggunakan relasi
+            $newClass->fasilitas()->attach($fasilitas);
         }
     }
 } 
