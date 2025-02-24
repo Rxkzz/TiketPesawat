@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/booking/payment.css') }}">
 </head>
 <body>
+    @include('customer.partials.loader')
     @include('customer.partials.navbar')
 
     @if(session('email_sent'))
@@ -42,6 +43,31 @@
                 <i class="fas fa-times-circle"></i>
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if($booking->status_pembayaran === 'PAID')
+            <div class="status-banner success">
+                <div class="success-animation">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+                <div class="status-content">
+                    <h3>Pembayaran Berhasil!</h3>
+                    <p>Pembayaran Anda telah diverifikasi. Silakan cetak e-ticket Anda.</p>
+                    <div class="action-wrapper">
+                        <a href="{{ route('booking.ticket', $booking->id_pemesanan) }}" class="btn-ticket">
+                            <span class="btn-content">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>Lihat E-Ticket</span>
+                            </span>
+                            <span class="btn-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         @endif
 

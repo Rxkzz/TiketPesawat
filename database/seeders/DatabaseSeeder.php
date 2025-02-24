@@ -20,20 +20,17 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
         DB::table('penumpangs')->truncate();
         DB::table('rute')->truncate();
+        DB::table('roles')->truncate();
+        DB::table('permissions')->truncate();
+        DB::table('role_has_permissions')->truncate();
+        DB::table('model_has_roles')->truncate();
+        DB::table('model_has_permissions')->truncate();
 
         // Aktifkan kembali foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        // Buat data dummy untuk testing
-        DB::table('users')->insert([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
         $this->call([
+            RoleAndPermissionSeeder::class,
             TypeTransportasiSeeder::class,
             TransportasiSeeder::class,
             FasilitasSeeder::class,

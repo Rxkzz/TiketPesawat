@@ -34,6 +34,7 @@
     </style>
 </head>
 <body>
+    @include('customer.partials.loader')
     @include('customer.partials.navbar')
 
     <div class="main-container">

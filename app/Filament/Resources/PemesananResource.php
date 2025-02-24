@@ -57,6 +57,9 @@ class PemesananResource extends Resource
                 TextInput::make('total_bayar')
                     ->label('Total Bayar')
                     ->disabled(),
+                Forms\Components\ViewField::make('payment_proof')
+                    ->label('Bukti Pembayaran')
+                    ->view('filament.components.payment-proof-viewer'),
                 Select::make('status_pembayaran')
                     ->label('Status Pembayaran')
                     ->options([
@@ -107,22 +110,29 @@ class PemesananResource extends Resource
                         $record->status_pembayaran === 'WAITING_CONFIRMATION' && 
                         auth()->user()->hasAnyRole(['admin', 'petugas'])
                     )
-                    ->action(function (Pemesanan $record): void {
-                        $record->update([
-                            'status_pembayaran' => 'PAID',
-                            'id_petugas' => auth()->id()
-                        ]);
-                    })
                     ->requiresConfirmation()
                     ->modalHeading('Verifikasi Pembayaran')
                     ->modalDescription('Apakah Anda yakin ingin memverifikasi pembayaran ini? Pastikan bukti pembayaran sudah valid.')
                     ->modalSubmitActionLabel('Ya, Verifikasi')
-                    ->successNotification(
-                        Notification::make()
-                            ->success()
-                            ->title('Berhasil')
-                            ->body('Pembayaran berhasil diverifikasi')
-                    ),
+                    ->action(function (Pemesanan $record): void {
+                        try {
+                            $record->status_pembayaran = 'PAID';
+                            $record->id_petugas = auth()->id();
+                            $record->save();
+                            
+                            Notification::make()
+                                ->success()
+                                ->title('Berhasil')
+                                ->body('Pembayaran berhasil diverifikasi')
+                                ->send();
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->danger()
+                                ->title('Error')
+                                ->body('Terjadi kesalahan: ' . $e->getMessage())
+                                ->send();
+                        }
+                    }),
                 Tables\Actions\ViewAction::make(),
             ])
             ->headerActions([

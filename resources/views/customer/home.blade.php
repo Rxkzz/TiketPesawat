@@ -18,6 +18,7 @@
 </head>
 
 <body>
+    @include('customer.partials.loader')
     @include('customer.partials.navbar')
 
     <!-- Content -->

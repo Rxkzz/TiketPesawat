@@ -36,6 +36,12 @@ class PetugasResource extends Resource
                     ->password()
                     ->required(fn ($livewire) => $livewire instanceof Pages\CreatePetugas)
                     ->dehydrateStateUsing(fn ($state) => $state ? Hash::make($state) : null)
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->label(fn ($livewire) => 
+                        $livewire instanceof Pages\EditPetugas 
+                            ? 'Password (Kosongkan jika tidak ingin mengubah)' 
+                            : 'Password'
+                    )
                     ->maxLength(255),
                 TextInput::make('name')
                     ->label('Nama Petugas')

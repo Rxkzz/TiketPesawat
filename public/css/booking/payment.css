@@ -190,31 +190,131 @@ body {
 }
 
 .status-banner {
-    background: var(--light-purple);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
+.status-banner.success {
+    background: linear-gradient(135deg, var(--primary-purple), #8B5CF6);
+    border: none;
+    box-shadow: 0 8px 24px rgba(110, 46, 191, 0.25);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transition: all 0.3s ease;
+}
+
+.status-banner.success:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(110, 46, 191, 0.35);
+}
+
+.status-banner.success i {
+    color: #ffffff;
+}
+
 .status-banner i {
-    font-size: 32px;
-    color: var(--primary-purple);
+    font-size: 2.5rem;
+    color: var(--text-gray);
+}
+
+.status-content {
+    flex: 1;
+}
+
+.status-content h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.status-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.action-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-ticket {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+    color: white;
+    padding: 0;
+    border-radius: 12px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.15);
+}
+
+.btn-ticket:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+    color: white;
+}
+
+.btn-content {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 10px;
+}
+
+.btn-arrow {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-ticket:hover .btn-arrow {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(3px);
 }
 
 .status-message h3 {
-    color: var(--primary-purple);
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 5px;
 }
 
 .status-message p {
-    color: var(--text-color);
-    font-size: 14px;
     margin: 0;
+    color: #666;
+}
+
+.status-banner.success .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.status-banner.success .btn-primary:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    transform: translateY(-1px);
 }
 
 .alert {
@@ -246,4 +346,68 @@ body {
 
 .btn-close:hover {
     opacity: 1;
+}
+
+.success-animation {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.checkmark {
+    width: 80px;
+    height: 80px;
+    display: block;
+    stroke-width: 3;
+    stroke: #ffffff;
+    stroke-miterlimit: 10;
+    animation: scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.5s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+
+.status-banner.success {
+    background: linear-gradient(135deg, var(--primary-purple), #8B5CF6);
+    border: none;
+    box-shadow: 0 8px 24px rgba(110, 46, 191, 0.25);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transition: all 0.3s ease;
+}
+
+.status-banner.success:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(110, 46, 191, 0.35);
+}
+
+.status-banner.success i {
+    color: #ffffff;
+}
+
+.status-banner i {
+    font-size: 2.5rem;
+    color: var(--text-gray);
 }
