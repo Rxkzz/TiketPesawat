@@ -4,8 +4,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tampilkan loader saat akan berpindah halaman
     document.addEventListener('click', function(e) {
         const link = e.target.closest('a');
-        if (link && !link.hasAttribute('data-no-loader') && !e.ctrlKey && !e.shiftKey && !e.metaKey && !e.altKey) {
-            loader.classList.add('active');
+        
+        // Cek apakah link valid dan bukan dropdown toggle atau menu item
+        if (link && 
+            !link.hasAttribute('data-no-loader') && 
+            !link.classList.contains('dropdown-toggle') &&
+            !link.classList.contains('dropdown-item') &&
+            !link.hasAttribute('data-bs-toggle') &&
+            !e.ctrlKey && !e.shiftKey && !e.metaKey && !e.altKey) {
+            
+            // Cek apakah link mengarah ke halaman yang sama
+            const isSamePageLink = link.getAttribute('href') === '#' || 
+                                 link.getAttribute('href') === '' ||
+                                 link.getAttribute('href') === window.location.href;
+            
+            if (!isSamePageLink) {
+                loader.classList.add('active');
+            }
         }
     });
 
@@ -27,5 +42,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.persisted) {
             loader.classList.remove('active');
         }
+    });
+
+    // Tambahkan event listener untuk dropdown menu
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+    dropdownMenus.forEach(menu => {
+        menu.addEventListener('click', function(e) {
+            // Hentikan event bubbling untuk mencegah loader muncul
+            e.stopPropagation();
+        });
     });
 }); 
