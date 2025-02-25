@@ -1,0 +1,129 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+/* Custom Styles */
+.fi-sidebar {
+    @apply bg-gradient-to-b from-purple-600 to-purple-900;
+}
+
+.fi-sidebar-item {
+    @apply text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300;
+}
+
+.fi-sidebar-item-active {
+    @apply bg-white/20 text-white;
+}
+
+.fi-main-ctn {
+    @apply bg-gray-50 dark:bg-gray-900;
+}
+
+/* Card Styles */
+.fi-section {
+    @apply rounded-xl border-0 shadow-sm transition-all duration-300 hover:shadow-md;
+}
+
+/* Button Styles */
+.fi-btn {
+    @apply rounded-lg transition-transform duration-200 hover:-translate-y-0.5;
+}
+
+.fi-btn-success {
+    @apply bg-emerald-500 hover:bg-emerald-600;
+}
+
+.fi-btn-danger {
+    @apply bg-rose-500 hover:bg-rose-600;
+}
+
+/* Table Styles */
+.fi-ta-header-cell {
+    @apply bg-gray-100 dark:bg-gray-800;
+}
+
+.fi-ta-row {
+    @apply hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-200;
+}
+
+/* Form Styles */
+.fi-input {
+    @apply rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500;
+}
+
+.fi-select {
+    @apply rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500;
+}
+
+/* Badge Styles */
+.fi-badge {
+    @apply rounded-full px-3 py-1 text-xs font-medium;
+}
+
+.fi-badge-success {
+    @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400;
+}
+
+.fi-badge-warning {
+    @apply bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400;
+}
+
+.fi-badge-danger {
+    @apply bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400;
+}
+
+/* Modal Styles */
+.fi-modal-window {
+    @apply rounded-2xl shadow-2xl;
+}
+
+.fi-modal-header {
+    @apply bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-t-2xl;
+}
+
+/* Navigation */
+.fi-topbar {
+    @apply bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700;
+}
+
+/* Notification Styles */
+.fi-notification {
+    @apply rounded-xl shadow-lg;
+}
+
+/* Loading States */
+.fi-loading-indicator {
+    @apply text-purple-600;
+}
+
+/* Dark Mode Overrides */
+.dark .fi-sidebar {
+    @apply bg-gradient-to-b from-purple-900 to-purple-950;
+}
+
+.dark .fi-main-ctn {
+    @apply bg-gray-900;
+}
+
+.dark .fi-section {
+    @apply bg-gray-800 border-gray-700;
+}
+
+.dark .fi-input,
+.dark .fi-select {
+    @apply border-gray-700 bg-gray-800 text-white;
+}
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fi-section {
+    animation: slideIn 0.3s ease-out;
+} 

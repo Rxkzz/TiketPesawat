@@ -1,5 +1,8 @@
 <?php
 
+use Filament\Panel;
+use Filament\Support\Colors\Color;
+
 return [
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'public'),
     
@@ -105,6 +108,25 @@ return [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
             'login' => \Filament\Pages\Auth\Login::class,
+        ],
+    ],
+
+    'colors' => [
+        'primary' => Color::Purple,
+        'gray' => Color::Slate,
+        'info' => Color::Blue,
+        'success' => Color::Emerald,
+        'warning' => Color::Orange,
+        'danger' => Color::Rose,
+    ],
+
+    'theme' => [
+        'sidebar' => [
+            'background' => 'bg-gradient-to-b from-purple-600 to-purple-900',
+            'color' => 'text-white',
+        ],
+        'topbar' => [
+            'background' => 'bg-white dark:bg-gray-800',
         ],
     ],
 ]; 
