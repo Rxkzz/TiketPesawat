@@ -7,6 +7,8 @@ use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContr
 use Illuminate\Support\ServiceProvider;
 use App\Models\Rute;
 use App\Observers\RuteObserver;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Rute::observe(RuteObserver::class);
+
+        // Disable Vite
+        if (class_exists(FilamentAsset::class)) {
+            FilamentAsset::shouldBeMinified();
+        }
     }
 }
